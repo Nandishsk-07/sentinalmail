@@ -1,0 +1,178 @@
+Received: from edge03.partnerco.com (edge03.partnerco.com [192.0.2.40])
+        by imap.partnerco.com (Cyrus 3.8.1) with LMTPS id aKm9NwPFyWZ+XAAA
+        for <procurement@partnerco.com>;
+        Fri, 21 Aug 2026 16:45:19 +0000 (UTC)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+        (mail-sg2apc01on20710.outbound.protection.outlook.com [40.107.207.10])
+        by edge03.partnerco.com (Postfix) with ESMTPS id 4Wv2Tn5RQKz6pBm
+        for <procurement@partnerco.com>;
+        Fri, 21 Aug 2026 16:45:18 +0000 (UTC)
+Received: from SG2PR04MB5271.apcprd04.prod.outlook.com (2603:1096:4:a8::14)
+        by SG2PR04MB4893.apcprd04.prod.outlook.com (2603:1096:4:a2::11)
+        with Microsoft SMTP Server (version=TLS1_3,
+        cipher=TLS_AES_256_GCM_SHA384) id 15.20.7828.25;
+        Fri, 21 Aug 2026 16:45:16 +0000
+Received: from SG2PR04MB5271.apcprd04.prod.outlook.com
+        ([fe80::e12a:b4ff:fe92:7c38]) by
+        SG2PR04MB5271.apcprd04.prod.outlook.com ([fe80::e12a:b4ff:fe92:7c38])
+        with Microsoft SMTP Server id 15.20.7828.25;
+        Fri, 21 Aug 2026 16:45:15 +0000
+Authentication-Results: edge03.partnerco.com;
+        spf=pass (sender SPF authorized) smtp.mailfrom=globallogistics.io;
+        dkim=pass (signature verified) header.d=globallogistics.io header.s=selector1 header.b=Km4Tz2Xw;
+        dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=globallogistics.io;
+        arc=pass (i=1 spf=pass dkim=pass dmarc=pass)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com;
+        cv=none; b=Xk3mNpQrSt7uVwYz1A2bC4dE6fG8hI0jK
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=microsoft.com; s=arcselector9901;
+        h=from:to:subject:date:message-id;
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=Lm3NoPqRsT5uVw0XyZaB2cDeFgHiJkLmNoPqRsTuVwXyZ
+ARC-Authentication-Results: i=1; mx.microsoft.com;
+        dkim=pass header.d=globallogistics.io;
+        spf=pass smtp.mailfrom=globallogistics.io;
+        dmarc=pass header.from=globallogistics.io
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=globallogistics.io; s=selector1;
+        h=from:to:subject:date:message-id:content-type:mime-version;
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=Km4Tz2XwAb5Cd7Ef9Gh1Ij3Kl5Mn7Op9Qr1St3Uv5Wx7Yz
+Return-Path: <d.nakamura@globallogistics.io>
+From: David Nakamura <d.nakamura@globallogistics.io>
+To: procurement@partnerco.com
+Cc: logistics-ops@globallogistics.io, m.torres@partnerco.com
+Subject: Follow-up: Supply Chain Sync - Action Items from Aug 20 Call
+Date: Fri, 21 Aug 2026 16:45:14 +0000
+Message-ID: <SG2PR04MB5271.AAMkADk4MjE3NjY2.7828@globallogistics.io>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="----=_NextPart_001_0A1B_01D6F2E8.3C0D5A70"
+X-Mailer: Microsoft Outlook 16.0.17830.20166
+X-MS-Exchange-Organization-SCL: -1
+X-MS-Exchange-Organization-AuthSource: SG2PR04MB5271.apcprd04.prod.outlook.com
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Thread-Topic: Supply Chain Sync - Action Items from Aug 20 Call
+Thread-Index: AQHbABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789AB==
+X-Microsoft-Antispam: BCL:0;
+X-Forefront-Antispam-Report: CIP:40.107.207.10; CTRY:SG; LANG:en;
+        SCL:-1; SRV:; IPV:NLI; SFV:NSPM; PTR:mail-sg2apc01on20710.outbound.protection.outlook.com;
+Importance: normal
+
+------=_NextPart_001_0A1B_01D6F2E8.3C0D5A70
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Hi Maria,
+
+Thanks for the productive call yesterday. Below are the action items
+we agreed on -- I've assigned owners and target dates.
+
+SUPPLY CHAIN SYNC -- ACTION ITEMS (Aug 20 Call)
+================================================
+
+1. CONTAINER ALLOCATION (Owner: David N. | Due: Aug 28)
+   - Confirm 40-ft reefer container availability for the Sep 15
+     Shanghai-to-Rotterdam shipment.
+   - Share updated rate card with PartnerCo procurement.
+
+2. CUSTOMS PRE-CLEARANCE (Owner: Maria T. | Due: Aug 26)
+   - Submit HS tariff codes for the new SKU batch (PCB-4400 series)
+     to the Rotterdam customs broker.
+   - Confirm whether preferential duty treatment applies under
+     the EU-Singapore FTA.
+
+3. WAREHOUSE CAPACITY (Owner: Logistics Ops | Due: Sep 1)
+   - Validate that Rotterdam Warehouse B has sufficient pallet
+     positions for the projected +20% volume increase in Q4.
+   - Provide overflow options if capacity is constrained.
+
+4. TRACKING INTEGRATION (Owner: David N. + PartnerCo IT | Due: Sep 5)
+   - Complete API integration testing for real-time container
+     tracking (Maersk TradeLens -> PartnerCo ERP).
+   - Share Postman collection with PartnerCo dev team.
+
+Next sync call is scheduled for Thursday, Aug 27 at 09:00 SGT /
+03:00 CEST. Calendar invite to follow.
+
+Please flag any blockers early so we can keep the Sep 15 sailing
+date on track.
+
+Best,
+David Nakamura
+Director of Operations | Global Logistics International
+Mobile: +65 9123 4567
+d.nakamura@globallogistics.io
+
+------=_NextPart_001_0A1B_01D6F2E8.3C0D5A70
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head><meta charset=3D"UTF-8"></head>
+<body style=3D"font-family: Segoe UI, Calibri, sans-serif; font-size: 14px;=
+ color: #2c3e50; line-height: 1.6;">
+<p>Hi Maria,</p>
+<p>Thanks for the productive call yesterday. Below are the action items we a=
+greed on =E2=80=94 I=E2=80=99ve assigned owners and target dates.</p>
+
+<h3 style=3D"color: #2471a3; border-bottom: 2px solid #2471a3; padding-bott=
+om: 4px;">Supply Chain Sync =E2=80=94 Action Items (Aug 20 Call)</h3>
+
+<table style=3D"border-collapse: collapse; width: 100%; margin-top: 10px;">
+<tr style=3D"background: #eaf2f8;">
+  <th style=3D"text-align: left; padding: 8px; border: 1px solid #d4e6f1;">=
+#</th>
+  <th style=3D"text-align: left; padding: 8px; border: 1px solid #d4e6f1;">=
+Item</th>
+  <th style=3D"text-align: left; padding: 8px; border: 1px solid #d4e6f1;">=
+Owner</th>
+  <th style=3D"text-align: left; padding: 8px; border: 1px solid #d4e6f1;">=
+Due</th>
+</tr>
+<tr>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">1</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Confirm 40-ft reef=
+er container availability; share updated rate card</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">David N.</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Aug 28</td>
+</tr>
+<tr style=3D"background: #f9f9f9;">
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">2</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Submit HS tariff c=
+odes for PCB-4400 series; confirm FTA preferential treatment</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Maria T.</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Aug 26</td>
+</tr>
+<tr>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">3</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Validate Rotterdam=
+ Warehouse B pallet capacity for Q4 volume</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Logistics Ops</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Sep 1</td>
+</tr>
+<tr style=3D"background: #f9f9f9;">
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">4</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Complete API integ=
+ration testing (Maersk TradeLens =E2=86=92 PartnerCo ERP)</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">David N. + IT</td>
+  <td style=3D"padding: 8px; border: 1px solid #d4e6f1;">Sep 5</td>
+</tr>
+</table>
+
+<p>Next sync call: <strong>Thursday, Aug 27 at 09:00 SGT / 03:00 CEST</str=
+ong>. Calendar invite to follow.</p>
+<p>Please flag any blockers early so we can keep the Sep 15 sailing date on =
+track.</p>
+
+<p>Best,<br>
+<strong>David Nakamura</strong><br>
+Director of Operations | Global Logistics International<br>
+Mobile: +65 9123 4567<br>
+<a href=3D"mailto:d.nakamura@globallogistics.io">d.nakamura@globallogistics=
+.io</a></p>
+</body>
+</html>
+
+------=_NextPart_001_0A1B_01D6F2E8.3C0D5A70--

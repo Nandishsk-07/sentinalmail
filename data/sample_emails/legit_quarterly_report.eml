@@ -1,0 +1,151 @@
+Received: from mx1.acmecorp.com (mx1.acmecorp.com [198.51.100.25])
+        by mail-store.acmecorp.com (Dovecot) with LMTP id jR3kLm0FyWZfOAAA
+        for <team-leads@acmecorp.com>;
+        Mon, 24 Aug 2026 14:22:09 +0000 (UTC)
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+        by mx1.acmecorp.com (Postfix) with ESMTPS id 4WxRkN6bQyz3vGT
+        for <team-leads@acmecorp.com>;
+        Mon, 24 Aug 2026 14:22:08 +0000 (UTC)
+Received: by mail-yw1-f182.google.com with SMTP id
+        d2e1a72fcca58-71432b7e1a4so1892005b3a.3
+        for <team-leads@acmecorp.com>;
+        Mon, 24 Aug 2026 07:22:07 -0700 (PDT)
+Received: from [10.0.12.45] (corp-vpn-gw.acmecorp.com [203.0.113.60])
+        by smtp.gmail.com with ESMTPSA id
+        d2e1a72fcca58-714117c3b22sm9948212b3a.45.2026.08.24.07.22.06
+        for <team-leads@acmecorp.com>;
+        Mon, 24 Aug 2026 07:22:06 -0700 (PDT)
+Authentication-Results: mx1.acmecorp.com;
+        spf=pass (google.com: domain of s.chen@acmecorp.com designates 209.85.128.182 as permitted sender) smtp.mailfrom=s.chen@acmecorp.com;
+        dkim=pass header.d=acmecorp.com header.s=google header.b=aB3xKz9Q;
+        dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=acmecorp.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acmecorp.com;
+        s=google; t=1724508127; x=1725112927;
+        h=from:to:subject:date:message-id:mime-version:content-type;
+        bh=LPJNul+wow2Kd2on7hJtWCdqBe3IvJlYnqFcWANagkI=;
+        b=aB3xKz9QrV7mN2pL8wXeF5gH1jK3dS6tY9uR4oI0qW2zMaC7bD5nE
+Return-Path: <s.chen@acmecorp.com>
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601;
+        h=from:to:subject:date:message-id:mime-version:content-type;
+        b=TkJhVm5Xc2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6MTIzNDU2Nzg5MA
+From: Sarah Chen <s.chen@acmecorp.com>
+To: team-leads@acmecorp.com
+Subject: Q3 2026 Financial Summary - Board Review Deck Attached
+Date: Mon, 24 Aug 2026 14:22:05 +0000
+Message-ID: <CA+nP3xKz9Q.1724508125@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----=_Part_8837_1020395678.1724508125"
+X-Mailer: Microsoft Outlook 16.0
+X-Originating-IP: 203.0.113.60
+Precedence: bulk
+List-Unsubscribe: <mailto:team-leads-unsub@acmecorp.com>
+
+------=_Part_8837_1020395678.1724508125
+Content-Type: multipart/alternative; boundary="----=_Part_8838_490281735.1724508125"
+
+------=_Part_8838_490281735.1724508125
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Hi Team,
+
+Please find below the Q3 2026 financial summary ahead of next Thursday's
+board review session.
+
+KEY HIGHLIGHTS
+--------------
+  * Revenue: $48.2M (+12% YoY) - driven by Enterprise segment growth
+  * Gross Margin: 68.4% (up from 65.1% in Q2)
+  * Net Income: $7.1M (+18% YoY)
+  * Cash Position: $112M with $0 drawn on revolving credit facility
+  * Customer Acquisition: 34 net-new enterprise logos
+
+ACTION ITEMS
+------------
+  1. Review the attached slide deck and flag any data discrepancies
+     to the Finance team (finance-review@acmecorp.com) by Wednesday COB.
+  2. Prepare 2-3 talking points for your respective business unit
+     sections - we'll do a dry run Friday at 10 AM ET.
+  3. Emily (IR) will circulate the updated analyst consensus model
+     separately.
+
+The full deck is attached as a PDF. Note that Slides 14-18 covering
+the APAC expansion pipeline are still marked DRAFT - Raj's team is
+finalising the partner revenue projections.
+
+Let me know if you have questions. Looking forward to a strong
+board session.
+
+Best regards,
+Sarah Chen
+VP of Finance | Acme Corp
+Office: +1 (415) 555-0142
+s.chen@acmecorp.com
+
+------=_Part_8838_490281735.1724508125
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head><meta charset=3D"UTF-8"></head>
+<body style=3D"font-family: Calibri, Arial, sans-serif; font-size: 14px; c=
+olor: #333;">
+<p>Hi Team,</p>
+<p>Please find below the Q3 2026 financial summary ahead of next Thursday=
+=E2=80=99s board review session.</p>
+
+<h3 style=3D"color: #1a5276;">Key Highlights</h3>
+<ul>
+<li><strong>Revenue:</strong> $48.2M (+12% YoY) =E2=80=93 driven by Enterp=
+rise segment growth</li>
+<li><strong>Gross Margin:</strong> 68.4% (up from 65.1% in Q2)</li>
+<li><strong>Net Income:</strong> $7.1M (+18% YoY)</li>
+<li><strong>Cash Position:</strong> $112M with $0 drawn on revolving credit=
+ facility</li>
+<li><strong>Customer Acquisition:</strong> 34 net-new enterprise logos</li>
+</ul>
+
+<h3 style=3D"color: #1a5276;">Action Items</h3>
+<ol>
+<li>Review the attached slide deck and flag any data discrepancies to the Fi=
+nance team (<a href=3D"mailto:finance-review@acmecorp.com">finance-review@a=
+cmecorp.com</a>) by Wednesday COB.</li>
+<li>Prepare 2=E2=80=933 talking points for your respective business unit se=
+ctions =E2=80=93 we=E2=80=99ll do a dry run Friday at 10 AM ET.</li>
+<li>Emily (IR) will circulate the updated analyst consensus model separately=
+.</li>
+</ol>
+
+<p>The full deck is attached as a PDF. Note that Slides 14=E2=80=9318 cover=
+ing the APAC expansion pipeline are still marked <strong>DRAFT</strong> =E2=
+=80=93 Raj=E2=80=99s team is finalising the partner revenue projections.</p>
+
+<p>Let me know if you have questions. Looking forward to a strong board sess=
+ion.</p>
+
+<p>Best regards,<br>
+<strong>Sarah Chen</strong><br>
+VP of Finance | Acme Corp<br>
+Office: +1 (415) 555-0142<br>
+<a href=3D"mailto:s.chen@acmecorp.com">s.chen@acmecorp.com</a></p>
+</body>
+</html>
+
+------=_Part_8838_490281735.1724508125--
+
+------=_Part_8837_1020395678.1724508125
+Content-Type: application/pdf; name="ACME_Q3_2026_Board_Deck_v3.pdf"
+Content-Disposition: attachment; filename="ACME_Q3_2026_Board_Deck_v3.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5k
+b2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4K
+ZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3gg
+WzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAow
+MDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBu
+IAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjIwNgolJUVP
+Rgo=
+
+------=_Part_8837_1020395678.1724508125--

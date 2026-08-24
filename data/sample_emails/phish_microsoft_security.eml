@@ -1,0 +1,152 @@
+Received: from mx2.targetcorp.com (mx2.targetcorp.com [198.51.100.50])
+        by imap4.targetcorp.com (Dovecot 2.3.20) with LMTP id qN7xPw2GyWZkRAAA
+        for <j.martinez@targetcorp.com>;
+        Sun, 23 Aug 2026 08:14:47 +0000 (UTC)
+Received: from mail-out.m1cr0soft-secure.xyz (vps-838274.bulletproof.li [185.234.72.19])
+        by mx2.targetcorp.com (Postfix) with ESMTP id 4WwQKm3TRNz1vFp
+        for <j.martinez@targetcorp.com>;
+        Sun, 23 Aug 2026 08:14:46 +0000 (UTC)
+Received: from localhost (unknown [10.255.0.3])
+        by mail-out.m1cr0soft-secure.xyz (Postfix) with ESMTP id 9A3F21C005B
+        for <j.martinez@targetcorp.com>;
+        Sun, 23 Aug 2026 08:14:44 +0000 (UTC)
+Authentication-Results: mx2.targetcorp.com;
+        spf=fail (domain m1cr0soft-secure.xyz does not designate 185.234.72.19 as permitted sender) smtp.mailfrom=alert-noreply@m1cr0soft-secure.xyz;
+        dkim=fail (no valid DKIM signature found);
+        dmarc=fail (p=NONE dis=NONE) header.from=m1cr0soft-secure.xyz
+X-Spam-Status: Yes, score=8.7 required=5.0 tests=BAYES_99,DKIM_NONE,
+        SPF_FAIL,URIBL_BLACK,HTML_IMAGE_RATIO_02,FREEMAIL_ENVFROM_REPLYTO,
+        RCVD_IN_PBL autolearn=spam autolearn_force=yes version=4.0.0
+X-Spam-Score: 8.7
+X-Spam-Flag: YES
+Return-Path: <alert-noreply@m1cr0soft-secure.xyz>
+From: "Microsoft 365 Security Team" <security-alert@m1cr0soft-secure.xyz>
+Reply-To: ms365-support-verify@protonmail.com
+To: j.martinez@targetcorp.com
+Subject: =?UTF-8?B?4pqg77iPIFVSR0VOVDogVW51c3VhbCBTaWduLWluIEFjdGl2aXR5IOKAlCBWZXJpZnkgWW91ciBJZGVudGl0eSBOb3c=?=
+Date: Sun, 23 Aug 2026 08:14:43 +0000
+Message-ID: <5f8a3b2c.1c3d4e5f.6a7b8c9d@m1cr0soft-secure.xyz>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="----=_PHISH_BOUNDARY_001"
+X-Mailer: PHPMailer 6.8.1 (https://github.com/PHPMailer/PHPMailer)
+X-Originating-IP: 185.234.72.19
+X-Priority: 1
+Importance: High
+
+------=_PHISH_BOUNDARY_001
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Microsoft 365 Security Alert
+=============================
+
+Dear Valued Customer,
+
+We detected an unusual sign-in attempt on your Microsoft 365 account:
+
+  Location:    Lagos, Nigeria
+  IP Address:  41.203.76.114
+  Device:      Unknown Linux Device
+  Time:        Aug 23, 2026 at 07:58 UTC
+
+If this was NOT you, your account may be compromised. You must verify
+your identity IMMEDIATELY to prevent unauthorized access to your
+emails, files, and organizational data.
+
+=E2=9A=A0=EF=B8=8F FAILURE TO VERIFY WITHIN 24 HOURS WILL RESULT IN
+PERMANENT ACCOUNT SUSPENSION.
+
+Click here to verify your identity now:
+https://m1cr0soft-secure.xyz/auth/verify?token=3Deyj0eXAiOiJKV1QiLCJhbGci&=
+session=3Da8f2e91b&ref=3Dalert-2026-08-23
+
+If the link above does not work, copy and paste this URL into your browser:
+https://m1cr0soft-secure.xyz/auth/verify?token=3Deyj0eXAiOiJKV1QiLCJhbGci&=
+session=3Da8f2e91b&ref=3Dalert-2026-08-23
+
+This is an automated security notification. Please do not reply to this
+email. For assistance, contact Microsoft Support at 1-800-642-7676.
+
+=C2=A9 2026 Microsoft Corporation. All rights reserved.
+One Microsoft Way, Redmond, WA 98052
+
+------=_PHISH_BOUNDARY_001
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head><meta charset=3D"UTF-8">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+</head>
+<body style=3D"margin: 0; padding: 0; background: #f4f4f4; font-family: Se=
+goe UI, Tahoma, sans-serif;">
+<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"backgrou=
+nd: #f4f4f4; padding: 40px 0;">
+<tr><td align=3D"center">
+<table width=3D"600" cellpadding=3D"0" cellspacing=3D"0" style=3D"backgroun=
+d: #ffffff; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+<!-- Header -->
+<tr><td style=3D"background: #0078d4; padding: 24px 32px;">
+<img src=3D"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/=
+imageFileData/RE1Mu3b?ver=3D5c31" alt=3D"Microsoft" width=3D"120" style=3D"=
+display: block;">
+</td></tr>
+
+<!-- Body -->
+<tr><td style=3D"padding: 32px;">
+<h2 style=3D"color: #d83b01; margin-top: 0;">=E2=9A=A0=EF=B8=8F Unusual Si=
+gn-in Activity Detected</h2>
+<p>Dear Valued Customer,</p>
+<p>We detected a sign-in attempt on your account from an <strong>unrecognis=
+ed device and location</strong>:</p>
+
+<table style=3D"background: #fff4ce; border-left: 4px solid #d83b01; paddin=
+g: 12px; width: 100%; margin: 16px 0;">
+<tr><td>
+<strong>Location:</strong> Lagos, Nigeria<br>
+<strong>IP Address:</strong> 41.203.76.114<br>
+<strong>Device:</strong> Unknown Linux Device<br>
+<strong>Time:</strong> Aug 23, 2026 at 07:58 UTC
+</td></tr>
+</table>
+
+<p style=3D"color: #d83b01; font-weight: bold; font-size: 15px;">=E2=9A=A0=
+=EF=B8=8F If this was NOT you, verify your identity immediately. Failure to=
+ verify within 24 hours will result in permanent account suspension.</p>
+
+<p style=3D"text-align: center; margin: 28px 0;">
+<a href=3D"https://m1cr0soft-secure.xyz/auth/verify?token=3Deyj0eXAiOiJKV1=
+QiLCJhbGci&amp;session=3Da8f2e91b&amp;ref=3Dalert-2026-08-23"
+   style=3D"display: inline-block; background: #0078d4; color: #ffffff; tex=
+t-decoration: none; padding: 14px 48px; border-radius: 4px; font-size: 16p=
+x; font-weight: 600;">
+Verify My Identity
+</a></p>
+
+<p style=3D"font-size: 12px; color: #888;">If the button above does not wor=
+k, copy and paste this URL into your browser:<br>
+<a href=3D"https://m1cr0soft-secure.xyz/auth/verify?token=3Deyj0eXAiOiJKV1=
+QiLCJhbGci&amp;session=3Da8f2e91b" style=3D"color: #0078d4; word-break: br=
+eak-all;">https://m1cr0soft-secure.xyz/auth/verify?token=3Deyj0eXAiOiJKV1Qi=
+LCJhbGci&amp;session=3Da8f2e91b</a></p>
+</td></tr>
+
+<!-- Footer -->
+<tr><td style=3D"padding: 20px 32px; background: #f8f8f8; border-top: 1px =
+solid #eee; font-size: 11px; color: #999;">
+<p>This is an automated security notification. Please do not reply.<br>
+For assistance, contact Microsoft Support at 1-800-642-7676.</p>
+<p>=C2=A9 2026 Microsoft Corporation. One Microsoft Way, Redmond, WA 98052<=
+/p>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>
+
+------=_PHISH_BOUNDARY_001--
