@@ -1,0 +1,13 @@
+# sentinel-mail — dependencies
+fastapi
+uvicorn[standard]
+dnspython
+transformers
+torch
+nltk
+opencv-python
+pyzbar
+networkx
+weasyprint
+python-magic
+email-validator
