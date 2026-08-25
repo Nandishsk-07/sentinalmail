@@ -1,0 +1,837 @@
+{
+  "version": "0.1.0",
+  "chain_of_custody": {
+    "sha256": "42986d12c8fb7a096d143fed391a51fc12e77caebcfc2bf94750cad15078171a",
+    "file_name": "phish_microsoft_security.eml",
+    "file_size_bytes": 6176,
+    "analyzed_at_utc": "2026-08-25T06:17:21Z"
+  },
+  "verdict": {
+    "threat_score": 100,
+    "tier": "CONFIRMED_THREAT",
+    "reasoning": "Email authentication issues: SPF FAIL, DKIM FAIL, DMARC FAIL | Spoofing flagged: From domain (m1cr0soft-secure.xyz) differs from Reply-To domain (protonmail.com) | Spoofing flagged: Reply-To domain (protonmail.com) differs from Return-Path domain (m1cr0soft-secure.xyz) | Spoofing flagged: Display name 'Microsoft 365 Security Team' mentions 'microsoft' but actual domain is 'm1cr0soft-secure.xyz' | Spoofing flagged: X-Spam-Score is 8.7 (threshold 5.0) | NLP engine detected high phishing risk (1.00) with signals: urgency, threat, impersonation, url_risk | Threat attribution match: Storm-0982 (Scattered Spider subgroup) (50% confidence)",
+    "signal_contributions": [
+      {
+        "engine": "HeaderParser",
+        "threat_belief": 0.9,
+        "safe_belief": 0.0,
+        "uncertainty": 0.1
+      },
+      {
+        "engine": "NLPEngine",
+        "threat_belief": 0.95,
+        "safe_belief": 0.0,
+        "uncertainty": 0.05
+      },
+      {
+        "engine": "VisualEngine",
+        "threat_belief": 0.0,
+        "safe_belief": 0.2,
+        "uncertainty": 0.8
+      },
+      {
+        "engine": "AttributionGraph",
+        "threat_belief": 0.475,
+        "safe_belief": 0.0,
+        "uncertainty": 0.525
+      }
+    ],
+    "raw_belief": {
+      "threat": 0.9967,
+      "safe": 0.0007,
+      "uncertainty": 0.0026
+    }
+  },
+  "engine_results": {
+    "HeaderParser": {
+      "file": "phish_microsoft_security.eml",
+      "subject": "\u26a0\ufe0f URGENT: Unusual Sign-in Activity \u2014 Verify Your Identity Now",
+      "from": "\"Microsoft 365 Security Team\" <security-alert@m1cr0soft-secure.xyz>",
+      "relay_path": [
+        {
+          "from_host": "localhost",
+          "from_ip": "10.255.0.3",
+          "by_host": "mail-out.m1cr0soft-secure.xyz",
+          "protocol": "ESMTP",
+          "timestamp": "Sun, 23 Aug 2026 08:14:44 +0000 (UTC)",
+          "timestamp_utc": "2026-08-23T08:14:44+00:00",
+          "hop": 1,
+          "delay_seconds": null
+        },
+        {
+          "from_host": "mail-out.m1cr0soft-secure.xyz",
+          "from_ip": "185.234.72.19",
+          "by_host": "mx2.targetcorp.com",
+          "protocol": "ESMTP",
+          "timestamp": "Sun, 23 Aug 2026 08:14:46 +0000 (UTC)",
+          "timestamp_utc": "2026-08-23T08:14:46+00:00",
+          "hop": 2,
+          "delay_seconds": 2.0
+        },
+        {
+          "from_host": "mx2.targetcorp.com",
+          "from_ip": "198.51.100.50",
+          "by_host": "imap4.targetcorp.com",
+          "protocol": "LMTP",
+          "timestamp": "Sun, 23 Aug 2026 08:14:47 +0000 (UTC)",
+          "timestamp_utc": "2026-08-23T08:14:47+00:00",
+          "hop": 3,
+          "delay_seconds": 1.0
+        }
+      ],
+      "auth_results": {
+        "header": {
+          "spf": {
+            "verdict": "fail",
+            "detail": "domain m1cr0soft-secure.xyz does not designate 185.234.72.19 as permitted sender",
+            "smtp_mailfrom": "alert-noreply@m1cr0soft-secure.xyz"
+          },
+          "dkim": {
+            "verdict": "fail",
+            "detail": "no valid DKIM signature found",
+            "domain": null,
+            "selector": null
+          },
+          "dmarc": {
+            "verdict": "fail",
+            "detail": "p=NONE dis=NONE",
+            "header_from": "m1cr0soft-secure.xyz"
+          }
+        },
+        "envelope_domain": "m1cr0soft-secure.xyz",
+        "header_from_domain": "m1cr0soft-secure.xyz",
+        "live_dns": null
+      },
+      "spoofing_flags": [
+        {
+          "type": "domain_mismatch",
+          "fields": [
+            "From",
+            "Reply-To"
+          ],
+          "values": [
+            "m1cr0soft-secure.xyz",
+            "protonmail.com"
+          ],
+          "severity": "high",
+          "description": "From domain (m1cr0soft-secure.xyz) differs from Reply-To domain (protonmail.com)"
+        },
+        {
+          "type": "domain_mismatch",
+          "fields": [
+            "Reply-To",
+            "Return-Path"
+          ],
+          "values": [
+            "protonmail.com",
+            "m1cr0soft-secure.xyz"
+          ],
+          "severity": "medium",
+          "description": "Reply-To domain (protonmail.com) differs from Return-Path domain (m1cr0soft-secure.xyz)"
+        },
+        {
+          "type": "display_name_impersonation",
+          "display_name": "Microsoft 365 Security Team",
+          "actual_domain": "m1cr0soft-secure.xyz",
+          "impersonated_brand": "microsoft.com",
+          "severity": "critical",
+          "description": "Display name 'Microsoft 365 Security Team' mentions 'microsoft' but actual domain is 'm1cr0soft-secure.xyz'"
+        },
+        {
+          "type": "high_spam_score",
+          "score": 8.7,
+          "severity": "high",
+          "description": "X-Spam-Score is 8.7 (threshold 5.0)"
+        }
+      ],
+      "geo_trace": [
+        {
+          "ip": "10.255.0.3",
+          "private": true
+        },
+        {
+          "ip": "185.234.72.19",
+          "geo": "disabled"
+        },
+        {
+          "ip": "198.51.100.50",
+          "private": true
+        }
+      ]
+    },
+    "NLPEngine": {
+      "phishing_score": {
+        "score": 1.0,
+        "label": "phishing",
+        "confidence": 1.0,
+        "method": "heuristic",
+        "signals": {
+          "urgency": {
+            "score": 0.978,
+            "matches": 4
+          },
+          "financial": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "secrecy": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "threat": {
+            "score": 0.762,
+            "matches": 2
+          },
+          "impersonation": {
+            "score": 0.978,
+            "matches": 6
+          },
+          "url_risk": {
+            "score": 0.5,
+            "suspicious_urls": 3
+          }
+        }
+      },
+      "ai_generated_score": {
+        "score": 0.0187,
+        "label": "likely human-written",
+        "type_token_ratio": 0.774,
+        "avg_word_length": 7.04,
+        "sentence_length_stdev": 14.44,
+        "method": "heuristic"
+      },
+      "extracted_entities": {
+        "financial": [],
+        "references": [],
+        "contact": [
+          {
+            "type": "phone",
+            "value": "800-642-7676"
+          }
+        ],
+        "urls": [
+          {
+            "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23",
+            "risk_score": 0.5,
+            "suspicious": true
+          },
+          {
+            "url": "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
+            "risk_score": 0.0,
+            "suspicious": false
+          },
+          {
+            "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23",
+            "risk_score": 0.5,
+            "suspicious": true
+          },
+          {
+            "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b",
+            "risk_score": 0.5,
+            "suspicious": true
+          }
+        ],
+        "crypto": [],
+        "named_entities": null
+      },
+      "flagged_phrases": [
+        {
+          "phrase": "FAILURE TO VERIFY",
+          "category": "urgency",
+          "severity": "critical",
+          "context": "\u2026ls, files, and organizational data.  \u26a0\ufe0f FAILURE TO VERIFY WITHIN 24 HOURS WILL RESULT IN PERMANEN\u2026"
+        },
+        {
+          "phrase": "URGENT",
+          "category": "urgency",
+          "severity": "high",
+          "context": "\u26a0\ufe0f URGENT: Unusual Sign-in Activity \u2014 Verify Your\u2026"
+        },
+        {
+          "phrase": "IMMEDIATELY",
+          "category": "urgency",
+          "severity": "high",
+          "context": "\u2026promised. You must verify your identity IMMEDIATELY to prevent unauthorized access to your\u2026"
+        },
+        {
+          "phrase": "WITHIN 24 HOURS",
+          "category": "urgency",
+          "severity": "high",
+          "context": "\u2026anizational data.  \u26a0\ufe0f FAILURE TO VERIFY WITHIN 24 HOURS WILL RESULT IN PERMANENT ACCOUNT SUSPEN\u2026"
+        },
+        {
+          "phrase": "unauthorized access",
+          "category": "threat",
+          "severity": "high",
+          "context": "\u2026fy your identity IMMEDIATELY to prevent unauthorized access to your emails, files, and organization\u2026"
+        },
+        {
+          "phrase": "compromised",
+          "category": "threat",
+          "severity": "high",
+          "context": "\u2026f this was NOT you, your account may be compromised. You must verify your identity IMMEDIAT\u2026"
+        },
+        {
+          "phrase": "Verify Your Identity",
+          "category": "impersonation",
+          "severity": "high",
+          "context": "\u26a0\ufe0f URGENT: Unusual Sign-in Activity \u2014 Verify Your Identity Now Microsoft 365 Security Alert ======\u2026"
+        },
+        {
+          "phrase": "verify\nyour identity",
+          "category": "impersonation",
+          "severity": "high",
+          "context": "\u2026ur account may be compromised. You must verify your identity IMMEDIATELY to prevent unauthorized acc\u2026"
+        },
+        {
+          "phrase": "Security Alert",
+          "category": "impersonation",
+          "severity": "medium",
+          "context": "\u2026Verify Your Identity Now Microsoft 365 Security Alert ============== Dear Valued Customer,  W\u2026"
+        },
+        {
+          "phrase": "security notification",
+          "category": "impersonation",
+          "severity": "medium",
+          "context": "\u2026=alert-2026-08-23  This is an automated security notification. Please do not reply to this email. For\u2026"
+        },
+        {
+          "phrase": "Click here",
+          "category": "impersonation",
+          "severity": "medium",
+          "context": "\u2026ESULT IN PERMANENT ACCOUNT SUSPENSION.  Click here to verify your identity now: https://m1\u2026"
+        }
+      ]
+    },
+    "VisualEngine": {
+      "attachments": [],
+      "images_scanned": 0,
+      "qr_codes_found": 0,
+      "decoded_urls": [],
+      "url_risk_flags": [],
+      "source_file": "phish_microsoft_security.eml"
+    },
+    "AttributionGraph": {
+      "nodes": [
+        {
+          "id": "phish_microsoft_security.eml",
+          "type": "email",
+          "label": "Email: phish_microsoft_security.eml",
+          "subject": "\u26a0\ufe0f URGENT: Unusual Sign-in Activity \u2014 Verify Your Identity Now",
+          "sender": "\"Microsoft 365 Security Team\" <security-alert@m1cr0soft-secure.xyz>"
+        },
+        {
+          "id": "security-alert@m1cr0soft-secure.xyz",
+          "type": "sender",
+          "label": "Sender: security-alert@m1cr0soft-secure.xyz"
+        },
+        {
+          "id": "m1cr0soft-secure.xyz",
+          "type": "domain",
+          "label": "Domain: m1cr0soft-secure.xyz"
+        },
+        {
+          "id": "10.255.0.3",
+          "type": "ip",
+          "label": "IP: 10.255.0.3"
+        },
+        {
+          "id": "host:mail-out.m1cr0soft-secure.xyz",
+          "type": "relay_host",
+          "label": "Relay: mail-out.m1cr0soft-secure.xyz",
+          "host": "mail-out.m1cr0soft-secure.xyz"
+        },
+        {
+          "id": "185.234.72.19",
+          "type": "ip",
+          "label": "IP: 185.234.72.19"
+        },
+        {
+          "id": "host:mx2.targetcorp.com",
+          "type": "relay_host",
+          "label": "Relay: mx2.targetcorp.com",
+          "host": "mx2.targetcorp.com"
+        },
+        {
+          "id": "targetcorp.com",
+          "type": "domain",
+          "label": "Domain: targetcorp.com"
+        },
+        {
+          "id": "198.51.100.50",
+          "type": "ip",
+          "label": "IP: 198.51.100.50"
+        },
+        {
+          "id": "host:imap4.targetcorp.com",
+          "type": "relay_host",
+          "label": "Relay: imap4.targetcorp.com",
+          "host": "imap4.targetcorp.com"
+        },
+        {
+          "id": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23",
+          "type": "url",
+          "label": "URL (body)",
+          "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23"
+        },
+        {
+          "id": "url:https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
+          "type": "url",
+          "label": "URL (body)",
+          "url": "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31"
+        },
+        {
+          "id": "img-prod-cms-rt-microsoft-com.akamaized.net",
+          "type": "domain",
+          "label": "Domain: img-prod-cms-rt-microsoft-com.akamaized.net"
+        },
+        {
+          "id": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23",
+          "type": "url",
+          "label": "URL (body)",
+          "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23"
+        },
+        {
+          "id": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b",
+          "type": "url",
+          "label": "URL (body)",
+          "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b"
+        },
+        {
+          "id": "APT-Storm-0982",
+          "type": "actor",
+          "label": "Threat Actor: Storm-0982 (Scattered Spider subgroup)",
+          "details": {
+            "actor_id": "APT-Storm-0982",
+            "actor_name": "Storm-0982 (Scattered Spider subgroup)",
+            "actor_type": "Cybercrime / Access Broker",
+            "tactics": "QR-phishing (quishing), MFA fatigue/bypass, Microsoft 365 credential harvesting.",
+            "severity": "critical",
+            "confidence": 50,
+            "matched_indicators": [
+              "185.234.72.19",
+              "m1cr0soft-secure.xyz",
+              "security-alert@m1cr0soft-secure.xyz"
+            ]
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "security-alert@m1cr0soft-secure.xyz",
+          "relation": "has_sender"
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "10.255.0.3",
+          "relation": "routed_through",
+          "hop": 1
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "host:mail-out.m1cr0soft-secure.xyz",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "185.234.72.19",
+          "relation": "routed_through",
+          "hop": 2
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "host:mx2.targetcorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "198.51.100.50",
+          "relation": "routed_through",
+          "hop": 3
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "host:imap4.targetcorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "body",
+          "target": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23",
+          "relation": "contains_url"
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "m1cr0soft-secure.xyz",
+          "relation": "uses_domain"
+        },
+        {
+          "source": "body",
+          "target": "url:https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
+          "relation": "contains_url"
+        },
+        {
+          "source": "phish_microsoft_security.eml",
+          "target": "img-prod-cms-rt-microsoft-com.akamaized.net",
+          "relation": "uses_domain"
+        },
+        {
+          "source": "body",
+          "target": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23",
+          "relation": "contains_url"
+        },
+        {
+          "source": "body",
+          "target": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b",
+          "relation": "contains_url"
+        },
+        {
+          "source": "security-alert@m1cr0soft-secure.xyz",
+          "target": "m1cr0soft-secure.xyz",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "security-alert@m1cr0soft-secure.xyz",
+          "target": "APT-Storm-0982",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "m1cr0soft-secure.xyz",
+          "target": "APT-Storm-0982",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "host:mail-out.m1cr0soft-secure.xyz",
+          "target": "m1cr0soft-secure.xyz",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "185.234.72.19",
+          "target": "APT-Storm-0982",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "host:mx2.targetcorp.com",
+          "target": "targetcorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:imap4.targetcorp.com",
+          "target": "targetcorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23",
+          "target": "m1cr0soft-secure.xyz",
+          "relation": "resolves_to_domain"
+        },
+        {
+          "source": "url:https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
+          "target": "img-prod-cms-rt-microsoft-com.akamaized.net",
+          "relation": "resolves_to_domain"
+        },
+        {
+          "source": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23",
+          "target": "m1cr0soft-secure.xyz",
+          "relation": "resolves_to_domain"
+        },
+        {
+          "source": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b",
+          "target": "m1cr0soft-secure.xyz",
+          "relation": "resolves_to_domain"
+        }
+      ],
+      "json_data": {
+        "directed": true,
+        "multigraph": false,
+        "graph": {},
+        "nodes": [
+          {
+            "type": "email",
+            "label": "Email: phish_microsoft_security.eml",
+            "subject": "\u26a0\ufe0f URGENT: Unusual Sign-in Activity \u2014 Verify Your Identity Now",
+            "sender": "\"Microsoft 365 Security Team\" <security-alert@m1cr0soft-secure.xyz>",
+            "id": "phish_microsoft_security.eml"
+          },
+          {
+            "type": "sender",
+            "label": "Sender: security-alert@m1cr0soft-secure.xyz",
+            "id": "security-alert@m1cr0soft-secure.xyz"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: m1cr0soft-secure.xyz",
+            "id": "m1cr0soft-secure.xyz"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 10.255.0.3",
+            "id": "10.255.0.3"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mail-out.m1cr0soft-secure.xyz",
+            "host": "mail-out.m1cr0soft-secure.xyz",
+            "id": "host:mail-out.m1cr0soft-secure.xyz"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 185.234.72.19",
+            "id": "185.234.72.19"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mx2.targetcorp.com",
+            "host": "mx2.targetcorp.com",
+            "id": "host:mx2.targetcorp.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: targetcorp.com",
+            "id": "targetcorp.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 198.51.100.50",
+            "id": "198.51.100.50"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: imap4.targetcorp.com",
+            "host": "imap4.targetcorp.com",
+            "id": "host:imap4.targetcorp.com"
+          },
+          {
+            "type": "url",
+            "label": "URL (body)",
+            "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23",
+            "id": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23"
+          },
+          {
+            "type": "url",
+            "label": "URL (body)",
+            "url": "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
+            "id": "url:https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: img-prod-cms-rt-microsoft-com.akamaized.net",
+            "id": "img-prod-cms-rt-microsoft-com.akamaized.net"
+          },
+          {
+            "type": "url",
+            "label": "URL (body)",
+            "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23",
+            "id": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23"
+          },
+          {
+            "type": "url",
+            "label": "URL (body)",
+            "url": "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b",
+            "id": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b"
+          },
+          {
+            "type": "actor",
+            "label": "Threat Actor: Storm-0982 (Scattered Spider subgroup)",
+            "details": {
+              "actor_id": "APT-Storm-0982",
+              "actor_name": "Storm-0982 (Scattered Spider subgroup)",
+              "actor_type": "Cybercrime / Access Broker",
+              "tactics": "QR-phishing (quishing), MFA fatigue/bypass, Microsoft 365 credential harvesting.",
+              "severity": "critical",
+              "confidence": 50,
+              "matched_indicators": [
+                "185.234.72.19",
+                "m1cr0soft-secure.xyz",
+                "security-alert@m1cr0soft-secure.xyz"
+              ]
+            },
+            "id": "APT-Storm-0982"
+          }
+        ],
+        "edges": [
+          {
+            "relation": "has_sender",
+            "source": "phish_microsoft_security.eml",
+            "target": "security-alert@m1cr0soft-secure.xyz"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 1,
+            "source": "phish_microsoft_security.eml",
+            "target": "10.255.0.3"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_microsoft_security.eml",
+            "target": "host:mail-out.m1cr0soft-secure.xyz"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 2,
+            "source": "phish_microsoft_security.eml",
+            "target": "185.234.72.19"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_microsoft_security.eml",
+            "target": "host:mx2.targetcorp.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 3,
+            "source": "phish_microsoft_security.eml",
+            "target": "198.51.100.50"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_microsoft_security.eml",
+            "target": "host:imap4.targetcorp.com"
+          },
+          {
+            "relation": "contains_url",
+            "source": "phish_microsoft_security.eml",
+            "target": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23"
+          },
+          {
+            "relation": "uses_domain",
+            "source": "phish_microsoft_security.eml",
+            "target": "m1cr0soft-secure.xyz"
+          },
+          {
+            "relation": "contains_url",
+            "source": "phish_microsoft_security.eml",
+            "target": "url:https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31"
+          },
+          {
+            "relation": "uses_domain",
+            "source": "phish_microsoft_security.eml",
+            "target": "img-prod-cms-rt-microsoft-com.akamaized.net"
+          },
+          {
+            "relation": "contains_url",
+            "source": "phish_microsoft_security.eml",
+            "target": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23"
+          },
+          {
+            "relation": "contains_url",
+            "source": "phish_microsoft_security.eml",
+            "target": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "security-alert@m1cr0soft-secure.xyz",
+            "target": "m1cr0soft-secure.xyz"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "security-alert@m1cr0soft-secure.xyz",
+            "target": "APT-Storm-0982"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "m1cr0soft-secure.xyz",
+            "target": "APT-Storm-0982"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mail-out.m1cr0soft-secure.xyz",
+            "target": "m1cr0soft-secure.xyz"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "185.234.72.19",
+            "target": "APT-Storm-0982"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mx2.targetcorp.com",
+            "target": "targetcorp.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:imap4.targetcorp.com",
+            "target": "targetcorp.com"
+          },
+          {
+            "relation": "resolves_to_domain",
+            "source": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23",
+            "target": "m1cr0soft-secure.xyz"
+          },
+          {
+            "relation": "resolves_to_domain",
+            "source": "url:https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
+            "target": "img-prod-cms-rt-microsoft-com.akamaized.net"
+          },
+          {
+            "relation": "resolves_to_domain",
+            "source": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23",
+            "target": "m1cr0soft-secure.xyz"
+          },
+          {
+            "relation": "resolves_to_domain",
+            "source": "url:https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b",
+            "target": "m1cr0soft-secure.xyz"
+          }
+        ]
+      },
+      "campaigns": [
+        {
+          "campaign_id": "campaign_1",
+          "name": "Campaign Cluster 1",
+          "emails": [
+            "phish_microsoft_security.eml"
+          ],
+          "email_count": 1,
+          "total_nodes": 15,
+          "shared_ips": [
+            "198.51.100.50",
+            "185.234.72.19",
+            "10.255.0.3"
+          ],
+          "shared_hosts": [
+            "mail-out.m1cr0soft-secure.xyz",
+            "imap4.targetcorp.com",
+            "mx2.targetcorp.com"
+          ],
+          "shared_domains": [
+            "m1cr0soft-secure.xyz",
+            "img-prod-cms-rt-microsoft-com.akamaized.net"
+          ],
+          "urls": [
+            "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
+            "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b",
+            "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&session=a8f2e91b&ref=alert-2026-08-23",
+            "https://m1cr0soft-secure.xyz/auth/verify?token=eyj0eXAiOiJKV1QiLCJhbGci&amp;session=a8f2e91b&amp;ref=alert-2026-08-23"
+          ],
+          "is_phishing": true
+        }
+      ],
+      "attributions": [
+        {
+          "actor_id": "APT-Storm-0982",
+          "actor_name": "Storm-0982 (Scattered Spider subgroup)",
+          "actor_type": "Cybercrime / Access Broker",
+          "tactics": "QR-phishing (quishing), MFA fatigue/bypass, Microsoft 365 credential harvesting.",
+          "severity": "critical",
+          "confidence": 50,
+          "matched_indicators": [
+            "185.234.72.19",
+            "m1cr0soft-secure.xyz",
+            "security-alert@m1cr0soft-secure.xyz"
+          ]
+        }
+      ],
+      "indicators": {
+        "blocklisted_domains": [
+          "m1cr0soft-secure.xyz"
+        ],
+        "blocklisted_ips": [
+          "185.234.72.19"
+        ],
+        "total_malicious_nodes": 3
+      },
+      "summary": "Analyzed 1 email(s) across individual components. Attributed to Storm-0982 (Scattered Spider subgroup) (50% confidence)."
+    }
+  }
+}

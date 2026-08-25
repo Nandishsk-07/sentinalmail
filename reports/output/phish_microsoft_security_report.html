@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel-Mail Forensic Report — phish_microsoft_security.eml</title>
+    <style>
+        :root {
+            --primary-color: #dc2626;
+            --bg-color: #fef2f2;
+            --border-color: #fecaca;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-light: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-light);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+        .report-meta {
+            text-align: right;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        /* Executive Verdict Banner */
+        .verdict-banner {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-left: 6px solid var(--primary-color);
+            padding: 24px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .verdict-title {
+            margin: 0 0 6px 0;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        .verdict-sub {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .score-badge {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 16px 28px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 90px;
+        }
+        .score-val {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .score-lbl {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Metadata & Chain of Custody */
+        .custody-box {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+        }
+        .custody-title {
+            font-family: sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hash-str {
+            color: #0f172a;
+            word-break: break-all;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 35px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .email-details-grid {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 10px 16px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .grid-lbl {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .reasoning-list {
+            padding-left: 20px;
+            margin: 0 0 25px 0;
+            font-size: 14px;
+        }
+        .reasoning-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Signal Contributions Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+        th {
+            background-color: #f8fafc;
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 700;
+            color: #475569;
+            border-bottom: 2px solid var(--border-light);
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .badge-critical, .badge-fail { background-color: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .badge-high { background-color: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+        .badge-medium, .badge-softfail { background-color: #fefce8; color: #ca8a04; border: 1px solid #fef08a; }
+        .badge-low, .badge-none { background-color: #f1f5f9; color: #64748b; }
+        .badge-pass { background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+        .auth-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .auth-card {
+            border: 1px solid var(--border-light);
+            padding: 16px;
+            border-radius: 8px;
+            background: #f8fafc;
+            text-align: center;
+        }
+        .auth-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .hop-list {
+            margin-bottom: 25px;
+        }
+        .hop-item {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+            padding: 10px 0;
+        }
+        .hop-num {
+            width: 70px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 13px;
+        }
+        .hop-details {
+            font-size: 13px;
+        }
+
+        .svg-container {
+            text-align: center;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 20px;
+            background: #ffffff;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">SENTINEL<span>MAIL</span></div>
+            <div class="report-meta">
+                <strong>Forensic Threat Analysis Report</strong><br>
+                Analyzed: 2026-08-25T06:17:21Z
+            </div>
+        </header>
+
+        <!-- Executive Verdict Banner -->
+        <div class="verdict-banner">
+            <div class="verdict-info">
+                <div class="verdict-title">CONFIRMED THREAT</div>
+                <div class="verdict-sub">Dempster–Shafer Multi-Engine Risk Score: 100 / 100</div>
+            </div>
+            <div class="score-badge">
+                <div class="score-val">100</div>
+                <div class="score-lbl">Risk Score</div>
+            </div>
+        </div>
+
+        <!-- Chain of Custody -->
+        <div class="custody-box">
+            <div class="custody-title">🛡️ Chain-of-Custody Metadata</div>
+            <div>File Name : phish_microsoft_security.eml (6176 bytes)</div>
+            <div>SHA-256   : <span class="hash-str">42986d12c8fb7a096d143fed391a51fc12e77caebcfc2bf94750cad15078171a</span></div>
+        </div>
+
+        <!-- Email Details -->
+        <div class="email-details-grid">
+            <div class="grid-lbl">Subject:</div>
+            <div><strong>⚠️ URGENT: Unusual Sign-in Activity — Verify Your Identity Now</strong></div>
+            <div class="grid-lbl">From:</div>
+            <div>&#34;Microsoft 365 Security Team&#34; &lt;security-alert@m1cr0soft-secure.xyz&gt;</div>
+            <div class="grid-lbl">Envelope:</div>
+            <div>m1cr0soft-secure.xyz</div>
+        </div>
+
+        <!-- Reasoning Path -->
+        <div class="section-title">Verdict Reasoning Path</div>
+        <ul class="reasoning-list">
+            
+            <li>Email authentication issues: SPF FAIL, DKIM FAIL, DMARC FAIL</li>
+            
+            <li>Spoofing flagged: From domain (m1cr0soft-secure.xyz) differs from Reply-To domain (protonmail.com)</li>
+            
+            <li>Spoofing flagged: Reply-To domain (protonmail.com) differs from Return-Path domain (m1cr0soft-secure.xyz)</li>
+            
+            <li>Spoofing flagged: Display name &#39;Microsoft 365 Security Team&#39; mentions &#39;microsoft&#39; but actual domain is &#39;m1cr0soft-secure.xyz&#39;</li>
+            
+            <li>Spoofing flagged: X-Spam-Score is 8.7 (threshold 5.0)</li>
+            
+            <li>NLP engine detected high phishing risk (1.00) with signals: urgency, threat, impersonation, url_risk</li>
+            
+            <li>Threat attribution match: Storm-0982 (Scattered Spider subgroup) (50% confidence)</li>
+            
+        </ul>
+
+        <!-- Engine Contributions -->
+        <div class="section-title">Engine Risk Contributions</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Engine</th>
+                    <th>Threat Belief</th>
+                    <th>Safe Belief</th>
+                    <th>Uncertainty</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>HeaderParser</strong></td>
+                    <td>90.0%</td>
+                    <td>0.0%</td>
+                    <td>10.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>NLPEngine</strong></td>
+                    <td>95.0%</td>
+                    <td>0.0%</td>
+                    <td>5.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>VisualEngine</strong></td>
+                    <td>0.0%</td>
+                    <td>20.0%</td>
+                    <td>80.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>AttributionGraph</strong></td>
+                    <td>47.5%</td>
+                    <td>0.0%</td>
+                    <td>52.5%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Authentication Results -->
+        <div class="section-title">Email Authentication Checks</div>
+        <div class="auth-grid">
+            <div class="auth-card">
+                <h3>SPF</h3>
+                <span class="badge badge-fail">FAIL</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">alert-noreply@m1cr0soft-secure.xyz</div>
+            </div>
+            <div class="auth-card">
+                <h3>DKIM</h3>
+                <span class="badge badge-fail">FAIL</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">No signing domain</div>
+            </div>
+            <div class="auth-card">
+                <h3>DMARC</h3>
+                <span class="badge badge-fail">FAIL</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">m1cr0soft-secure.xyz</div>
+            </div>
+        </div>
+
+        <!-- Relay Routing Path -->
+        <div class="section-title">Relay Hop Routing Chain</div>
+        <div class="hop-list">
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 1</div>
+                <div class="hop-details">
+                    <strong>localhost</strong> [10.255.0.3] &rarr; mail-out.m1cr0soft-secure.xyz
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTP | Timestamp: 2026-08-23T08:14:44+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 2</div>
+                <div class="hop-details">
+                    <strong>mail-out.m1cr0soft-secure.xyz</strong> [185.234.72.19] &rarr; mx2.targetcorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTP | Timestamp: 2026-08-23T08:14:46+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 3</div>
+                <div class="hop-details">
+                    <strong>mx2.targetcorp.com</strong> [198.51.100.50] &rarr; imap4.targetcorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: LMTP | Timestamp: 2026-08-23T08:14:47+00:00
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- NLP Flagged Phrases -->
+        <div class="section-title">NLP Flagged Threat Phrases</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 100px;">Severity</th>
+                    <th style="width: 180px;">Phrase</th>
+                    <th style="width: 120px;">Category</th>
+                    <th>Observed Context</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                    <tr>
+                        <td><span class="badge badge-critical">CRITICAL</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"FAILURE TO VERIFY"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…ls, files, and organizational data.  ⚠️ FAILURE TO VERIFY WITHIN 24 HOURS WILL RESULT IN PERMANEN…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"URGENT"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">⚠️ URGENT: Unusual Sign-in Activity — Verify Your…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"IMMEDIATELY"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…promised. You must verify your identity IMMEDIATELY to prevent unauthorized access to your…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"WITHIN 24 HOURS"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…anizational data.  ⚠️ FAILURE TO VERIFY WITHIN 24 HOURS WILL RESULT IN PERMANENT ACCOUNT SUSPEN…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"unauthorized access"</td>
+                        <td>THREAT</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…fy your identity IMMEDIATELY to prevent unauthorized access to your emails, files, and organization…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"compromised"</td>
+                        <td>THREAT</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…f this was NOT you, your account may be compromised. You must verify your identity IMMEDIAT…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Verify Your Identity"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">⚠️ URGENT: Unusual Sign-in Activity — Verify Your Identity Now Microsoft 365 Security Alert ======…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"verify
+your identity"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…ur account may be compromised. You must verify your identity IMMEDIATELY to prevent unauthorized acc…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Security Alert"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…Verify Your Identity Now Microsoft 365 Security Alert ============== Dear Valued Customer,  W…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"security notification"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…=alert-2026-08-23  This is an automated security notification. Please do not reply to this email. For…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Click here"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…ESULT IN PERMANENT ACCOUNT SUSPENSION.  Click here to verify your identity now: https://m1…</td>
+                    </tr>
+                    
+                
+            </tbody>
+        </table>
+
+        <!-- Attachments -->
+        <div class="section-title">Attachments & Visual Scans</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Content Type</th>
+                    <th>Size</th>
+                    <th>QR Codes</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    <tr><td colspan="4" class="text-center">No attachments.</td></tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Attribution Graph -->
+        <div class="section-title">Attribution & Infrastructure Relations</div>
+        <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
+            <strong>Threat Intelligence Attribution:</strong>
+            <p style="margin: 6px 0 0 0;">Analyzed 1 email(s) across individual components. Attributed to Storm-0982 (Scattered Spider subgroup) (50% confidence).</p>
+        </div>
+
+        <div class="svg-container">
+            <h3>Visual Entity Graph</h3>
+            <svg width="100%" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="20" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" /></marker></defs>
+<line x1="400.0" y1="260.0" x2="655.8" y2="333.2" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="486.5" y2="431.2" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="370.7" y2="439.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="260.0" y2="415.9" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="173.5" y2="365.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="126.1" y2="222.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="173.5" y2="154.2" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="587.4" y2="393.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="486.5" y2="88.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="655.8" y1="333.2" x2="587.4" y2="393.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="655.8" y1="333.2" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="587.4" y1="393.8" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="370.7" y1="439.0" x2="587.4" y2="393.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="260.0" y1="415.9" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="173.5" y1="365.8" x2="126.1" y2="297.4" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="173.5" y1="154.2" x2="126.1" y2="297.4" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="260.0" y1="104.1" x2="587.4" y2="393.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="370.7" y1="81.0" x2="486.5" y2="88.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="587.4" y1="126.2" x2="587.4" y2="393.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="655.8" y1="186.8" x2="587.4" y2="393.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<circle cx="400.0" cy="260.0" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2" />
+<text x="400.0" y="242.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Email: phish_microsoft_s...</text>
+<circle cx="655.8" cy="333.2" r="10" fill="#a855f7" stroke="#ffffff" stroke-width="2" />
+<text x="655.8" y="319.2" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Sender: security-alert@m...</text>
+<circle cx="587.4" cy="393.8" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="587.4" y="379.8" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: m1cr0soft-secure...</text>
+<circle cx="486.5" cy="431.2" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="486.5" y="417.2" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 10.255.0.3</text>
+<circle cx="370.7" cy="439.0" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="370.7" y="425.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mail-out.m1cr0sof...</text>
+<circle cx="260.0" cy="415.9" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="260.0" y="401.9" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 185.234.72.19</text>
+<circle cx="173.5" cy="365.8" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="173.5" y="351.8" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mx2.targetcorp.com</text>
+<circle cx="126.1" cy="297.4" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="126.1" y="283.4" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: targetcorp.com</text>
+<circle cx="126.1" cy="222.6" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="126.1" y="208.6" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 198.51.100.50</text>
+<circle cx="173.5" cy="154.2" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="173.5" y="140.2" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: imap4.targetcorp....</text>
+<circle cx="260.0" cy="104.1" r="10" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+<text x="260.0" y="90.1" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">URL (body)</text>
+<circle cx="370.7" cy="81.0" r="10" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+<text x="370.7" y="67.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">URL (body)</text>
+<circle cx="486.5" cy="88.8" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="486.5" y="74.8" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: img-prod-cms-rt-...</text>
+<circle cx="587.4" cy="126.2" r="10" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+<text x="587.4" y="112.2" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">URL (body)</text>
+<circle cx="655.8" cy="186.8" r="10" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+<text x="655.8" y="172.8" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">URL (body)</text>
+<circle cx="680.0" cy="260.0" r="18" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="680.0" y="238.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Threat Actor: Storm-0982...</text>
+</svg>
+        </div>
+    </div>
+</body>
+</html>

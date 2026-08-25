@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel-Mail Forensic Report — legit_quarterly_report.eml</title>
+    <style>
+        :root {
+            --primary-color: #16a34a;
+            --bg-color: #f0fdf4;
+            --border-color: #bbf7d0;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-light: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-light);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+        .report-meta {
+            text-align: right;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        /* Executive Verdict Banner */
+        .verdict-banner {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-left: 6px solid var(--primary-color);
+            padding: 24px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .verdict-title {
+            margin: 0 0 6px 0;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        .verdict-sub {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .score-badge {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 16px 28px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 90px;
+        }
+        .score-val {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .score-lbl {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Metadata & Chain of Custody */
+        .custody-box {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+        }
+        .custody-title {
+            font-family: sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hash-str {
+            color: #0f172a;
+            word-break: break-all;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 35px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .email-details-grid {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 10px 16px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .grid-lbl {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .reasoning-list {
+            padding-left: 20px;
+            margin: 0 0 25px 0;
+            font-size: 14px;
+        }
+        .reasoning-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Signal Contributions Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+        th {
+            background-color: #f8fafc;
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 700;
+            color: #475569;
+            border-bottom: 2px solid var(--border-light);
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .badge-critical, .badge-fail { background-color: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .badge-high { background-color: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+        .badge-medium, .badge-softfail { background-color: #fefce8; color: #ca8a04; border: 1px solid #fef08a; }
+        .badge-low, .badge-none { background-color: #f1f5f9; color: #64748b; }
+        .badge-pass { background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+        .auth-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .auth-card {
+            border: 1px solid var(--border-light);
+            padding: 16px;
+            border-radius: 8px;
+            background: #f8fafc;
+            text-align: center;
+        }
+        .auth-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .hop-list {
+            margin-bottom: 25px;
+        }
+        .hop-item {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+            padding: 10px 0;
+        }
+        .hop-num {
+            width: 70px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 13px;
+        }
+        .hop-details {
+            font-size: 13px;
+        }
+
+        .svg-container {
+            text-align: center;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 20px;
+            background: #ffffff;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">SENTINEL<span>MAIL</span></div>
+            <div class="report-meta">
+                <strong>Forensic Threat Analysis Report</strong><br>
+                Analyzed: 2026-08-25T06:17:21Z
+            </div>
+        </header>
+
+        <!-- Executive Verdict Banner -->
+        <div class="verdict-banner">
+            <div class="verdict-info">
+                <div class="verdict-title">SAFE</div>
+                <div class="verdict-sub">Dempster–Shafer Multi-Engine Risk Score: 0 / 100</div>
+            </div>
+            <div class="score-badge">
+                <div class="score-val">0</div>
+                <div class="score-lbl">Risk Score</div>
+            </div>
+        </div>
+
+        <!-- Chain of Custody -->
+        <div class="custody-box">
+            <div class="custody-title">🛡️ Chain-of-Custody Metadata</div>
+            <div>File Name : legit_quarterly_report.eml (6267 bytes)</div>
+            <div>SHA-256   : <span class="hash-str">65857563f1bfbbfba48991e81054a8b245d402318d9096a74019d4958099fca4</span></div>
+        </div>
+
+        <!-- Email Details -->
+        <div class="email-details-grid">
+            <div class="grid-lbl">Subject:</div>
+            <div><strong>Q3 2026 Financial Summary - Board Review Deck Attached</strong></div>
+            <div class="grid-lbl">From:</div>
+            <div>Sarah Chen &lt;s.chen@acmecorp.com&gt;</div>
+            <div class="grid-lbl">Envelope:</div>
+            <div>acmecorp.com</div>
+        </div>
+
+        <!-- Reasoning Path -->
+        <div class="section-title">Verdict Reasoning Path</div>
+        <ul class="reasoning-list">
+            
+            <li>Header validation: All SPF/DKIM/DMARC authentications passed, zero anomalies.</li>
+            
+            <li>NLP engine text analysis: standard/legitimate tone (0.05)</li>
+            
+        </ul>
+
+        <!-- Engine Contributions -->
+        <div class="section-title">Engine Risk Contributions</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Engine</th>
+                    <th>Threat Belief</th>
+                    <th>Safe Belief</th>
+                    <th>Uncertainty</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>HeaderParser</strong></td>
+                    <td>0.0%</td>
+                    <td>60.0%</td>
+                    <td>40.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>NLPEngine</strong></td>
+                    <td>0.0%</td>
+                    <td>47.6%</td>
+                    <td>52.4%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>VisualEngine</strong></td>
+                    <td>0.0%</td>
+                    <td>10.0%</td>
+                    <td>90.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>AttributionGraph</strong></td>
+                    <td>0.0%</td>
+                    <td>30.0%</td>
+                    <td>70.0%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Authentication Results -->
+        <div class="section-title">Email Authentication Checks</div>
+        <div class="auth-grid">
+            <div class="auth-card">
+                <h3>SPF</h3>
+                <span class="badge badge-pass">PASS</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">s.chen@acmecorp.com</div>
+            </div>
+            <div class="auth-card">
+                <h3>DKIM</h3>
+                <span class="badge badge-pass">PASS</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">acmecorp.com</div>
+            </div>
+            <div class="auth-card">
+                <h3>DMARC</h3>
+                <span class="badge badge-pass">PASS</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">acmecorp.com</div>
+            </div>
+        </div>
+
+        <!-- Relay Routing Path -->
+        <div class="section-title">Relay Hop Routing Chain</div>
+        <div class="hop-list">
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 1</div>
+                <div class="hop-details">
+                    <strong>[10.0.12.45]</strong> [10.0.12.45] &rarr; smtp.gmail.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTPSA | Timestamp: 2026-08-24T14:22:06+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 2</div>
+                <div class="hop-details">
+                    <strong>—</strong> [—] &rarr; mail-yw1-f182.google.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: SMTP | Timestamp: 2026-08-24T14:22:07+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 3</div>
+                <div class="hop-details">
+                    <strong>mail-yw1-f182.google.com</strong> [209.85.128.182] &rarr; mx1.acmecorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTPS | Timestamp: 2026-08-24T14:22:08+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 4</div>
+                <div class="hop-details">
+                    <strong>mx1.acmecorp.com</strong> [198.51.100.25] &rarr; mail-store.acmecorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: LMTP | Timestamp: 2026-08-24T14:22:09+00:00
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- NLP Flagged Phrases -->
+        <div class="section-title">NLP Flagged Threat Phrases</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 100px;">Severity</th>
+                    <th style="width: 180px;">Phrase</th>
+                    <th style="width: 120px;">Category</th>
+                    <th>Observed Context</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    <tr><td colspan="4" class="text-center">No suspicious phrases flagged.</td></tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Attachments -->
+        <div class="section-title">Attachments & Visual Scans</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Content Type</th>
+                    <th>Size</th>
+                    <th>QR Codes</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                    <tr>
+                        <td>ACME_Q3_2026_Board_Deck_v3.pdf</td>
+                        <td>application/pdf</td>
+                        <td>329 bytes</td>
+                        <td>
+                            
+                                None
+                            
+                        </td>
+                    </tr>
+                    
+                
+            </tbody>
+        </table>
+
+        <!-- Attribution Graph -->
+        <div class="section-title">Attribution & Infrastructure Relations</div>
+        <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
+            <strong>Threat Intelligence Attribution:</strong>
+            <p style="margin: 6px 0 0 0;">Analyzed 1 email(s) across individual components. No known threat-actor profiles matched.</p>
+        </div>
+
+        <div class="svg-container">
+            <h3>Visual Entity Graph</h3>
+            <svg width="100%" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="20" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" /></marker></defs>
+<line x1="400.0" y1="260.0" x2="664.8" y2="318.4" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="553.1" y2="410.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="621.0" y2="370.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="468.7" y2="434.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="376.9" y2="439.4" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="210.4" y2="392.4" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="123.8" y2="289.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="153.7" y2="174.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="210.4" y2="127.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="287.5" y2="95.2" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="376.9" y2="80.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="468.7" y2="85.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="553.1" y2="109.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="621.0" y2="149.4" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="664.8" y2="201.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="664.8" y1="318.4" x2="621.0" y2="370.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="553.1" y1="410.7" x2="621.0" y2="370.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="376.9" y1="439.4" x2="287.5" y2="424.8" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="210.4" y1="392.4" x2="153.7" y2="345.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="123.8" y1="289.6" x2="123.8" y2="230.4" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="210.4" y1="127.6" x2="621.0" y2="370.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="376.9" y1="80.6" x2="621.0" y2="370.6" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<circle cx="400.0" cy="260.0" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2" />
+<text x="400.0" y="242.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Email: legit_quarterly_r...</text>
+<circle cx="664.8" cy="318.4" r="10" fill="#a855f7" stroke="#ffffff" stroke-width="2" />
+<text x="664.8" y="304.4" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Sender: s.chen@acmecorp....</text>
+<circle cx="621.0" cy="370.6" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="621.0" y="356.6" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: acmecorp.com</text>
+<circle cx="553.1" cy="410.7" r="10" fill="#9333ea" stroke="#ffffff" stroke-width="2" />
+<text x="553.1" y="396.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Contact: finance-review@...</text>
+<circle cx="468.7" cy="434.5" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="468.7" y="420.5" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 10.0.12.45</text>
+<circle cx="376.9" cy="439.4" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="376.9" y="425.4" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: [10.0.12.45]</text>
+<circle cx="287.5" cy="424.8" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="287.5" y="410.8" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: 12.45]</text>
+<circle cx="210.4" cy="392.4" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="210.4" y="378.4" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: smtp.gmail.com</text>
+<circle cx="153.7" cy="345.7" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="153.7" y="331.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: gmail.com</text>
+<circle cx="123.8" cy="289.6" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="123.8" y="275.6" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mail-yw1-f182.goo...</text>
+<circle cx="123.8" cy="230.4" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="123.8" y="216.4" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: google.com</text>
+<circle cx="153.7" cy="174.3" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="153.7" y="160.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 209.85.128.182</text>
+<circle cx="210.4" cy="127.6" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="210.4" y="113.6" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mx1.acmecorp.com</text>
+<circle cx="287.5" cy="95.2" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="287.5" y="81.2" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 198.51.100.25</text>
+<circle cx="376.9" cy="80.6" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="376.9" y="66.6" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mail-store.acmeco...</text>
+<circle cx="468.7" cy="85.5" r="10" fill="#14b8a6" stroke="#ffffff" stroke-width="2" />
+<text x="468.7" y="71.5" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Attachment: ACME_Q3_2026...</text>
+<circle cx="553.1" cy="109.3" r="10" fill="#22c55e" stroke="#ffffff" stroke-width="2" />
+<text x="553.1" y="95.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">monetary_amount: $48</text>
+<circle cx="621.0" cy="149.4" r="10" fill="#22c55e" stroke="#ffffff" stroke-width="2" />
+<text x="621.0" y="135.4" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">monetary_amount: $7</text>
+<circle cx="664.8" cy="201.6" r="10" fill="#22c55e" stroke="#ffffff" stroke-width="2" />
+<text x="664.8" y="187.6" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">monetary_amount: $112</text>
+<circle cx="680.0" cy="260.0" r="10" fill="#22c55e" stroke="#ffffff" stroke-width="2" />
+<text x="680.0" y="246.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">monetary_amount: $0</text>
+</svg>
+        </div>
+    </div>
+</body>
+</html>

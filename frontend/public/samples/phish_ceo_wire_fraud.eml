@@ -1,0 +1,71 @@
+Received: from mx1.targetcorp.com (mx1.targetcorp.com [198.51.100.49])
+        by mailstore.targetcorp.com (Dovecot 2.3.20) with LMTP id nL2mRx8HyWZYTAAA
+        for <accounts.payable@targetcorp.com>;
+        Mon, 24 Aug 2026 11:38:22 +0000 (UTC)
+Received: from mail.deltahold1ngs.com (vmi927431.contaboserver.net [194.163.128.77])
+        by mx1.targetcorp.com (Postfix) with ESMTPS id 4WxLQp2bRMz5kNw
+        (TLS: TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
+        for <accounts.payable@targetcorp.com>;
+        Mon, 24 Aug 2026 11:38:21 +0000 (UTC)
+Received: from webmail.deltahold1ngs.com (unknown [10.0.0.2])
+        by mail.deltahold1ngs.com (Postfix) with ESMTPA id 1B2C34D005E
+        for <accounts.payable@targetcorp.com>;
+        Mon, 24 Aug 2026 11:38:19 +0000 (UTC)
+Authentication-Results: mx1.targetcorp.com;
+        spf=softfail (domain deltahold1ngs.com does not designate 194.163.128.77 as permitted sender) smtp.mailfrom=r.walsh@deltahold1ngs.com;
+        dkim=none (no DKIM signature found);
+        dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=deltahold1ngs.com
+X-Spam-Status: No, score=4.2 required=5.0 tests=BAYES_80,SPF_SOFTFAIL,
+        DKIM_NONE,REPLYTO_WITHOUT_TO_CC,FREEMAIL_REPLYTO,
+        MISSING_MID autolearn=no version=4.0.0
+X-Spam-Score: 4.2
+Return-Path: <r.walsh@deltahold1ngs.com>
+From: "Robert Walsh, CEO" <r.walsh@deltahold1ngs.com>
+Reply-To: rwalshdelta@protonmail.com
+To: accounts.payable@targetcorp.com
+Subject: Confidential - Wire Transfer Required Today
+Date: Mon, 24 Aug 2026 11:38:18 +0000
+Message-ID: <a1b2c3d4e5.deltahold1ngs.com@webmail>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Roundcube Webmail/1.6.5
+X-Priority: 1
+Importance: High
+
+Hi,
+
+I need you to process an urgent wire transfer today. This is
+time-sensitive and must be completed before 3 PM ET.
+
+I'm currently in a board meeting and unable to take calls, so please
+handle this via email only. Do NOT discuss this with anyone else on
+the team -- the transaction is part of a confidential acquisition that
+hasn't been announced yet. Legal has approved it but I need the funds
+moved before the counterparty's deadline.
+
+Details:
+
+  Beneficiary:    Meridian Consulting Partners AG
+  Bank:           Credit Suisse (Zurich)
+  IBAN:           CH93 0076 2011 6238 5295 7
+  SWIFT/BIC:      CRESCHZZ80A
+  Amount:         $187,500.00 USD
+  Reference:      INV-2026-DELTA-0847 / Project Horizon
+
+Please confirm once the transfer is initiated. I'll send the signed
+authorisation form as soon as I'm out of this meeting.
+
+This needs to stay between us until the public announcement next week.
+
+Regards,
+Robert Walsh
+Chief Executive Officer
+Delta Holdings International
+r.walsh@deltaholdings.com
+Tel: +1 (212) 555-0198
+
+CONFIDENTIALITY NOTICE: This email and any attachments are for the
+exclusive and confidential use of the intended recipient. If you are
+not the intended recipient, please do not read, distribute, or take
+action based on this message.

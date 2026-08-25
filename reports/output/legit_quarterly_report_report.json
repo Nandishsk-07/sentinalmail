@@ -1,0 +1,740 @@
+{
+  "version": "0.1.0",
+  "chain_of_custody": {
+    "sha256": "65857563f1bfbbfba48991e81054a8b245d402318d9096a74019d4958099fca4",
+    "file_name": "legit_quarterly_report.eml",
+    "file_size_bytes": 6267,
+    "analyzed_at_utc": "2026-08-25T06:17:21Z"
+  },
+  "verdict": {
+    "threat_score": 0,
+    "tier": "SAFE",
+    "reasoning": "Header validation: All SPF/DKIM/DMARC authentications passed, zero anomalies. | NLP engine text analysis: standard/legitimate tone (0.05)",
+    "signal_contributions": [
+      {
+        "engine": "HeaderParser",
+        "threat_belief": 0.0,
+        "safe_belief": 0.6,
+        "uncertainty": 0.4
+      },
+      {
+        "engine": "NLPEngine",
+        "threat_belief": 0.0,
+        "safe_belief": 0.476,
+        "uncertainty": 0.524
+      },
+      {
+        "engine": "VisualEngine",
+        "threat_belief": 0.0,
+        "safe_belief": 0.1,
+        "uncertainty": 0.9
+      },
+      {
+        "engine": "AttributionGraph",
+        "threat_belief": 0.0,
+        "safe_belief": 0.3,
+        "uncertainty": 0.7
+      }
+    ],
+    "raw_belief": {
+      "threat": 0.0,
+      "safe": 0.868,
+      "uncertainty": 0.132
+    }
+  },
+  "engine_results": {
+    "HeaderParser": {
+      "file": "legit_quarterly_report.eml",
+      "subject": "Q3 2026 Financial Summary - Board Review Deck Attached",
+      "from": "Sarah Chen <s.chen@acmecorp.com>",
+      "relay_path": [
+        {
+          "from_host": "[10.0.12.45]",
+          "from_ip": "10.0.12.45",
+          "by_host": "smtp.gmail.com",
+          "protocol": "ESMTPSA",
+          "timestamp": "Mon, 24 Aug 2026 07:22:06 -0700 (PDT)",
+          "timestamp_utc": "2026-08-24T14:22:06+00:00",
+          "hop": 1,
+          "delay_seconds": null
+        },
+        {
+          "from_host": null,
+          "from_ip": null,
+          "by_host": "mail-yw1-f182.google.com",
+          "protocol": "SMTP",
+          "timestamp": "Mon, 24 Aug 2026 07:22:07 -0700 (PDT)",
+          "timestamp_utc": "2026-08-24T14:22:07+00:00",
+          "hop": 2,
+          "delay_seconds": 1.0
+        },
+        {
+          "from_host": "mail-yw1-f182.google.com",
+          "from_ip": "209.85.128.182",
+          "by_host": "mx1.acmecorp.com",
+          "protocol": "ESMTPS",
+          "timestamp": "Mon, 24 Aug 2026 14:22:08 +0000 (UTC)",
+          "timestamp_utc": "2026-08-24T14:22:08+00:00",
+          "hop": 3,
+          "delay_seconds": 1.0
+        },
+        {
+          "from_host": "mx1.acmecorp.com",
+          "from_ip": "198.51.100.25",
+          "by_host": "mail-store.acmecorp.com",
+          "protocol": "LMTP",
+          "timestamp": "Mon, 24 Aug 2026 14:22:09 +0000 (UTC)",
+          "timestamp_utc": "2026-08-24T14:22:09+00:00",
+          "hop": 4,
+          "delay_seconds": 1.0
+        }
+      ],
+      "auth_results": {
+        "header": {
+          "spf": {
+            "verdict": "pass",
+            "detail": "google.com: domain of s.chen@acmecorp.com designates 209.85.128.182 as permitted sender",
+            "smtp_mailfrom": "s.chen@acmecorp.com"
+          },
+          "dkim": {
+            "verdict": "pass",
+            "detail": null,
+            "domain": "acmecorp.com",
+            "selector": "google"
+          },
+          "dmarc": {
+            "verdict": "pass",
+            "detail": "p=REJECT sp=REJECT dis=NONE",
+            "header_from": "acmecorp.com"
+          }
+        },
+        "envelope_domain": "acmecorp.com",
+        "header_from_domain": "acmecorp.com",
+        "live_dns": null
+      },
+      "spoofing_flags": [],
+      "geo_trace": [
+        {
+          "ip": "10.0.12.45",
+          "private": true
+        },
+        {
+          "ip": "209.85.128.182",
+          "geo": "disabled"
+        },
+        {
+          "ip": "198.51.100.25",
+          "private": true
+        }
+      ]
+    },
+    "NLPEngine": {
+      "phishing_score": {
+        "score": 0.0474,
+        "label": "safe",
+        "confidence": 0.0474,
+        "method": "heuristic",
+        "signals": {
+          "urgency": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "financial": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "secrecy": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "threat": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "impersonation": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "url_risk": {
+            "score": 0.0,
+            "suspicious_urls": 0
+          }
+        }
+      },
+      "ai_generated_score": {
+        "score": 0.0519,
+        "label": "likely human-written",
+        "type_token_ratio": 0.848,
+        "avg_word_length": 5.17,
+        "sentence_length_stdev": 13.44,
+        "method": "heuristic"
+      },
+      "extracted_entities": {
+        "financial": [
+          {
+            "type": "monetary_amount",
+            "value": "$48"
+          },
+          {
+            "type": "monetary_amount",
+            "value": "$7"
+          },
+          {
+            "type": "monetary_amount",
+            "value": "$112"
+          },
+          {
+            "type": "monetary_amount",
+            "value": "$0"
+          }
+        ],
+        "references": [],
+        "contact": [
+          {
+            "type": "phone",
+            "value": "+1 (415) 555-0142"
+          },
+          {
+            "type": "email",
+            "value": "finance-review@acmecorp.com"
+          },
+          {
+            "type": "email",
+            "value": "s.chen@acmecorp.com"
+          }
+        ],
+        "urls": [],
+        "crypto": [],
+        "named_entities": null
+      },
+      "flagged_phrases": []
+    },
+    "VisualEngine": {
+      "attachments": [
+        {
+          "filename": "ACME_Q3_2026_Board_Deck_v3.pdf",
+          "content_type": "application/pdf",
+          "size_bytes": 329,
+          "qr_codes": []
+        }
+      ],
+      "images_scanned": 0,
+      "qr_codes_found": 0,
+      "decoded_urls": [],
+      "url_risk_flags": [],
+      "source_file": "legit_quarterly_report.eml"
+    },
+    "AttributionGraph": {
+      "nodes": [
+        {
+          "id": "legit_quarterly_report.eml",
+          "type": "email",
+          "label": "Email: legit_quarterly_report.eml",
+          "subject": "Q3 2026 Financial Summary - Board Review Deck Attached",
+          "sender": "Sarah Chen <s.chen@acmecorp.com>"
+        },
+        {
+          "id": "s.chen@acmecorp.com",
+          "type": "sender",
+          "label": "Sender: s.chen@acmecorp.com"
+        },
+        {
+          "id": "acmecorp.com",
+          "type": "domain",
+          "label": "Domain: acmecorp.com"
+        },
+        {
+          "id": "finance-review@acmecorp.com",
+          "type": "contact_email",
+          "label": "Contact: finance-review@acmecorp.com"
+        },
+        {
+          "id": "10.0.12.45",
+          "type": "ip",
+          "label": "IP: 10.0.12.45"
+        },
+        {
+          "id": "host:[10.0.12.45]",
+          "type": "relay_host",
+          "label": "Relay: [10.0.12.45]",
+          "host": "[10.0.12.45]"
+        },
+        {
+          "id": "12.45]",
+          "type": "domain",
+          "label": "Domain: 12.45]"
+        },
+        {
+          "id": "host:smtp.gmail.com",
+          "type": "relay_host",
+          "label": "Relay: smtp.gmail.com",
+          "host": "smtp.gmail.com"
+        },
+        {
+          "id": "gmail.com",
+          "type": "domain",
+          "label": "Domain: gmail.com"
+        },
+        {
+          "id": "host:mail-yw1-f182.google.com",
+          "type": "relay_host",
+          "label": "Relay: mail-yw1-f182.google.com",
+          "host": "mail-yw1-f182.google.com"
+        },
+        {
+          "id": "google.com",
+          "type": "domain",
+          "label": "Domain: google.com"
+        },
+        {
+          "id": "209.85.128.182",
+          "type": "ip",
+          "label": "IP: 209.85.128.182"
+        },
+        {
+          "id": "host:mx1.acmecorp.com",
+          "type": "relay_host",
+          "label": "Relay: mx1.acmecorp.com",
+          "host": "mx1.acmecorp.com"
+        },
+        {
+          "id": "198.51.100.25",
+          "type": "ip",
+          "label": "IP: 198.51.100.25"
+        },
+        {
+          "id": "host:mail-store.acmecorp.com",
+          "type": "relay_host",
+          "label": "Relay: mail-store.acmecorp.com",
+          "host": "mail-store.acmecorp.com"
+        },
+        {
+          "id": "ACME_Q3_2026_Board_Deck_v3.pdf",
+          "type": "attachment",
+          "label": "Attachment: ACME_Q3_2026_Board_Deck_v3.pdf",
+          "content_type": "application/pdf"
+        },
+        {
+          "id": "$48",
+          "type": "financial",
+          "label": "monetary_amount: $48",
+          "subtype": "monetary_amount"
+        },
+        {
+          "id": "$7",
+          "type": "financial",
+          "label": "monetary_amount: $7",
+          "subtype": "monetary_amount"
+        },
+        {
+          "id": "$112",
+          "type": "financial",
+          "label": "monetary_amount: $112",
+          "subtype": "monetary_amount"
+        },
+        {
+          "id": "$0",
+          "type": "financial",
+          "label": "monetary_amount: $0",
+          "subtype": "monetary_amount"
+        }
+      ],
+      "edges": [
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "s.chen@acmecorp.com",
+          "relation": "has_sender"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "finance-review@acmecorp.com",
+          "relation": "mentions_email"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "acmecorp.com",
+          "relation": "has_reply_to_domain"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "10.0.12.45",
+          "relation": "routed_through",
+          "hop": 1
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "host:[10.0.12.45]",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "host:smtp.gmail.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "host:mail-yw1-f182.google.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "209.85.128.182",
+          "relation": "routed_through",
+          "hop": 3
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "host:mx1.acmecorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "198.51.100.25",
+          "relation": "routed_through",
+          "hop": 4
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "host:mail-store.acmecorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "ACME_Q3_2026_Board_Deck_v3.pdf",
+          "relation": "has_attachment"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "$48",
+          "relation": "mentions_financial"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "$7",
+          "relation": "mentions_financial"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "$112",
+          "relation": "mentions_financial"
+        },
+        {
+          "source": "legit_quarterly_report.eml",
+          "target": "$0",
+          "relation": "mentions_financial"
+        },
+        {
+          "source": "s.chen@acmecorp.com",
+          "target": "acmecorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "finance-review@acmecorp.com",
+          "target": "acmecorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:[10.0.12.45]",
+          "target": "12.45]",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:smtp.gmail.com",
+          "target": "gmail.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:mail-yw1-f182.google.com",
+          "target": "google.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:mx1.acmecorp.com",
+          "target": "acmecorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:mail-store.acmecorp.com",
+          "target": "acmecorp.com",
+          "relation": "belongs_to_domain"
+        }
+      ],
+      "json_data": {
+        "directed": true,
+        "multigraph": false,
+        "graph": {},
+        "nodes": [
+          {
+            "type": "email",
+            "label": "Email: legit_quarterly_report.eml",
+            "subject": "Q3 2026 Financial Summary - Board Review Deck Attached",
+            "sender": "Sarah Chen <s.chen@acmecorp.com>",
+            "id": "legit_quarterly_report.eml"
+          },
+          {
+            "type": "sender",
+            "label": "Sender: s.chen@acmecorp.com",
+            "id": "s.chen@acmecorp.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: acmecorp.com",
+            "id": "acmecorp.com"
+          },
+          {
+            "type": "contact_email",
+            "label": "Contact: finance-review@acmecorp.com",
+            "id": "finance-review@acmecorp.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 10.0.12.45",
+            "id": "10.0.12.45"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: [10.0.12.45]",
+            "host": "[10.0.12.45]",
+            "id": "host:[10.0.12.45]"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: 12.45]",
+            "id": "12.45]"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: smtp.gmail.com",
+            "host": "smtp.gmail.com",
+            "id": "host:smtp.gmail.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: gmail.com",
+            "id": "gmail.com"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mail-yw1-f182.google.com",
+            "host": "mail-yw1-f182.google.com",
+            "id": "host:mail-yw1-f182.google.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: google.com",
+            "id": "google.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 209.85.128.182",
+            "id": "209.85.128.182"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mx1.acmecorp.com",
+            "host": "mx1.acmecorp.com",
+            "id": "host:mx1.acmecorp.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 198.51.100.25",
+            "id": "198.51.100.25"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mail-store.acmecorp.com",
+            "host": "mail-store.acmecorp.com",
+            "id": "host:mail-store.acmecorp.com"
+          },
+          {
+            "type": "attachment",
+            "label": "Attachment: ACME_Q3_2026_Board_Deck_v3.pdf",
+            "content_type": "application/pdf",
+            "id": "ACME_Q3_2026_Board_Deck_v3.pdf"
+          },
+          {
+            "type": "financial",
+            "label": "monetary_amount: $48",
+            "subtype": "monetary_amount",
+            "id": "$48"
+          },
+          {
+            "type": "financial",
+            "label": "monetary_amount: $7",
+            "subtype": "monetary_amount",
+            "id": "$7"
+          },
+          {
+            "type": "financial",
+            "label": "monetary_amount: $112",
+            "subtype": "monetary_amount",
+            "id": "$112"
+          },
+          {
+            "type": "financial",
+            "label": "monetary_amount: $0",
+            "subtype": "monetary_amount",
+            "id": "$0"
+          }
+        ],
+        "edges": [
+          {
+            "relation": "has_sender",
+            "source": "legit_quarterly_report.eml",
+            "target": "s.chen@acmecorp.com"
+          },
+          {
+            "relation": "mentions_email",
+            "source": "legit_quarterly_report.eml",
+            "target": "finance-review@acmecorp.com"
+          },
+          {
+            "relation": "has_reply_to_domain",
+            "source": "legit_quarterly_report.eml",
+            "target": "acmecorp.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 1,
+            "source": "legit_quarterly_report.eml",
+            "target": "10.0.12.45"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_quarterly_report.eml",
+            "target": "host:[10.0.12.45]"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_quarterly_report.eml",
+            "target": "host:smtp.gmail.com"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_quarterly_report.eml",
+            "target": "host:mail-yw1-f182.google.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 3,
+            "source": "legit_quarterly_report.eml",
+            "target": "209.85.128.182"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_quarterly_report.eml",
+            "target": "host:mx1.acmecorp.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 4,
+            "source": "legit_quarterly_report.eml",
+            "target": "198.51.100.25"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_quarterly_report.eml",
+            "target": "host:mail-store.acmecorp.com"
+          },
+          {
+            "relation": "has_attachment",
+            "source": "legit_quarterly_report.eml",
+            "target": "ACME_Q3_2026_Board_Deck_v3.pdf"
+          },
+          {
+            "relation": "mentions_financial",
+            "source": "legit_quarterly_report.eml",
+            "target": "$48"
+          },
+          {
+            "relation": "mentions_financial",
+            "source": "legit_quarterly_report.eml",
+            "target": "$7"
+          },
+          {
+            "relation": "mentions_financial",
+            "source": "legit_quarterly_report.eml",
+            "target": "$112"
+          },
+          {
+            "relation": "mentions_financial",
+            "source": "legit_quarterly_report.eml",
+            "target": "$0"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "s.chen@acmecorp.com",
+            "target": "acmecorp.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "finance-review@acmecorp.com",
+            "target": "acmecorp.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:[10.0.12.45]",
+            "target": "12.45]"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:smtp.gmail.com",
+            "target": "gmail.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mail-yw1-f182.google.com",
+            "target": "google.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mx1.acmecorp.com",
+            "target": "acmecorp.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mail-store.acmecorp.com",
+            "target": "acmecorp.com"
+          }
+        ]
+      },
+      "campaigns": [
+        {
+          "campaign_id": "campaign_1",
+          "name": "Campaign Cluster 1",
+          "emails": [
+            "legit_quarterly_report.eml"
+          ],
+          "email_count": 1,
+          "total_nodes": 20,
+          "shared_ips": [
+            "10.0.12.45",
+            "209.85.128.182",
+            "198.51.100.25"
+          ],
+          "shared_hosts": [
+            "mail-store.acmecorp.com",
+            "[10.0.12.45]",
+            "smtp.gmail.com",
+            "mail-yw1-f182.google.com",
+            "mx1.acmecorp.com"
+          ],
+          "shared_domains": [
+            "12.45]",
+            "acmecorp.com",
+            "google.com"
+          ],
+          "urls": [],
+          "is_phishing": true
+        }
+      ],
+      "attributions": [],
+      "indicators": {
+        "blocklisted_domains": [],
+        "blocklisted_ips": [],
+        "total_malicious_nodes": 0
+      },
+      "summary": "Analyzed 1 email(s) across individual components. No known threat-actor profiles matched."
+    }
+  }
+}

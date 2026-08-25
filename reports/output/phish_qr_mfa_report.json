@@ -1,0 +1,818 @@
+{
+  "version": "0.1.0",
+  "chain_of_custody": {
+    "sha256": "edd62746d7cb734cc86d4ca0a4f81e8e43d56bf7598ed5a636dc05a63eb79f43",
+    "file_name": "phish_qr_mfa.eml",
+    "file_size_bytes": 7643,
+    "analyzed_at_utc": "2026-08-25T06:17:22Z"
+  },
+  "verdict": {
+    "threat_score": 100,
+    "tier": "CONFIRMED_THREAT",
+    "reasoning": "Email authentication issues: SPF FAIL, DKIM NONE, DMARC FAIL | Spoofing flagged: From domain (company-1t-support.net) differs from Reply-To domain (protonmail.com) | Spoofing flagged: Reply-To domain (protonmail.com) differs from Return-Path domain (company-1t-support.net) | Spoofing flagged: X-Spam-Score is 7.4 (threshold 5.0) | NLP engine detected high phishing risk (0.99) with signals: threat, impersonation | Visual engine flagged embedded QR code linking to risky URL: https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2 (domain_mismatch) | Threat attribution match: Storm-0982 (Scattered Spider subgroup) (50% confidence)",
+    "signal_contributions": [
+      {
+        "engine": "HeaderParser",
+        "threat_belief": 0.9,
+        "safe_belief": 0.0,
+        "uncertainty": 0.1
+      },
+      {
+        "engine": "NLPEngine",
+        "threat_belief": 0.95,
+        "safe_belief": 0.0,
+        "uncertainty": 0.05
+      },
+      {
+        "engine": "VisualEngine",
+        "threat_belief": 0.72,
+        "safe_belief": 0.0,
+        "uncertainty": 0.28
+      },
+      {
+        "engine": "AttributionGraph",
+        "threat_belief": 0.475,
+        "safe_belief": 0.0,
+        "uncertainty": 0.525
+      }
+    ],
+    "raw_belief": {
+      "threat": 0.9993,
+      "safe": 0.0,
+      "uncertainty": 0.0007
+    }
+  },
+  "engine_results": {
+    "HeaderParser": {
+      "file": "phish_qr_mfa.eml",
+      "subject": "\ud83d\udd10 Action Required: Scan QR Code to Update Multi-Factor Authentication",
+      "from": "\"IT Helpdesk - TargetCorp\" <helpdesk@company-1t-support.net>",
+      "relay_path": [
+        {
+          "from_host": "localhost",
+          "from_ip": "10.10.0.5",
+          "by_host": "smtp-relay.company-1t-support.net",
+          "protocol": "ESMTP",
+          "timestamp": "Sat, 22 Aug 2026 19:07:30 +0000 (UTC)",
+          "timestamp_utc": "2026-08-22T19:07:30+00:00",
+          "hop": 1,
+          "delay_seconds": null
+        },
+        {
+          "from_host": "smtp-relay.company-1t-support.net",
+          "from_ip": "153.92.0.44",
+          "by_host": "mx3.targetcorp.com",
+          "protocol": "ESMTP",
+          "timestamp": "Sat, 22 Aug 2026 19:07:32 +0000 (UTC)",
+          "timestamp_utc": "2026-08-22T19:07:32+00:00",
+          "hop": 2,
+          "delay_seconds": 2.0
+        },
+        {
+          "from_host": "mx3.targetcorp.com",
+          "from_ip": "198.51.100.51",
+          "by_host": "mailstore.targetcorp.com",
+          "protocol": "LMTP",
+          "timestamp": "Sat, 22 Aug 2026 19:07:33 +0000 (UTC)",
+          "timestamp_utc": "2026-08-22T19:07:33+00:00",
+          "hop": 3,
+          "delay_seconds": 1.0
+        }
+      ],
+      "auth_results": {
+        "header": {
+          "spf": {
+            "verdict": "fail",
+            "detail": "domain company-1t-support.net does not designate 153.92.0.44 as permitted sender",
+            "smtp_mailfrom": "helpdesk@company-1t-support.net"
+          },
+          "dkim": {
+            "verdict": "none",
+            "detail": "no DKIM signature",
+            "domain": null,
+            "selector": null
+          },
+          "dmarc": {
+            "verdict": "fail",
+            "detail": "p=NONE dis=NONE",
+            "header_from": "company-1t-support.net"
+          }
+        },
+        "envelope_domain": "company-1t-support.net",
+        "header_from_domain": "company-1t-support.net",
+        "live_dns": null
+      },
+      "spoofing_flags": [
+        {
+          "type": "domain_mismatch",
+          "fields": [
+            "From",
+            "Reply-To"
+          ],
+          "values": [
+            "company-1t-support.net",
+            "protonmail.com"
+          ],
+          "severity": "high",
+          "description": "From domain (company-1t-support.net) differs from Reply-To domain (protonmail.com)"
+        },
+        {
+          "type": "domain_mismatch",
+          "fields": [
+            "Reply-To",
+            "Return-Path"
+          ],
+          "values": [
+            "protonmail.com",
+            "company-1t-support.net"
+          ],
+          "severity": "medium",
+          "description": "Reply-To domain (protonmail.com) differs from Return-Path domain (company-1t-support.net)"
+        },
+        {
+          "type": "high_spam_score",
+          "score": 7.4,
+          "severity": "high",
+          "description": "X-Spam-Score is 7.4 (threshold 5.0)"
+        }
+      ],
+      "geo_trace": [
+        {
+          "ip": "10.10.0.5",
+          "private": true
+        },
+        {
+          "ip": "153.92.0.44",
+          "geo": "disabled"
+        },
+        {
+          "ip": "198.51.100.51",
+          "private": true
+        }
+      ]
+    },
+    "NLPEngine": {
+      "phishing_score": {
+        "score": 0.9933,
+        "label": "phishing",
+        "confidence": 0.9933,
+        "method": "heuristic",
+        "signals": {
+          "urgency": {
+            "score": 0.245,
+            "matches": 1
+          },
+          "financial": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "secrecy": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "threat": {
+            "score": 0.462,
+            "matches": 1
+          },
+          "impersonation": {
+            "score": 0.978,
+            "matches": 5
+          },
+          "url_risk": {
+            "score": 0.0,
+            "suspicious_urls": 0
+          }
+        }
+      },
+      "ai_generated_score": {
+        "score": 0.2156,
+        "label": "likely human-written",
+        "type_token_ratio": 0.783,
+        "avg_word_length": 6.53,
+        "sentence_length_stdev": 8.53,
+        "method": "heuristic"
+      },
+      "extracted_entities": {
+        "financial": [],
+        "references": [],
+        "contact": [
+          {
+            "type": "email",
+            "value": "helpdesk@targetcorp.com"
+          }
+        ],
+        "urls": [
+          {
+            "url": "https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+            "risk_score": 0.0,
+            "suspicious": false
+          },
+          {
+            "url": "https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2",
+            "risk_score": 0.0,
+            "suspicious": false
+          }
+        ],
+        "crypto": [],
+        "named_entities": null
+      },
+      "flagged_phrases": [
+        {
+          "phrase": "lose access",
+          "category": "threat",
+          "severity": "high",
+          "context": "\u2026LOCKED for security purposes. You will lose access to email, VPN, and all internal systems\u2026"
+        },
+        {
+          "phrase": "verify your identity",
+          "category": "impersonation",
+          "severity": "high",
+          "context": "\u20263. Follow the on-screen instructions to verify your identity.  IMPORTANT: Accounts that have not com\u2026"
+        },
+        {
+          "phrase": "Scan QR Code",
+          "category": "impersonation",
+          "severity": "high",
+          "context": "\ud83d\udd10 Action Required: Scan QR Code to Update Multi-Factor Authentication A\u2026"
+        },
+        {
+          "phrase": "Scan the QR code",
+          "category": "impersonation",
+          "severity": "high",
+          "context": "\u20261. Open your phone's camera app.   2. Scan the QR code in the HTML version of this email.   3.\u2026"
+        },
+        {
+          "phrase": "deadline",
+          "category": "urgency",
+          "severity": "medium",
+          "context": "\u2026e not completed MFA re-enrolment by the deadline will be temporarily LOCKED for security\u2026"
+        },
+        {
+          "phrase": "IT Helpdesk",
+          "category": "impersonation",
+          "severity": "medium",
+          "context": "\u20269f3e2  Thank you for your cooperation.  IT Helpdesk TargetCorp Information Security helpdes\u2026"
+        }
+      ]
+    },
+    "VisualEngine": {
+      "attachments": [
+        {
+          "filename": "mfa_qr_code.png",
+          "content_type": "image/png",
+          "size_bytes": 1169,
+          "qr_codes": [
+            {
+              "data": "https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+              "type": "QRCODE",
+              "is_url": true,
+              "source_file": "mfa_qr_code.png",
+              "decoder": "opencv",
+              "polygon": [
+                [
+                  40.0,
+                  40.0
+                ],
+                [
+                  409.0,
+                  40.0
+                ],
+                [
+                  409.0000305175781,
+                  409.0000305175781
+                ],
+                [
+                  40.0,
+                  409.0
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "images_scanned": 1,
+      "qr_codes_found": 1,
+      "decoded_urls": [
+        "https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2"
+      ],
+      "url_risk_flags": [
+        {
+          "url": "https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+          "hostname": "company-1t-support.net",
+          "risk_score": 0.55,
+          "risk_level": "medium",
+          "flags": [
+            {
+              "flag": "domain_mismatch",
+              "detail": "QR URL domain 'company-1t-support.net' does not match sender domain 'globallogistics.io'",
+              "severity": "high"
+            },
+            {
+              "flag": "phishy_path_keywords",
+              "detail": "Path/query contains suspicious keywords: token, mfa, enroll",
+              "severity": "medium"
+            }
+          ]
+        }
+      ],
+      "source_file": "phish_qr_mfa.eml"
+    },
+    "AttributionGraph": {
+      "nodes": [
+        {
+          "id": "phish_qr_mfa.eml",
+          "type": "email",
+          "label": "Email: phish_qr_mfa.eml",
+          "subject": "\ud83d\udd10 Action Required: Scan QR Code to Update Multi-Factor Authentication",
+          "sender": "\"IT Helpdesk - TargetCorp\" <helpdesk@company-1t-support.net>"
+        },
+        {
+          "id": "helpdesk@company-1t-support.net",
+          "type": "sender",
+          "label": "Sender: helpdesk@company-1t-support.net"
+        },
+        {
+          "id": "company-1t-support.net",
+          "type": "domain",
+          "label": "Domain: company-1t-support.net"
+        },
+        {
+          "id": "helpdesk@targetcorp.com",
+          "type": "contact_email",
+          "label": "Contact: helpdesk@targetcorp.com"
+        },
+        {
+          "id": "targetcorp.com",
+          "type": "domain",
+          "label": "Domain: targetcorp.com"
+        },
+        {
+          "id": "10.10.0.5",
+          "type": "ip",
+          "label": "IP: 10.10.0.5"
+        },
+        {
+          "id": "host:smtp-relay.company-1t-support.net",
+          "type": "relay_host",
+          "label": "Relay: smtp-relay.company-1t-support.net",
+          "host": "smtp-relay.company-1t-support.net"
+        },
+        {
+          "id": "153.92.0.44",
+          "type": "ip",
+          "label": "IP: 153.92.0.44"
+        },
+        {
+          "id": "host:mx3.targetcorp.com",
+          "type": "relay_host",
+          "label": "Relay: mx3.targetcorp.com",
+          "host": "mx3.targetcorp.com"
+        },
+        {
+          "id": "198.51.100.51",
+          "type": "ip",
+          "label": "IP: 198.51.100.51"
+        },
+        {
+          "id": "host:mailstore.targetcorp.com",
+          "type": "relay_host",
+          "label": "Relay: mailstore.targetcorp.com",
+          "host": "mailstore.targetcorp.com"
+        },
+        {
+          "id": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+          "type": "url",
+          "label": "URL (qr_code)",
+          "url": "https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2"
+        },
+        {
+          "id": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2",
+          "type": "url",
+          "label": "URL (body)",
+          "url": "https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2"
+        },
+        {
+          "id": "mfa_qr_code.png",
+          "type": "attachment",
+          "label": "Attachment: mfa_qr_code.png",
+          "content_type": "image/png"
+        },
+        {
+          "id": "APT-Storm-0982",
+          "type": "actor",
+          "label": "Threat Actor: Storm-0982 (Scattered Spider subgroup)",
+          "details": {
+            "actor_id": "APT-Storm-0982",
+            "actor_name": "Storm-0982 (Scattered Spider subgroup)",
+            "actor_type": "Cybercrime / Access Broker",
+            "tactics": "QR-phishing (quishing), MFA fatigue/bypass, Microsoft 365 credential harvesting.",
+            "severity": "critical",
+            "confidence": 50,
+            "matched_indicators": [
+              "helpdesk@company-1t-support.net",
+              "company-1t-support.net",
+              "153.92.0.44"
+            ]
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "helpdesk@company-1t-support.net",
+          "relation": "has_sender"
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "helpdesk@targetcorp.com",
+          "relation": "mentions_email"
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "targetcorp.com",
+          "relation": "has_reply_to_domain"
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "10.10.0.5",
+          "relation": "routed_through",
+          "hop": 1
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "host:smtp-relay.company-1t-support.net",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "153.92.0.44",
+          "relation": "routed_through",
+          "hop": 2
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "host:mx3.targetcorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "198.51.100.51",
+          "relation": "routed_through",
+          "hop": 3
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "host:mailstore.targetcorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "qr_code",
+          "target": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+          "relation": "contains_url"
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "company-1t-support.net",
+          "relation": "uses_domain"
+        },
+        {
+          "source": "body",
+          "target": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2",
+          "relation": "contains_url"
+        },
+        {
+          "source": "phish_qr_mfa.eml",
+          "target": "mfa_qr_code.png",
+          "relation": "has_attachment"
+        },
+        {
+          "source": "helpdesk@company-1t-support.net",
+          "target": "company-1t-support.net",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "helpdesk@company-1t-support.net",
+          "target": "APT-Storm-0982",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "company-1t-support.net",
+          "target": "APT-Storm-0982",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "helpdesk@targetcorp.com",
+          "target": "targetcorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:smtp-relay.company-1t-support.net",
+          "target": "company-1t-support.net",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "153.92.0.44",
+          "target": "APT-Storm-0982",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "host:mx3.targetcorp.com",
+          "target": "targetcorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:mailstore.targetcorp.com",
+          "target": "targetcorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+          "target": "company-1t-support.net",
+          "relation": "resolves_to_domain"
+        },
+        {
+          "source": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2",
+          "target": "company-1t-support.net",
+          "relation": "resolves_to_domain"
+        }
+      ],
+      "json_data": {
+        "directed": true,
+        "multigraph": false,
+        "graph": {},
+        "nodes": [
+          {
+            "type": "email",
+            "label": "Email: phish_qr_mfa.eml",
+            "subject": "\ud83d\udd10 Action Required: Scan QR Code to Update Multi-Factor Authentication",
+            "sender": "\"IT Helpdesk - TargetCorp\" <helpdesk@company-1t-support.net>",
+            "id": "phish_qr_mfa.eml"
+          },
+          {
+            "type": "sender",
+            "label": "Sender: helpdesk@company-1t-support.net",
+            "id": "helpdesk@company-1t-support.net"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: company-1t-support.net",
+            "id": "company-1t-support.net"
+          },
+          {
+            "type": "contact_email",
+            "label": "Contact: helpdesk@targetcorp.com",
+            "id": "helpdesk@targetcorp.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: targetcorp.com",
+            "id": "targetcorp.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 10.10.0.5",
+            "id": "10.10.0.5"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: smtp-relay.company-1t-support.net",
+            "host": "smtp-relay.company-1t-support.net",
+            "id": "host:smtp-relay.company-1t-support.net"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 153.92.0.44",
+            "id": "153.92.0.44"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mx3.targetcorp.com",
+            "host": "mx3.targetcorp.com",
+            "id": "host:mx3.targetcorp.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 198.51.100.51",
+            "id": "198.51.100.51"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mailstore.targetcorp.com",
+            "host": "mailstore.targetcorp.com",
+            "id": "host:mailstore.targetcorp.com"
+          },
+          {
+            "type": "url",
+            "label": "URL (qr_code)",
+            "url": "https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+            "id": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2"
+          },
+          {
+            "type": "url",
+            "label": "URL (body)",
+            "url": "https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2",
+            "id": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2"
+          },
+          {
+            "type": "attachment",
+            "label": "Attachment: mfa_qr_code.png",
+            "content_type": "image/png",
+            "id": "mfa_qr_code.png"
+          },
+          {
+            "type": "actor",
+            "label": "Threat Actor: Storm-0982 (Scattered Spider subgroup)",
+            "details": {
+              "actor_id": "APT-Storm-0982",
+              "actor_name": "Storm-0982 (Scattered Spider subgroup)",
+              "actor_type": "Cybercrime / Access Broker",
+              "tactics": "QR-phishing (quishing), MFA fatigue/bypass, Microsoft 365 credential harvesting.",
+              "severity": "critical",
+              "confidence": 50,
+              "matched_indicators": [
+                "helpdesk@company-1t-support.net",
+                "company-1t-support.net",
+                "153.92.0.44"
+              ]
+            },
+            "id": "APT-Storm-0982"
+          }
+        ],
+        "edges": [
+          {
+            "relation": "has_sender",
+            "source": "phish_qr_mfa.eml",
+            "target": "helpdesk@company-1t-support.net"
+          },
+          {
+            "relation": "mentions_email",
+            "source": "phish_qr_mfa.eml",
+            "target": "helpdesk@targetcorp.com"
+          },
+          {
+            "relation": "has_reply_to_domain",
+            "source": "phish_qr_mfa.eml",
+            "target": "targetcorp.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 1,
+            "source": "phish_qr_mfa.eml",
+            "target": "10.10.0.5"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_qr_mfa.eml",
+            "target": "host:smtp-relay.company-1t-support.net"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 2,
+            "source": "phish_qr_mfa.eml",
+            "target": "153.92.0.44"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_qr_mfa.eml",
+            "target": "host:mx3.targetcorp.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 3,
+            "source": "phish_qr_mfa.eml",
+            "target": "198.51.100.51"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_qr_mfa.eml",
+            "target": "host:mailstore.targetcorp.com"
+          },
+          {
+            "relation": "contains_url",
+            "source": "phish_qr_mfa.eml",
+            "target": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2"
+          },
+          {
+            "relation": "uses_domain",
+            "source": "phish_qr_mfa.eml",
+            "target": "company-1t-support.net"
+          },
+          {
+            "relation": "contains_url",
+            "source": "phish_qr_mfa.eml",
+            "target": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2"
+          },
+          {
+            "relation": "has_attachment",
+            "source": "phish_qr_mfa.eml",
+            "target": "mfa_qr_code.png"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "helpdesk@company-1t-support.net",
+            "target": "company-1t-support.net"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "helpdesk@company-1t-support.net",
+            "target": "APT-Storm-0982"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "company-1t-support.net",
+            "target": "APT-Storm-0982"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "helpdesk@targetcorp.com",
+            "target": "targetcorp.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:smtp-relay.company-1t-support.net",
+            "target": "company-1t-support.net"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "153.92.0.44",
+            "target": "APT-Storm-0982"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mx3.targetcorp.com",
+            "target": "targetcorp.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mailstore.targetcorp.com",
+            "target": "targetcorp.com"
+          },
+          {
+            "relation": "resolves_to_domain",
+            "source": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+            "target": "company-1t-support.net"
+          },
+          {
+            "relation": "resolves_to_domain",
+            "source": "url:https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2",
+            "target": "company-1t-support.net"
+          }
+        ]
+      },
+      "campaigns": [
+        {
+          "campaign_id": "campaign_1",
+          "name": "Campaign Cluster 1",
+          "emails": [
+            "phish_qr_mfa.eml"
+          ],
+          "email_count": 1,
+          "total_nodes": 14,
+          "shared_ips": [
+            "198.51.100.51",
+            "153.92.0.44",
+            "10.10.0.5"
+          ],
+          "shared_hosts": [
+            "smtp-relay.company-1t-support.net",
+            "mx3.targetcorp.com",
+            "mailstore.targetcorp.com"
+          ],
+          "shared_domains": [
+            "company-1t-support.net"
+          ],
+          "urls": [
+            "https://company-1t-support.net/mfa/enroll?user=all-staff&token=a9f3e2",
+            "https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2"
+          ],
+          "is_phishing": true
+        }
+      ],
+      "attributions": [
+        {
+          "actor_id": "APT-Storm-0982",
+          "actor_name": "Storm-0982 (Scattered Spider subgroup)",
+          "actor_type": "Cybercrime / Access Broker",
+          "tactics": "QR-phishing (quishing), MFA fatigue/bypass, Microsoft 365 credential harvesting.",
+          "severity": "critical",
+          "confidence": 50,
+          "matched_indicators": [
+            "helpdesk@company-1t-support.net",
+            "company-1t-support.net",
+            "153.92.0.44"
+          ]
+        }
+      ],
+      "indicators": {
+        "blocklisted_domains": [
+          "company-1t-support.net"
+        ],
+        "blocklisted_ips": [
+          "153.92.0.44"
+        ],
+        "total_malicious_nodes": 3
+      },
+      "summary": "Analyzed 1 email(s) across individual components. Attributed to Storm-0982 (Scattered Spider subgroup) (50% confidence)."
+    }
+  }
+}

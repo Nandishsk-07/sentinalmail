@@ -36,21 +36,21 @@ try:
     import numpy as np
 
     _HAS_CV2 = True
-except ImportError:
+except Exception:
     pass
 
 try:
     from pyzbar.pyzbar import decode as pyzbar_decode, ZBarSymbol
 
     _HAS_PYZBAR = True
-except ImportError:
+except Exception:
     pass
 
 try:
     from PIL import Image
 
     _HAS_PIL = True
-except ImportError:
+except Exception:
     pass
 
 # ── Constants ──────────────────────────────────────────────────────────

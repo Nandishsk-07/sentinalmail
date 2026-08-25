@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel-Mail Forensic Report — phish_qr_mfa.eml</title>
+    <style>
+        :root {
+            --primary-color: #dc2626;
+            --bg-color: #fef2f2;
+            --border-color: #fecaca;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-light: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-light);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+        .report-meta {
+            text-align: right;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        /* Executive Verdict Banner */
+        .verdict-banner {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-left: 6px solid var(--primary-color);
+            padding: 24px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .verdict-title {
+            margin: 0 0 6px 0;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        .verdict-sub {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .score-badge {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 16px 28px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 90px;
+        }
+        .score-val {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .score-lbl {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Metadata & Chain of Custody */
+        .custody-box {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+        }
+        .custody-title {
+            font-family: sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hash-str {
+            color: #0f172a;
+            word-break: break-all;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 35px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .email-details-grid {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 10px 16px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .grid-lbl {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .reasoning-list {
+            padding-left: 20px;
+            margin: 0 0 25px 0;
+            font-size: 14px;
+        }
+        .reasoning-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Signal Contributions Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+        th {
+            background-color: #f8fafc;
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 700;
+            color: #475569;
+            border-bottom: 2px solid var(--border-light);
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .badge-critical, .badge-fail { background-color: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .badge-high { background-color: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+        .badge-medium, .badge-softfail { background-color: #fefce8; color: #ca8a04; border: 1px solid #fef08a; }
+        .badge-low, .badge-none { background-color: #f1f5f9; color: #64748b; }
+        .badge-pass { background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+        .auth-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .auth-card {
+            border: 1px solid var(--border-light);
+            padding: 16px;
+            border-radius: 8px;
+            background: #f8fafc;
+            text-align: center;
+        }
+        .auth-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .hop-list {
+            margin-bottom: 25px;
+        }
+        .hop-item {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+            padding: 10px 0;
+        }
+        .hop-num {
+            width: 70px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 13px;
+        }
+        .hop-details {
+            font-size: 13px;
+        }
+
+        .svg-container {
+            text-align: center;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 20px;
+            background: #ffffff;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">SENTINEL<span>MAIL</span></div>
+            <div class="report-meta">
+                <strong>Forensic Threat Analysis Report</strong><br>
+                Analyzed: 2026-08-25T06:17:22Z
+            </div>
+        </header>
+
+        <!-- Executive Verdict Banner -->
+        <div class="verdict-banner">
+            <div class="verdict-info">
+                <div class="verdict-title">CONFIRMED THREAT</div>
+                <div class="verdict-sub">Dempster–Shafer Multi-Engine Risk Score: 100 / 100</div>
+            </div>
+            <div class="score-badge">
+                <div class="score-val">100</div>
+                <div class="score-lbl">Risk Score</div>
+            </div>
+        </div>
+
+        <!-- Chain of Custody -->
+        <div class="custody-box">
+            <div class="custody-title">🛡️ Chain-of-Custody Metadata</div>
+            <div>File Name : phish_qr_mfa.eml (7643 bytes)</div>
+            <div>SHA-256   : <span class="hash-str">edd62746d7cb734cc86d4ca0a4f81e8e43d56bf7598ed5a636dc05a63eb79f43</span></div>
+        </div>
+
+        <!-- Email Details -->
+        <div class="email-details-grid">
+            <div class="grid-lbl">Subject:</div>
+            <div><strong>🔐 Action Required: Scan QR Code to Update Multi-Factor Authentication</strong></div>
+            <div class="grid-lbl">From:</div>
+            <div>&#34;IT Helpdesk - TargetCorp&#34; &lt;helpdesk@company-1t-support.net&gt;</div>
+            <div class="grid-lbl">Envelope:</div>
+            <div>company-1t-support.net</div>
+        </div>
+
+        <!-- Reasoning Path -->
+        <div class="section-title">Verdict Reasoning Path</div>
+        <ul class="reasoning-list">
+            
+            <li>Email authentication issues: SPF FAIL, DKIM NONE, DMARC FAIL</li>
+            
+            <li>Spoofing flagged: From domain (company-1t-support.net) differs from Reply-To domain (protonmail.com)</li>
+            
+            <li>Spoofing flagged: Reply-To domain (protonmail.com) differs from Return-Path domain (company-1t-support.net)</li>
+            
+            <li>Spoofing flagged: X-Spam-Score is 7.4 (threshold 5.0)</li>
+            
+            <li>NLP engine detected high phishing risk (0.99) with signals: threat, impersonation</li>
+            
+            <li>Visual engine flagged embedded QR code linking to risky URL: https://company-1t-support.net/mfa/enroll?user=all-staff&amp;token=a9f3e2 (domain_mismatch)</li>
+            
+            <li>Threat attribution match: Storm-0982 (Scattered Spider subgroup) (50% confidence)</li>
+            
+        </ul>
+
+        <!-- Engine Contributions -->
+        <div class="section-title">Engine Risk Contributions</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Engine</th>
+                    <th>Threat Belief</th>
+                    <th>Safe Belief</th>
+                    <th>Uncertainty</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>HeaderParser</strong></td>
+                    <td>90.0%</td>
+                    <td>0.0%</td>
+                    <td>10.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>NLPEngine</strong></td>
+                    <td>95.0%</td>
+                    <td>0.0%</td>
+                    <td>5.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>VisualEngine</strong></td>
+                    <td>72.0%</td>
+                    <td>0.0%</td>
+                    <td>28.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>AttributionGraph</strong></td>
+                    <td>47.5%</td>
+                    <td>0.0%</td>
+                    <td>52.5%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Authentication Results -->
+        <div class="section-title">Email Authentication Checks</div>
+        <div class="auth-grid">
+            <div class="auth-card">
+                <h3>SPF</h3>
+                <span class="badge badge-fail">FAIL</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">helpdesk@company-1t-support.net</div>
+            </div>
+            <div class="auth-card">
+                <h3>DKIM</h3>
+                <span class="badge badge-none">NONE</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">No signing domain</div>
+            </div>
+            <div class="auth-card">
+                <h3>DMARC</h3>
+                <span class="badge badge-fail">FAIL</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">company-1t-support.net</div>
+            </div>
+        </div>
+
+        <!-- Relay Routing Path -->
+        <div class="section-title">Relay Hop Routing Chain</div>
+        <div class="hop-list">
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 1</div>
+                <div class="hop-details">
+                    <strong>localhost</strong> [10.10.0.5] &rarr; smtp-relay.company-1t-support.net
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTP | Timestamp: 2026-08-22T19:07:30+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 2</div>
+                <div class="hop-details">
+                    <strong>smtp-relay.company-1t-support.net</strong> [153.92.0.44] &rarr; mx3.targetcorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTP | Timestamp: 2026-08-22T19:07:32+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 3</div>
+                <div class="hop-details">
+                    <strong>mx3.targetcorp.com</strong> [198.51.100.51] &rarr; mailstore.targetcorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: LMTP | Timestamp: 2026-08-22T19:07:33+00:00
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- NLP Flagged Phrases -->
+        <div class="section-title">NLP Flagged Threat Phrases</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 100px;">Severity</th>
+                    <th style="width: 180px;">Phrase</th>
+                    <th style="width: 120px;">Category</th>
+                    <th>Observed Context</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"lose access"</td>
+                        <td>THREAT</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…LOCKED for security purposes. You will lose access to email, VPN, and all internal systems…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"verify your identity"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…3. Follow the on-screen instructions to verify your identity.  IMPORTANT: Accounts that have not com…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Scan QR Code"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">🔐 Action Required: Scan QR Code to Update Multi-Factor Authentication A…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Scan the QR code"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…1. Open your phone&#39;s camera app.   2. Scan the QR code in the HTML version of this email.   3.…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"deadline"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…e not completed MFA re-enrolment by the deadline will be temporarily LOCKED for security…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"IT Helpdesk"</td>
+                        <td>IMPERSONATION</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…9f3e2  Thank you for your cooperation.  IT Helpdesk TargetCorp Information Security helpdes…</td>
+                    </tr>
+                    
+                
+            </tbody>
+        </table>
+
+        <!-- Attachments -->
+        <div class="section-title">Attachments & Visual Scans</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Content Type</th>
+                    <th>Size</th>
+                    <th>QR Codes</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                    <tr>
+                        <td>mfa_qr_code.png</td>
+                        <td>image/png</td>
+                        <td>1169 bytes</td>
+                        <td>
+                            
+                                <span class="badge badge-critical">QR CODE DETECTED</span>
+                            
+                        </td>
+                    </tr>
+                    
+                
+            </tbody>
+        </table>
+
+        <!-- Attribution Graph -->
+        <div class="section-title">Attribution & Infrastructure Relations</div>
+        <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
+            <strong>Threat Intelligence Attribution:</strong>
+            <p style="margin: 6px 0 0 0;">Analyzed 1 email(s) across individual components. Attributed to Storm-0982 (Scattered Spider subgroup) (50% confidence).</p>
+        </div>
+
+        <div class="svg-container">
+            <h3>Visual Entity Graph</h3>
+            <svg width="100%" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="20" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" /></marker></defs>
+<line x1="400.0" y1="260.0" x2="652.3" y2="338.1" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="462.3" y2="435.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="337.7" y2="435.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="225.4" y2="400.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="147.7" y2="338.1" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="120.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="147.7" y2="181.9" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="225.4" y2="119.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="337.7" y2="84.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="574.6" y2="400.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="652.3" y2="181.9" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="652.3" y1="338.1" x2="574.6" y2="400.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="652.3" y1="338.1" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="574.6" y1="400.7" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="462.3" y1="435.5" x2="337.7" y2="435.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="147.7" y1="338.1" x2="574.6" y2="400.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="120.0" y1="260.0" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="147.7" y1="181.9" x2="337.7" y2="435.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="337.7" y1="84.5" x2="337.7" y2="435.5" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="462.3" y1="84.5" x2="574.6" y2="400.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="574.6" y1="119.3" x2="574.6" y2="400.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<circle cx="400.0" cy="260.0" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2" />
+<text x="400.0" y="242.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Email: phish_qr_mfa.eml</text>
+<circle cx="652.3" cy="338.1" r="10" fill="#a855f7" stroke="#ffffff" stroke-width="2" />
+<text x="652.3" y="324.1" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Sender: helpdesk@company...</text>
+<circle cx="574.6" cy="400.7" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="574.6" y="386.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: company-1t-suppo...</text>
+<circle cx="462.3" cy="435.5" r="10" fill="#9333ea" stroke="#ffffff" stroke-width="2" />
+<text x="462.3" y="421.5" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Contact: helpdesk@target...</text>
+<circle cx="337.7" cy="435.5" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="337.7" y="421.5" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: targetcorp.com</text>
+<circle cx="225.4" cy="400.7" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="225.4" y="386.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 10.10.0.5</text>
+<circle cx="147.7" cy="338.1" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="147.7" y="324.1" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: smtp-relay.compan...</text>
+<circle cx="120.0" cy="260.0" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="120.0" y="246.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 153.92.0.44</text>
+<circle cx="147.7" cy="181.9" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="147.7" y="167.9" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mx3.targetcorp.com</text>
+<circle cx="225.4" cy="119.3" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="225.4" y="105.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 198.51.100.51</text>
+<circle cx="337.7" cy="84.5" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="337.7" y="70.5" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mailstore.targetc...</text>
+<circle cx="462.3" cy="84.5" r="10" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+<text x="462.3" y="70.5" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">URL (qr_code)</text>
+<circle cx="574.6" cy="119.3" r="10" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+<text x="574.6" y="105.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">URL (body)</text>
+<circle cx="652.3" cy="181.9" r="10" fill="#14b8a6" stroke="#ffffff" stroke-width="2" />
+<text x="652.3" y="167.9" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Attachment: mfa_qr_code....</text>
+<circle cx="680.0" cy="260.0" r="18" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="680.0" y="238.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Threat Actor: Storm-0982...</text>
+</svg>
+        </div>
+    </div>
+</body>
+</html>

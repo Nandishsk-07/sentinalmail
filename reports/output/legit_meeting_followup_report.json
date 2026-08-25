@@ -1,0 +1,551 @@
+{
+  "version": "0.1.0",
+  "chain_of_custody": {
+    "sha256": "ebe147c36783932ad59a4c5f7f5d948fe0cae4277c9d1f55bdf46a13d75c6786",
+    "file_name": "legit_meeting_followup.eml",
+    "file_size_bytes": 8003,
+    "analyzed_at_utc": "2026-08-25T06:17:21Z"
+  },
+  "verdict": {
+    "threat_score": 0,
+    "tier": "SAFE",
+    "reasoning": "Header validation: All SPF/DKIM/DMARC authentications passed, zero anomalies. | NLP engine text analysis: standard/legitimate tone (0.05)",
+    "signal_contributions": [
+      {
+        "engine": "HeaderParser",
+        "threat_belief": 0.0,
+        "safe_belief": 0.6,
+        "uncertainty": 0.4
+      },
+      {
+        "engine": "NLPEngine",
+        "threat_belief": 0.0,
+        "safe_belief": 0.476,
+        "uncertainty": 0.524
+      },
+      {
+        "engine": "VisualEngine",
+        "threat_belief": 0.0,
+        "safe_belief": 0.2,
+        "uncertainty": 0.8
+      },
+      {
+        "engine": "AttributionGraph",
+        "threat_belief": 0.0,
+        "safe_belief": 0.3,
+        "uncertainty": 0.7
+      }
+    ],
+    "raw_belief": {
+      "threat": 0.0,
+      "safe": 0.8827,
+      "uncertainty": 0.1173
+    }
+  },
+  "engine_results": {
+    "HeaderParser": {
+      "file": "legit_meeting_followup.eml",
+      "subject": "Follow-up: Supply Chain Sync - Action Items from Aug 20 Call",
+      "from": "David Nakamura <d.nakamura@globallogistics.io>",
+      "relay_path": [
+        {
+          "from_host": "SG2PR04MB5271.apcprd04.prod.outlook.com",
+          "from_ip": "fe80::e12a:b4ff:fe92:7c38",
+          "by_host": "SG2PR04MB5271.apcprd04.prod.outlook.com",
+          "protocol": null,
+          "timestamp": "Fri, 21 Aug 2026 16:45:15 +0000",
+          "timestamp_utc": "2026-08-21T16:45:15+00:00",
+          "hop": 1,
+          "delay_seconds": null
+        },
+        {
+          "from_host": "SG2PR04MB5271.apcprd04.prod.outlook.com",
+          "from_ip": null,
+          "by_host": "SG2PR04MB4893.apcprd04.prod.outlook.com",
+          "protocol": null,
+          "timestamp": "Fri, 21 Aug 2026 16:45:16 +0000",
+          "timestamp_utc": "2026-08-21T16:45:16+00:00",
+          "hop": 2,
+          "delay_seconds": 1.0
+        },
+        {
+          "from_host": "APC01-SG2-obe.outbound.protection.outlook.com",
+          "from_ip": "40.107.207.10",
+          "by_host": "edge03.partnerco.com",
+          "protocol": "ESMTPS",
+          "timestamp": "Fri, 21 Aug 2026 16:45:18 +0000 (UTC)",
+          "timestamp_utc": "2026-08-21T16:45:18+00:00",
+          "hop": 3,
+          "delay_seconds": 2.0
+        },
+        {
+          "from_host": "edge03.partnerco.com",
+          "from_ip": "192.0.2.40",
+          "by_host": "imap.partnerco.com",
+          "protocol": "LMTPS",
+          "timestamp": "Fri, 21 Aug 2026 16:45:19 +0000 (UTC)",
+          "timestamp_utc": "2026-08-21T16:45:19+00:00",
+          "hop": 4,
+          "delay_seconds": 1.0
+        }
+      ],
+      "auth_results": {
+        "header": {
+          "spf": {
+            "verdict": "pass",
+            "detail": "sender SPF authorized",
+            "smtp_mailfrom": "globallogistics.io"
+          },
+          "dkim": {
+            "verdict": "pass",
+            "detail": "signature verified",
+            "domain": "globallogistics.io",
+            "selector": "selector1"
+          },
+          "dmarc": {
+            "verdict": "pass",
+            "detail": "p=QUARANTINE sp=QUARANTINE dis=NONE",
+            "header_from": "globallogistics.io"
+          }
+        },
+        "envelope_domain": "globallogistics.io",
+        "header_from_domain": "globallogistics.io",
+        "live_dns": null
+      },
+      "spoofing_flags": [],
+      "geo_trace": [
+        {
+          "ip": "fe80::e12a:b4ff:fe92:7c38",
+          "private": true
+        },
+        {
+          "ip": "40.107.207.10",
+          "geo": "disabled"
+        },
+        {
+          "ip": "192.0.2.40",
+          "private": true
+        }
+      ]
+    },
+    "NLPEngine": {
+      "phishing_score": {
+        "score": 0.0474,
+        "label": "safe",
+        "confidence": 0.0474,
+        "method": "heuristic",
+        "signals": {
+          "urgency": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "financial": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "secrecy": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "threat": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "impersonation": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "url_risk": {
+            "score": 0.0,
+            "suspicious_urls": 0
+          }
+        }
+      },
+      "ai_generated_score": {
+        "score": 0.3178,
+        "label": "uncertain",
+        "type_token_ratio": 0.721,
+        "avg_word_length": 5.48,
+        "sentence_length_stdev": 7.22,
+        "method": "heuristic"
+      },
+      "extracted_entities": {
+        "financial": [],
+        "references": [],
+        "contact": [
+          {
+            "type": "phone",
+            "value": "65 9123 4567"
+          },
+          {
+            "type": "email",
+            "value": "d.nakamura@globallogistics.io"
+          }
+        ],
+        "urls": [],
+        "crypto": [],
+        "named_entities": null
+      },
+      "flagged_phrases": []
+    },
+    "VisualEngine": {
+      "attachments": [],
+      "images_scanned": 0,
+      "qr_codes_found": 0,
+      "decoded_urls": [],
+      "url_risk_flags": [],
+      "source_file": "legit_meeting_followup.eml"
+    },
+    "AttributionGraph": {
+      "nodes": [
+        {
+          "id": "legit_meeting_followup.eml",
+          "type": "email",
+          "label": "Email: legit_meeting_followup.eml",
+          "subject": "Follow-up: Supply Chain Sync - Action Items from Aug 20 Call",
+          "sender": "David Nakamura <d.nakamura@globallogistics.io>"
+        },
+        {
+          "id": "d.nakamura@globallogistics.io",
+          "type": "sender",
+          "label": "Sender: d.nakamura@globallogistics.io"
+        },
+        {
+          "id": "globallogistics.io",
+          "type": "domain",
+          "label": "Domain: globallogistics.io"
+        },
+        {
+          "id": "fe80::e12a:b4ff:fe92:7c38",
+          "type": "ip",
+          "label": "IP: fe80::e12a:b4ff:fe92:7c38"
+        },
+        {
+          "id": "host:sg2pr04mb5271.apcprd04.prod.outlook.com",
+          "type": "relay_host",
+          "label": "Relay: SG2PR04MB5271.apcprd04.prod.outlook.com",
+          "host": "SG2PR04MB5271.apcprd04.prod.outlook.com"
+        },
+        {
+          "id": "outlook.com",
+          "type": "domain",
+          "label": "Domain: outlook.com"
+        },
+        {
+          "id": "host:sg2pr04mb4893.apcprd04.prod.outlook.com",
+          "type": "relay_host",
+          "label": "Relay: SG2PR04MB4893.apcprd04.prod.outlook.com",
+          "host": "SG2PR04MB4893.apcprd04.prod.outlook.com"
+        },
+        {
+          "id": "40.107.207.10",
+          "type": "ip",
+          "label": "IP: 40.107.207.10"
+        },
+        {
+          "id": "host:apc01-sg2-obe.outbound.protection.outlook.com",
+          "type": "relay_host",
+          "label": "Relay: APC01-SG2-obe.outbound.protection.outlook.com",
+          "host": "APC01-SG2-obe.outbound.protection.outlook.com"
+        },
+        {
+          "id": "host:edge03.partnerco.com",
+          "type": "relay_host",
+          "label": "Relay: edge03.partnerco.com",
+          "host": "edge03.partnerco.com"
+        },
+        {
+          "id": "partnerco.com",
+          "type": "domain",
+          "label": "Domain: partnerco.com"
+        },
+        {
+          "id": "192.0.2.40",
+          "type": "ip",
+          "label": "IP: 192.0.2.40"
+        },
+        {
+          "id": "host:imap.partnerco.com",
+          "type": "relay_host",
+          "label": "Relay: imap.partnerco.com",
+          "host": "imap.partnerco.com"
+        }
+      ],
+      "edges": [
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "d.nakamura@globallogistics.io",
+          "relation": "has_sender"
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "fe80::e12a:b4ff:fe92:7c38",
+          "relation": "routed_through",
+          "hop": 1
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "host:sg2pr04mb5271.apcprd04.prod.outlook.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "host:sg2pr04mb4893.apcprd04.prod.outlook.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "40.107.207.10",
+          "relation": "routed_through",
+          "hop": 3
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "host:apc01-sg2-obe.outbound.protection.outlook.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "host:edge03.partnerco.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "192.0.2.40",
+          "relation": "routed_through",
+          "hop": 4
+        },
+        {
+          "source": "legit_meeting_followup.eml",
+          "target": "host:imap.partnerco.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "d.nakamura@globallogistics.io",
+          "target": "globallogistics.io",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:sg2pr04mb5271.apcprd04.prod.outlook.com",
+          "target": "outlook.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:sg2pr04mb4893.apcprd04.prod.outlook.com",
+          "target": "outlook.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:apc01-sg2-obe.outbound.protection.outlook.com",
+          "target": "outlook.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:edge03.partnerco.com",
+          "target": "partnerco.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:imap.partnerco.com",
+          "target": "partnerco.com",
+          "relation": "belongs_to_domain"
+        }
+      ],
+      "json_data": {
+        "directed": true,
+        "multigraph": false,
+        "graph": {},
+        "nodes": [
+          {
+            "type": "email",
+            "label": "Email: legit_meeting_followup.eml",
+            "subject": "Follow-up: Supply Chain Sync - Action Items from Aug 20 Call",
+            "sender": "David Nakamura <d.nakamura@globallogistics.io>",
+            "id": "legit_meeting_followup.eml"
+          },
+          {
+            "type": "sender",
+            "label": "Sender: d.nakamura@globallogistics.io",
+            "id": "d.nakamura@globallogistics.io"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: globallogistics.io",
+            "id": "globallogistics.io"
+          },
+          {
+            "type": "ip",
+            "label": "IP: fe80::e12a:b4ff:fe92:7c38",
+            "id": "fe80::e12a:b4ff:fe92:7c38"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: SG2PR04MB5271.apcprd04.prod.outlook.com",
+            "host": "SG2PR04MB5271.apcprd04.prod.outlook.com",
+            "id": "host:sg2pr04mb5271.apcprd04.prod.outlook.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: outlook.com",
+            "id": "outlook.com"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: SG2PR04MB4893.apcprd04.prod.outlook.com",
+            "host": "SG2PR04MB4893.apcprd04.prod.outlook.com",
+            "id": "host:sg2pr04mb4893.apcprd04.prod.outlook.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 40.107.207.10",
+            "id": "40.107.207.10"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: APC01-SG2-obe.outbound.protection.outlook.com",
+            "host": "APC01-SG2-obe.outbound.protection.outlook.com",
+            "id": "host:apc01-sg2-obe.outbound.protection.outlook.com"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: edge03.partnerco.com",
+            "host": "edge03.partnerco.com",
+            "id": "host:edge03.partnerco.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: partnerco.com",
+            "id": "partnerco.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 192.0.2.40",
+            "id": "192.0.2.40"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: imap.partnerco.com",
+            "host": "imap.partnerco.com",
+            "id": "host:imap.partnerco.com"
+          }
+        ],
+        "edges": [
+          {
+            "relation": "has_sender",
+            "source": "legit_meeting_followup.eml",
+            "target": "d.nakamura@globallogistics.io"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 1,
+            "source": "legit_meeting_followup.eml",
+            "target": "fe80::e12a:b4ff:fe92:7c38"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_meeting_followup.eml",
+            "target": "host:sg2pr04mb5271.apcprd04.prod.outlook.com"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_meeting_followup.eml",
+            "target": "host:sg2pr04mb4893.apcprd04.prod.outlook.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 3,
+            "source": "legit_meeting_followup.eml",
+            "target": "40.107.207.10"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_meeting_followup.eml",
+            "target": "host:apc01-sg2-obe.outbound.protection.outlook.com"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_meeting_followup.eml",
+            "target": "host:edge03.partnerco.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 4,
+            "source": "legit_meeting_followup.eml",
+            "target": "192.0.2.40"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "legit_meeting_followup.eml",
+            "target": "host:imap.partnerco.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "d.nakamura@globallogistics.io",
+            "target": "globallogistics.io"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:sg2pr04mb5271.apcprd04.prod.outlook.com",
+            "target": "outlook.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:sg2pr04mb4893.apcprd04.prod.outlook.com",
+            "target": "outlook.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:apc01-sg2-obe.outbound.protection.outlook.com",
+            "target": "outlook.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:edge03.partnerco.com",
+            "target": "partnerco.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:imap.partnerco.com",
+            "target": "partnerco.com"
+          }
+        ]
+      },
+      "campaigns": [
+        {
+          "campaign_id": "campaign_1",
+          "name": "Campaign Cluster 1",
+          "emails": [
+            "legit_meeting_followup.eml"
+          ],
+          "email_count": 1,
+          "total_nodes": 13,
+          "shared_ips": [
+            "192.0.2.40",
+            "fe80::e12a:b4ff:fe92:7c38",
+            "40.107.207.10"
+          ],
+          "shared_hosts": [
+            "SG2PR04MB4893.apcprd04.prod.outlook.com",
+            "APC01-SG2-obe.outbound.protection.outlook.com",
+            "edge03.partnerco.com",
+            "imap.partnerco.com",
+            "SG2PR04MB5271.apcprd04.prod.outlook.com"
+          ],
+          "shared_domains": [
+            "globallogistics.io",
+            "partnerco.com"
+          ],
+          "urls": [],
+          "is_phishing": true
+        }
+      ],
+      "attributions": [],
+      "indicators": {
+        "blocklisted_domains": [],
+        "blocklisted_ips": [],
+        "total_malicious_nodes": 0
+      },
+      "summary": "Analyzed 1 email(s) across individual components. No known threat-actor profiles matched."
+    }
+  }
+}

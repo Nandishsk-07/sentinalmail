@@ -1,0 +1,832 @@
+{
+  "version": "0.1.0",
+  "chain_of_custody": {
+    "sha256": "34ae5442d23b9c421985bfa99cbb6fc646ddd76884de07a3b9e81b7d4ed959f9",
+    "file_name": "phish_ceo_wire_fraud.eml",
+    "file_size_bytes": 3017,
+    "analyzed_at_utc": "2026-08-25T06:17:21Z"
+  },
+  "verdict": {
+    "threat_score": 100,
+    "tier": "CONFIRMED_THREAT",
+    "reasoning": "Email authentication issues: SPF SOFTFAIL, DKIM NONE, DMARC FAIL | Spoofing flagged: From domain (deltahold1ngs.com) differs from Reply-To domain (protonmail.com) | Spoofing flagged: Reply-To domain (protonmail.com) differs from Return-Path domain (deltahold1ngs.com) | NLP engine detected high phishing risk (1.00) with signals: urgency, financial, secrecy | Threat attribution match: TA505 BEC Campaign (100% confidence)",
+    "signal_contributions": [
+      {
+        "engine": "HeaderParser",
+        "threat_belief": 0.9,
+        "safe_belief": 0.0,
+        "uncertainty": 0.1
+      },
+      {
+        "engine": "NLPEngine",
+        "threat_belief": 0.95,
+        "safe_belief": 0.0,
+        "uncertainty": 0.05
+      },
+      {
+        "engine": "VisualEngine",
+        "threat_belief": 0.0,
+        "safe_belief": 0.2,
+        "uncertainty": 0.8
+      },
+      {
+        "engine": "AttributionGraph",
+        "threat_belief": 0.95,
+        "safe_belief": 0.0,
+        "uncertainty": 0.05
+      }
+    ],
+    "raw_belief": {
+      "threat": 0.9997,
+      "safe": 0.0001,
+      "uncertainty": 0.0002
+    }
+  },
+  "engine_results": {
+    "HeaderParser": {
+      "file": "phish_ceo_wire_fraud.eml",
+      "subject": "Confidential - Wire Transfer Required Today",
+      "from": "\"Robert Walsh, CEO\" <r.walsh@deltahold1ngs.com>",
+      "relay_path": [
+        {
+          "from_host": "webmail.deltahold1ngs.com",
+          "from_ip": "10.0.0.2",
+          "by_host": "mail.deltahold1ngs.com",
+          "protocol": "ESMTPA",
+          "timestamp": "Mon, 24 Aug 2026 11:38:19 +0000 (UTC)",
+          "timestamp_utc": "2026-08-24T11:38:19+00:00",
+          "hop": 1,
+          "delay_seconds": null
+        },
+        {
+          "from_host": "mail.deltahold1ngs.com",
+          "from_ip": "194.163.128.77",
+          "by_host": "mx1.targetcorp.com",
+          "protocol": "ESMTPS",
+          "timestamp": "Mon, 24 Aug 2026 11:38:21 +0000 (UTC)",
+          "timestamp_utc": "2026-08-24T11:38:21+00:00",
+          "hop": 2,
+          "delay_seconds": 2.0
+        },
+        {
+          "from_host": "mx1.targetcorp.com",
+          "from_ip": "198.51.100.49",
+          "by_host": "mailstore.targetcorp.com",
+          "protocol": "LMTP",
+          "timestamp": "Mon, 24 Aug 2026 11:38:22 +0000 (UTC)",
+          "timestamp_utc": "2026-08-24T11:38:22+00:00",
+          "hop": 3,
+          "delay_seconds": 1.0
+        }
+      ],
+      "auth_results": {
+        "header": {
+          "spf": {
+            "verdict": "softfail",
+            "detail": "domain deltahold1ngs.com does not designate 194.163.128.77 as permitted sender",
+            "smtp_mailfrom": "r.walsh@deltahold1ngs.com"
+          },
+          "dkim": {
+            "verdict": "none",
+            "detail": "no DKIM signature found",
+            "domain": null,
+            "selector": null
+          },
+          "dmarc": {
+            "verdict": "fail",
+            "detail": "p=NONE sp=NONE dis=NONE",
+            "header_from": "deltahold1ngs.com"
+          }
+        },
+        "envelope_domain": "deltahold1ngs.com",
+        "header_from_domain": "deltahold1ngs.com",
+        "live_dns": null
+      },
+      "spoofing_flags": [
+        {
+          "type": "domain_mismatch",
+          "fields": [
+            "From",
+            "Reply-To"
+          ],
+          "values": [
+            "deltahold1ngs.com",
+            "protonmail.com"
+          ],
+          "severity": "high",
+          "description": "From domain (deltahold1ngs.com) differs from Reply-To domain (protonmail.com)"
+        },
+        {
+          "type": "domain_mismatch",
+          "fields": [
+            "Reply-To",
+            "Return-Path"
+          ],
+          "values": [
+            "protonmail.com",
+            "deltahold1ngs.com"
+          ],
+          "severity": "medium",
+          "description": "Reply-To domain (protonmail.com) differs from Return-Path domain (deltahold1ngs.com)"
+        }
+      ],
+      "geo_trace": [
+        {
+          "ip": "10.0.0.2",
+          "private": true
+        },
+        {
+          "ip": "194.163.128.77",
+          "geo": "disabled"
+        },
+        {
+          "ip": "198.51.100.49",
+          "private": true
+        }
+      ]
+    },
+    "NLPEngine": {
+      "phishing_score": {
+        "score": 1.0,
+        "label": "phishing",
+        "confidence": 1.0,
+        "method": "heuristic",
+        "signals": {
+          "urgency": {
+            "score": 0.964,
+            "matches": 6
+          },
+          "financial": {
+            "score": 0.954,
+            "matches": 6
+          },
+          "secrecy": {
+            "score": 0.964,
+            "matches": 5
+          },
+          "threat": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "impersonation": {
+            "score": 0.0,
+            "matches": 0
+          },
+          "url_risk": {
+            "score": 0.0,
+            "suspicious_urls": 0
+          }
+        }
+      },
+      "ai_generated_score": {
+        "score": 0.2174,
+        "label": "likely human-written",
+        "type_token_ratio": 0.772,
+        "avg_word_length": 5.36,
+        "sentence_length_stdev": 8.48,
+        "method": "heuristic"
+      },
+      "extracted_entities": {
+        "financial": [
+          {
+            "type": "IBAN",
+            "value": "CH93 0076 2011 6238 5295 7"
+          },
+          {
+            "type": "SWIFT/BIC",
+            "value": "CRESCHZZ80A"
+          },
+          {
+            "type": "monetary_amount",
+            "value": "$187,500.00"
+          }
+        ],
+        "references": [
+          {
+            "type": "reference_number",
+            "value": "INV-2026-DELTA-0847"
+          }
+        ],
+        "contact": [
+          {
+            "type": "phone",
+            "value": "93 0076 2011"
+          },
+          {
+            "type": "phone",
+            "value": "+1 (212) 555-0198"
+          },
+          {
+            "type": "email",
+            "value": "r.walsh@deltaholdings.com"
+          }
+        ],
+        "urls": [],
+        "crypto": [],
+        "named_entities": null
+      },
+      "flagged_phrases": [
+        {
+          "phrase": "Do NOT discuss",
+          "category": "secrecy",
+          "severity": "critical",
+          "context": "\u2026, so please handle this via email only. Do NOT discuss this with anyone else on the team -- th\u2026"
+        },
+        {
+          "phrase": "urgent",
+          "category": "urgency",
+          "severity": "high",
+          "context": "\u2026red Today Hi,  I need you to process an urgent wire transfer today. This is time-sensi\u2026"
+        },
+        {
+          "phrase": "time-sensitive",
+          "category": "urgency",
+          "severity": "high",
+          "context": "\u2026an urgent wire transfer today. This is time-sensitive and must be completed before 3 PM ET.\u2026"
+        },
+        {
+          "phrase": "Wire Transfer",
+          "category": "financial",
+          "severity": "high",
+          "context": "Confidential - Wire Transfer Required Today Hi,  I need you to proce\u2026"
+        },
+        {
+          "phrase": "stay between us",
+          "category": "secrecy",
+          "severity": "high",
+          "context": "\u2026I'm out of this meeting.  This needs to stay between us until the public announcement next week\u2026"
+        },
+        {
+          "phrase": "deadline",
+          "category": "urgency",
+          "severity": "medium",
+          "context": "\u2026e funds moved before the counterparty's deadline.  Details:    Beneficiary:    Meridian\u2026"
+        },
+        {
+          "phrase": "must be completed",
+          "category": "urgency",
+          "severity": "medium",
+          "context": "\u2026nsfer today. This is time-sensitive and must be completed before 3 PM ET.  I'm currently in a boa\u2026"
+        },
+        {
+          "phrase": "before 3 PM",
+          "category": "urgency",
+          "severity": "medium",
+          "context": "\u2026is time-sensitive and must be completed before 3 PM ET.  I'm currently in a board meeting a\u2026"
+        },
+        {
+          "phrase": "Required Today",
+          "category": "urgency",
+          "severity": "medium",
+          "context": "Confidential - Wire Transfer Required Today Hi,  I need you to process an urgent wi\u2026"
+        },
+        {
+          "phrase": "IBAN",
+          "category": "financial",
+          "severity": "medium",
+          "context": "\u2026ank:           Credit Suisse (Zurich)   IBAN:           CH93 0076 2011 6238 5295 7\u2026"
+        },
+        {
+          "phrase": "SWIFT/BIC",
+          "category": "financial",
+          "severity": "medium",
+          "context": "\u2026CH93 0076 2011 6238 5295 7   SWIFT/BIC:      CRESCHZZ80A   Amount:         $18\u2026"
+        },
+        {
+          "phrase": "Beneficiary",
+          "category": "financial",
+          "severity": "medium",
+          "context": "\u2026e counterparty's deadline.  Details:    Beneficiary:    Meridian Consulting Partners AG   B\u2026"
+        },
+        {
+          "phrase": "Confidential",
+          "category": "secrecy",
+          "severity": "medium",
+          "context": "Confidential - Wire Transfer Required Today Hi,  I n\u2026"
+        },
+        {
+          "phrase": "funds",
+          "category": "financial",
+          "severity": "low",
+          "context": "\u2026t. Legal has approved it but I need the funds moved before the counterparty's deadlin\u2026"
+        }
+      ]
+    },
+    "VisualEngine": {
+      "attachments": [],
+      "images_scanned": 0,
+      "qr_codes_found": 0,
+      "decoded_urls": [],
+      "url_risk_flags": [],
+      "source_file": "phish_ceo_wire_fraud.eml"
+    },
+    "AttributionGraph": {
+      "nodes": [
+        {
+          "id": "phish_ceo_wire_fraud.eml",
+          "type": "email",
+          "label": "Email: phish_ceo_wire_fraud.eml",
+          "subject": "Confidential - Wire Transfer Required Today",
+          "sender": "\"Robert Walsh, CEO\" <r.walsh@deltahold1ngs.com>"
+        },
+        {
+          "id": "r.walsh@deltahold1ngs.com",
+          "type": "sender",
+          "label": "Sender: r.walsh@deltahold1ngs.com"
+        },
+        {
+          "id": "deltahold1ngs.com",
+          "type": "domain",
+          "label": "Domain: deltahold1ngs.com"
+        },
+        {
+          "id": "r.walsh@deltaholdings.com",
+          "type": "contact_email",
+          "label": "Contact: r.walsh@deltaholdings.com"
+        },
+        {
+          "id": "deltaholdings.com",
+          "type": "domain",
+          "label": "Domain: deltaholdings.com"
+        },
+        {
+          "id": "10.0.0.2",
+          "type": "ip",
+          "label": "IP: 10.0.0.2"
+        },
+        {
+          "id": "host:webmail.deltahold1ngs.com",
+          "type": "relay_host",
+          "label": "Relay: webmail.deltahold1ngs.com",
+          "host": "webmail.deltahold1ngs.com"
+        },
+        {
+          "id": "host:mail.deltahold1ngs.com",
+          "type": "relay_host",
+          "label": "Relay: mail.deltahold1ngs.com",
+          "host": "mail.deltahold1ngs.com"
+        },
+        {
+          "id": "194.163.128.77",
+          "type": "ip",
+          "label": "IP: 194.163.128.77"
+        },
+        {
+          "id": "host:mx1.targetcorp.com",
+          "type": "relay_host",
+          "label": "Relay: mx1.targetcorp.com",
+          "host": "mx1.targetcorp.com"
+        },
+        {
+          "id": "targetcorp.com",
+          "type": "domain",
+          "label": "Domain: targetcorp.com"
+        },
+        {
+          "id": "198.51.100.49",
+          "type": "ip",
+          "label": "IP: 198.51.100.49"
+        },
+        {
+          "id": "host:mailstore.targetcorp.com",
+          "type": "relay_host",
+          "label": "Relay: mailstore.targetcorp.com",
+          "host": "mailstore.targetcorp.com"
+        },
+        {
+          "id": "CH93 0076 2011 6238 5295 7",
+          "type": "financial",
+          "label": "IBAN: CH93 0076 2011 6238 5295 7",
+          "subtype": "IBAN"
+        },
+        {
+          "id": "CRESCHZZ80A",
+          "type": "financial",
+          "label": "SWIFT/BIC: CRESCHZZ80A",
+          "subtype": "SWIFT/BIC"
+        },
+        {
+          "id": "$187,500.00",
+          "type": "financial",
+          "label": "monetary_amount: $187,500.00",
+          "subtype": "monetary_amount"
+        },
+        {
+          "id": "TA505-BEC",
+          "type": "actor",
+          "label": "Threat Actor: TA505 BEC Campaign",
+          "details": {
+            "actor_id": "TA505-BEC",
+            "actor_name": "TA505 BEC Campaign",
+            "actor_type": "Business Email Compromise (BEC) Group",
+            "tactics": "Executive impersonation, financial invoice fraud, ProtonMail/anonymous reply-to routing.",
+            "severity": "high",
+            "confidence": 100,
+            "matched_indicators": [
+              "deltahold1ngs.com",
+              "194.163.128.77",
+              "r.walsh@deltahold1ngs.com"
+            ]
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "r.walsh@deltahold1ngs.com",
+          "relation": "has_sender"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "r.walsh@deltaholdings.com",
+          "relation": "mentions_email"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "deltaholdings.com",
+          "relation": "has_reply_to_domain"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "10.0.0.2",
+          "relation": "routed_through",
+          "hop": 1
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "host:webmail.deltahold1ngs.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "host:mail.deltahold1ngs.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "194.163.128.77",
+          "relation": "routed_through",
+          "hop": 2
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "host:mx1.targetcorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "198.51.100.49",
+          "relation": "routed_through",
+          "hop": 3
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "host:mailstore.targetcorp.com",
+          "relation": "relayed_by"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "CH93 0076 2011 6238 5295 7",
+          "relation": "mentions_financial"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "CRESCHZZ80A",
+          "relation": "mentions_financial"
+        },
+        {
+          "source": "phish_ceo_wire_fraud.eml",
+          "target": "$187,500.00",
+          "relation": "mentions_financial"
+        },
+        {
+          "source": "r.walsh@deltahold1ngs.com",
+          "target": "deltahold1ngs.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "r.walsh@deltahold1ngs.com",
+          "target": "TA505-BEC",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "deltahold1ngs.com",
+          "target": "TA505-BEC",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "r.walsh@deltaholdings.com",
+          "target": "deltaholdings.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:webmail.deltahold1ngs.com",
+          "target": "deltahold1ngs.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:mail.deltahold1ngs.com",
+          "target": "deltahold1ngs.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "194.163.128.77",
+          "target": "TA505-BEC",
+          "relation": "associated_with_actor"
+        },
+        {
+          "source": "host:mx1.targetcorp.com",
+          "target": "targetcorp.com",
+          "relation": "belongs_to_domain"
+        },
+        {
+          "source": "host:mailstore.targetcorp.com",
+          "target": "targetcorp.com",
+          "relation": "belongs_to_domain"
+        }
+      ],
+      "json_data": {
+        "directed": true,
+        "multigraph": false,
+        "graph": {},
+        "nodes": [
+          {
+            "type": "email",
+            "label": "Email: phish_ceo_wire_fraud.eml",
+            "subject": "Confidential - Wire Transfer Required Today",
+            "sender": "\"Robert Walsh, CEO\" <r.walsh@deltahold1ngs.com>",
+            "id": "phish_ceo_wire_fraud.eml"
+          },
+          {
+            "type": "sender",
+            "label": "Sender: r.walsh@deltahold1ngs.com",
+            "id": "r.walsh@deltahold1ngs.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: deltahold1ngs.com",
+            "id": "deltahold1ngs.com"
+          },
+          {
+            "type": "contact_email",
+            "label": "Contact: r.walsh@deltaholdings.com",
+            "id": "r.walsh@deltaholdings.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: deltaholdings.com",
+            "id": "deltaholdings.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 10.0.0.2",
+            "id": "10.0.0.2"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: webmail.deltahold1ngs.com",
+            "host": "webmail.deltahold1ngs.com",
+            "id": "host:webmail.deltahold1ngs.com"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mail.deltahold1ngs.com",
+            "host": "mail.deltahold1ngs.com",
+            "id": "host:mail.deltahold1ngs.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 194.163.128.77",
+            "id": "194.163.128.77"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mx1.targetcorp.com",
+            "host": "mx1.targetcorp.com",
+            "id": "host:mx1.targetcorp.com"
+          },
+          {
+            "type": "domain",
+            "label": "Domain: targetcorp.com",
+            "id": "targetcorp.com"
+          },
+          {
+            "type": "ip",
+            "label": "IP: 198.51.100.49",
+            "id": "198.51.100.49"
+          },
+          {
+            "type": "relay_host",
+            "label": "Relay: mailstore.targetcorp.com",
+            "host": "mailstore.targetcorp.com",
+            "id": "host:mailstore.targetcorp.com"
+          },
+          {
+            "type": "financial",
+            "label": "IBAN: CH93 0076 2011 6238 5295 7",
+            "subtype": "IBAN",
+            "id": "CH93 0076 2011 6238 5295 7"
+          },
+          {
+            "type": "financial",
+            "label": "SWIFT/BIC: CRESCHZZ80A",
+            "subtype": "SWIFT/BIC",
+            "id": "CRESCHZZ80A"
+          },
+          {
+            "type": "financial",
+            "label": "monetary_amount: $187,500.00",
+            "subtype": "monetary_amount",
+            "id": "$187,500.00"
+          },
+          {
+            "type": "actor",
+            "label": "Threat Actor: TA505 BEC Campaign",
+            "details": {
+              "actor_id": "TA505-BEC",
+              "actor_name": "TA505 BEC Campaign",
+              "actor_type": "Business Email Compromise (BEC) Group",
+              "tactics": "Executive impersonation, financial invoice fraud, ProtonMail/anonymous reply-to routing.",
+              "severity": "high",
+              "confidence": 100,
+              "matched_indicators": [
+                "deltahold1ngs.com",
+                "194.163.128.77",
+                "r.walsh@deltahold1ngs.com"
+              ]
+            },
+            "id": "TA505-BEC"
+          }
+        ],
+        "edges": [
+          {
+            "relation": "has_sender",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "r.walsh@deltahold1ngs.com"
+          },
+          {
+            "relation": "mentions_email",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "r.walsh@deltaholdings.com"
+          },
+          {
+            "relation": "has_reply_to_domain",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "deltaholdings.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 1,
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "10.0.0.2"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "host:webmail.deltahold1ngs.com"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "host:mail.deltahold1ngs.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 2,
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "194.163.128.77"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "host:mx1.targetcorp.com"
+          },
+          {
+            "relation": "routed_through",
+            "hop": 3,
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "198.51.100.49"
+          },
+          {
+            "relation": "relayed_by",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "host:mailstore.targetcorp.com"
+          },
+          {
+            "relation": "mentions_financial",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "CH93 0076 2011 6238 5295 7"
+          },
+          {
+            "relation": "mentions_financial",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "CRESCHZZ80A"
+          },
+          {
+            "relation": "mentions_financial",
+            "source": "phish_ceo_wire_fraud.eml",
+            "target": "$187,500.00"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "r.walsh@deltahold1ngs.com",
+            "target": "deltahold1ngs.com"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "r.walsh@deltahold1ngs.com",
+            "target": "TA505-BEC"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "deltahold1ngs.com",
+            "target": "TA505-BEC"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "r.walsh@deltaholdings.com",
+            "target": "deltaholdings.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:webmail.deltahold1ngs.com",
+            "target": "deltahold1ngs.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mail.deltahold1ngs.com",
+            "target": "deltahold1ngs.com"
+          },
+          {
+            "relation": "associated_with_actor",
+            "source": "194.163.128.77",
+            "target": "TA505-BEC"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mx1.targetcorp.com",
+            "target": "targetcorp.com"
+          },
+          {
+            "relation": "belongs_to_domain",
+            "source": "host:mailstore.targetcorp.com",
+            "target": "targetcorp.com"
+          }
+        ]
+      },
+      "campaigns": [
+        {
+          "campaign_id": "campaign_1",
+          "name": "Campaign Cluster 1",
+          "emails": [
+            "phish_ceo_wire_fraud.eml"
+          ],
+          "email_count": 1,
+          "total_nodes": 16,
+          "shared_ips": [
+            "10.0.0.2",
+            "194.163.128.77",
+            "198.51.100.49"
+          ],
+          "shared_hosts": [
+            "mail.deltahold1ngs.com",
+            "mx1.targetcorp.com",
+            "webmail.deltahold1ngs.com",
+            "mailstore.targetcorp.com"
+          ],
+          "shared_domains": [
+            "deltahold1ngs.com",
+            "deltaholdings.com"
+          ],
+          "urls": [],
+          "is_phishing": true
+        }
+      ],
+      "attributions": [
+        {
+          "actor_id": "TA505-BEC",
+          "actor_name": "TA505 BEC Campaign",
+          "actor_type": "Business Email Compromise (BEC) Group",
+          "tactics": "Executive impersonation, financial invoice fraud, ProtonMail/anonymous reply-to routing.",
+          "severity": "high",
+          "confidence": 100,
+          "matched_indicators": [
+            "deltahold1ngs.com",
+            "194.163.128.77",
+            "r.walsh@deltahold1ngs.com"
+          ]
+        }
+      ],
+      "indicators": {
+        "blocklisted_domains": [
+          "deltahold1ngs.com"
+        ],
+        "blocklisted_ips": [
+          "194.163.128.77"
+        ],
+        "total_malicious_nodes": 3
+      },
+      "summary": "Analyzed 1 email(s) across individual components. Attributed to TA505 BEC Campaign (100% confidence)."
+    }
+  }
+}

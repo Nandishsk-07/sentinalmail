@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-page-bg: #FBF7F1;
+  --color-sidebar-bg: #F3ECE0;
+  --color-card-border: #EDE6DA;
+  --color-primary-accent: #C97B4A;
+  --color-success-accent: #7A8B6F;
+  --color-alert-accent: #C1654F;
+  --color-alert-tint: #F7E8E3;
+  --color-success-tint: #EAEFE6;
+  --color-text-primary: #3A362F;
+  --color-text-secondary: #8A8378;
+  
+  --font-serif: "Georgia", "Cambria", serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #FBF7F1;
+    color: #3A362F;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom Scrollbars to fit the warm, handcrafted look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3ECE0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EDE6DA;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C97B4A;
+}
+
+/* Craft card style */
+.craft-card {
+  background-color: #FFFFFF;
+  border: 0.5px solid #EDE6DA;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.craft-card-sm {
+  background-color: #FFFFFF;
+  border: 0.5px solid #EDE6DA;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.craft-button {
+  background-color: #C97B4A;
+  color: #FFFFFF;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.craft-button:hover {
+  background-color: #B26535;
+}
+
+/* Typography Helpers */
+.font-serif-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}

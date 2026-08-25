@@ -11,3 +11,6 @@ networkx
 weasyprint
 python-magic
 email-validator
+matplotlib
+python-multipart
+jinja2

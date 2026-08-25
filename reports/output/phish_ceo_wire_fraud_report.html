@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel-Mail Forensic Report — phish_ceo_wire_fraud.eml</title>
+    <style>
+        :root {
+            --primary-color: #dc2626;
+            --bg-color: #fef2f2;
+            --border-color: #fecaca;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-light: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-light);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+        .report-meta {
+            text-align: right;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        /* Executive Verdict Banner */
+        .verdict-banner {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-left: 6px solid var(--primary-color);
+            padding: 24px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .verdict-title {
+            margin: 0 0 6px 0;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        .verdict-sub {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .score-badge {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 16px 28px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 90px;
+        }
+        .score-val {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .score-lbl {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Metadata & Chain of Custody */
+        .custody-box {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+        }
+        .custody-title {
+            font-family: sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hash-str {
+            color: #0f172a;
+            word-break: break-all;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 35px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .email-details-grid {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 10px 16px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .grid-lbl {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .reasoning-list {
+            padding-left: 20px;
+            margin: 0 0 25px 0;
+            font-size: 14px;
+        }
+        .reasoning-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Signal Contributions Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+        th {
+            background-color: #f8fafc;
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 700;
+            color: #475569;
+            border-bottom: 2px solid var(--border-light);
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .badge-critical, .badge-fail { background-color: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .badge-high { background-color: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+        .badge-medium, .badge-softfail { background-color: #fefce8; color: #ca8a04; border: 1px solid #fef08a; }
+        .badge-low, .badge-none { background-color: #f1f5f9; color: #64748b; }
+        .badge-pass { background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+        .auth-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .auth-card {
+            border: 1px solid var(--border-light);
+            padding: 16px;
+            border-radius: 8px;
+            background: #f8fafc;
+            text-align: center;
+        }
+        .auth-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .hop-list {
+            margin-bottom: 25px;
+        }
+        .hop-item {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+            padding: 10px 0;
+        }
+        .hop-num {
+            width: 70px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 13px;
+        }
+        .hop-details {
+            font-size: 13px;
+        }
+
+        .svg-container {
+            text-align: center;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 20px;
+            background: #ffffff;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">SENTINEL<span>MAIL</span></div>
+            <div class="report-meta">
+                <strong>Forensic Threat Analysis Report</strong><br>
+                Analyzed: 2026-08-25T06:17:21Z
+            </div>
+        </header>
+
+        <!-- Executive Verdict Banner -->
+        <div class="verdict-banner">
+            <div class="verdict-info">
+                <div class="verdict-title">CONFIRMED THREAT</div>
+                <div class="verdict-sub">Dempster–Shafer Multi-Engine Risk Score: 100 / 100</div>
+            </div>
+            <div class="score-badge">
+                <div class="score-val">100</div>
+                <div class="score-lbl">Risk Score</div>
+            </div>
+        </div>
+
+        <!-- Chain of Custody -->
+        <div class="custody-box">
+            <div class="custody-title">🛡️ Chain-of-Custody Metadata</div>
+            <div>File Name : phish_ceo_wire_fraud.eml (3017 bytes)</div>
+            <div>SHA-256   : <span class="hash-str">34ae5442d23b9c421985bfa99cbb6fc646ddd76884de07a3b9e81b7d4ed959f9</span></div>
+        </div>
+
+        <!-- Email Details -->
+        <div class="email-details-grid">
+            <div class="grid-lbl">Subject:</div>
+            <div><strong>Confidential - Wire Transfer Required Today</strong></div>
+            <div class="grid-lbl">From:</div>
+            <div>&#34;Robert Walsh, CEO&#34; &lt;r.walsh@deltahold1ngs.com&gt;</div>
+            <div class="grid-lbl">Envelope:</div>
+            <div>deltahold1ngs.com</div>
+        </div>
+
+        <!-- Reasoning Path -->
+        <div class="section-title">Verdict Reasoning Path</div>
+        <ul class="reasoning-list">
+            
+            <li>Email authentication issues: SPF SOFTFAIL, DKIM NONE, DMARC FAIL</li>
+            
+            <li>Spoofing flagged: From domain (deltahold1ngs.com) differs from Reply-To domain (protonmail.com)</li>
+            
+            <li>Spoofing flagged: Reply-To domain (protonmail.com) differs from Return-Path domain (deltahold1ngs.com)</li>
+            
+            <li>NLP engine detected high phishing risk (1.00) with signals: urgency, financial, secrecy</li>
+            
+            <li>Threat attribution match: TA505 BEC Campaign (100% confidence)</li>
+            
+        </ul>
+
+        <!-- Engine Contributions -->
+        <div class="section-title">Engine Risk Contributions</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Engine</th>
+                    <th>Threat Belief</th>
+                    <th>Safe Belief</th>
+                    <th>Uncertainty</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>HeaderParser</strong></td>
+                    <td>90.0%</td>
+                    <td>0.0%</td>
+                    <td>10.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>NLPEngine</strong></td>
+                    <td>95.0%</td>
+                    <td>0.0%</td>
+                    <td>5.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>VisualEngine</strong></td>
+                    <td>0.0%</td>
+                    <td>20.0%</td>
+                    <td>80.0%</td>
+                </tr>
+                
+                <tr>
+                    <td><strong>AttributionGraph</strong></td>
+                    <td>95.0%</td>
+                    <td>0.0%</td>
+                    <td>5.0%</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Authentication Results -->
+        <div class="section-title">Email Authentication Checks</div>
+        <div class="auth-grid">
+            <div class="auth-card">
+                <h3>SPF</h3>
+                <span class="badge badge-softfail">SOFTFAIL</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">r.walsh@deltahold1ngs.com</div>
+            </div>
+            <div class="auth-card">
+                <h3>DKIM</h3>
+                <span class="badge badge-none">NONE</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">No signing domain</div>
+            </div>
+            <div class="auth-card">
+                <h3>DMARC</h3>
+                <span class="badge badge-fail">FAIL</span>
+                <div style="font-size: 11px; margin-top: 8px; color: var(--text-muted);">deltahold1ngs.com</div>
+            </div>
+        </div>
+
+        <!-- Relay Routing Path -->
+        <div class="section-title">Relay Hop Routing Chain</div>
+        <div class="hop-list">
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 1</div>
+                <div class="hop-details">
+                    <strong>webmail.deltahold1ngs.com</strong> [10.0.0.2] &rarr; mail.deltahold1ngs.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTPA | Timestamp: 2026-08-24T11:38:19+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 2</div>
+                <div class="hop-details">
+                    <strong>mail.deltahold1ngs.com</strong> [194.163.128.77] &rarr; mx1.targetcorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: ESMTPS | Timestamp: 2026-08-24T11:38:21+00:00
+                    </span>
+                </div>
+            </div>
+            
+            <div class="hop-item">
+                <div class="hop-num">Hop 3</div>
+                <div class="hop-details">
+                    <strong>mx1.targetcorp.com</strong> [198.51.100.49] &rarr; mailstore.targetcorp.com
+                    <span style="color: #64748b; font-size: 11px; display: block; margin-top: 2px;">
+                        Proto: LMTP | Timestamp: 2026-08-24T11:38:22+00:00
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- NLP Flagged Phrases -->
+        <div class="section-title">NLP Flagged Threat Phrases</div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 100px;">Severity</th>
+                    <th style="width: 180px;">Phrase</th>
+                    <th style="width: 120px;">Category</th>
+                    <th>Observed Context</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                    <tr>
+                        <td><span class="badge badge-critical">CRITICAL</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Do NOT discuss"</td>
+                        <td>SECRECY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…, so please handle this via email only. Do NOT discuss this with anyone else on the team -- th…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"urgent"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…red Today Hi,  I need you to process an urgent wire transfer today. This is time-sensi…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"time-sensitive"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…an urgent wire transfer today. This is time-sensitive and must be completed before 3 PM ET.…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Wire Transfer"</td>
+                        <td>FINANCIAL</td>
+                        <td style="color: var(--text-muted); font-style: italic;">Confidential - Wire Transfer Required Today Hi,  I need you to proce…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-high">HIGH</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"stay between us"</td>
+                        <td>SECRECY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…I&#39;m out of this meeting.  This needs to stay between us until the public announcement next week…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"deadline"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…e funds moved before the counterparty&#39;s deadline.  Details:    Beneficiary:    Meridian…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"must be completed"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…nsfer today. This is time-sensitive and must be completed before 3 PM ET.  I&#39;m currently in a boa…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"before 3 PM"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…is time-sensitive and must be completed before 3 PM ET.  I&#39;m currently in a board meeting a…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Required Today"</td>
+                        <td>URGENCY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">Confidential - Wire Transfer Required Today Hi,  I need you to process an urgent wi…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"IBAN"</td>
+                        <td>FINANCIAL</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…ank:           Credit Suisse (Zurich)   IBAN:           CH93 0076 2011 6238 5295 7…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"SWIFT/BIC"</td>
+                        <td>FINANCIAL</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…CH93 0076 2011 6238 5295 7   SWIFT/BIC:      CRESCHZZ80A   Amount:         $18…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Beneficiary"</td>
+                        <td>FINANCIAL</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…e counterparty&#39;s deadline.  Details:    Beneficiary:    Meridian Consulting Partners AG   B…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-medium">MEDIUM</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"Confidential"</td>
+                        <td>SECRECY</td>
+                        <td style="color: var(--text-muted); font-style: italic;">Confidential - Wire Transfer Required Today Hi,  I n…</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span class="badge badge-low">LOW</span></td>
+                        <td style="font-family: monospace; font-weight: 600;">"funds"</td>
+                        <td>FINANCIAL</td>
+                        <td style="color: var(--text-muted); font-style: italic;">…t. Legal has approved it but I need the funds moved before the counterparty&#39;s deadlin…</td>
+                    </tr>
+                    
+                
+            </tbody>
+        </table>
+
+        <!-- Attachments -->
+        <div class="section-title">Attachments & Visual Scans</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Content Type</th>
+                    <th>Size</th>
+                    <th>QR Codes</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    <tr><td colspan="4" class="text-center">No attachments.</td></tr>
+                
+            </tbody>
+        </table>
+
+        <!-- Attribution Graph -->
+        <div class="section-title">Attribution & Infrastructure Relations</div>
+        <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
+            <strong>Threat Intelligence Attribution:</strong>
+            <p style="margin: 6px 0 0 0;">Analyzed 1 email(s) across individual components. Attributed to TA505 BEC Campaign (100% confidence).</p>
+        </div>
+
+        <div class="svg-container">
+            <h3>Visual Entity Graph</h3>
+            <svg width="100%" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="20" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" /></marker></defs>
+<line x1="400.0" y1="260.0" x2="658.7" y2="328.9" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="507.2" y2="426.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="400.0" y2="440.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="292.8" y2="426.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="202.0" y2="387.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="141.3" y2="328.9" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="120.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="141.3" y2="191.1" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="292.8" y2="93.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="400.0" y2="80.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="507.2" y2="93.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="598.0" y2="132.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="260.0" x2="658.7" y2="191.1" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="658.7" y1="328.9" x2="598.0" y2="387.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="658.7" y1="328.9" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="598.0" y1="387.3" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="507.2" y1="426.3" x2="400.0" y2="440.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="202.0" y1="387.3" x2="598.0" y2="387.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="141.3" y1="328.9" x2="598.0" y2="387.3" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="120.0" y1="260.0" x2="680.0" y2="260.0" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="141.3" y1="191.1" x2="202.0" y2="132.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<line x1="400.0" y1="80.0" x2="202.0" y2="132.7" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#arrow)" />
+<circle cx="400.0" cy="260.0" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2" />
+<text x="400.0" y="242.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Email: phish_ceo_wire_fr...</text>
+<circle cx="658.7" cy="328.9" r="10" fill="#a855f7" stroke="#ffffff" stroke-width="2" />
+<text x="658.7" y="314.9" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Sender: r.walsh@deltahol...</text>
+<circle cx="598.0" cy="387.3" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="598.0" y="373.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: deltahold1ngs.com</text>
+<circle cx="507.2" cy="426.3" r="10" fill="#9333ea" stroke="#ffffff" stroke-width="2" />
+<text x="507.2" y="412.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Contact: r.walsh@deltaho...</text>
+<circle cx="400.0" cy="440.0" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="400.0" y="426.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: deltaholdings.com</text>
+<circle cx="292.8" cy="426.3" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="292.8" y="412.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 10.0.0.2</text>
+<circle cx="202.0" cy="387.3" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="202.0" y="373.3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: webmail.deltahold...</text>
+<circle cx="141.3" cy="328.9" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="141.3" y="314.9" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mail.deltahold1ng...</text>
+<circle cx="120.0" cy="260.0" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="120.0" y="246.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 194.163.128.77</text>
+<circle cx="141.3" cy="191.1" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="141.3" y="177.1" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mx1.targetcorp.com</text>
+<circle cx="202.0" cy="132.7" r="10" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+<text x="202.0" y="118.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Domain: targetcorp.com</text>
+<circle cx="292.8" cy="93.7" r="10" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+<text x="292.8" y="79.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IP: 198.51.100.49</text>
+<circle cx="400.0" cy="80.0" r="10" fill="#64748b" stroke="#ffffff" stroke-width="2" />
+<text x="400.0" y="66.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Relay: mailstore.targetc...</text>
+<circle cx="507.2" cy="93.7" r="10" fill="#22c55e" stroke="#ffffff" stroke-width="2" />
+<text x="507.2" y="79.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">IBAN: CH93 0076 2011 623...</text>
+<circle cx="598.0" cy="132.7" r="10" fill="#22c55e" stroke="#ffffff" stroke-width="2" />
+<text x="598.0" y="118.7" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">SWIFT/BIC: CRESCHZZ80A</text>
+<circle cx="658.7" cy="191.1" r="10" fill="#22c55e" stroke="#ffffff" stroke-width="2" />
+<text x="658.7" y="177.1" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">monetary_amount: $187,50...</text>
+<circle cx="680.0" cy="260.0" r="18" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="680.0" y="238.0" font-family="sans-serif" font-size="10" font-weight="bold" fill="#1e293b" text-anchor="middle">Threat Actor: TA505 BEC ...</text>
+</svg>
+        </div>
+    </div>
+</body>
+</html>
