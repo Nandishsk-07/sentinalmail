@@ -18,6 +18,7 @@ Thumbs.db
 
 # Reports output
 *.pdf
+data/reports/
 
 # Model caches
 models/
