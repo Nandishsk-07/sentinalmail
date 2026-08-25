@@ -107,17 +107,17 @@ def main() -> None:
                 print(json.dumps(result, indent=4))
                 
                 report_id = result.get("report_id")
-                pdf_url = result.get("reports", {}).get("pdf_url")
+                pdf_url = result.get("report_urls", {}).get("pdf")
                 
                 if report_id and pdf_url:
-                    # Test GET /report/{id}
+                    # Test GET /reports/{id}
                     print(f"  [*] Downloading PDF report from {pdf_url}...")
                     with urllib.request.urlopen(f"{BASE_URL}{pdf_url}", timeout=5) as pdf_resp:
                         pdf_data = pdf_resp.read()
                         print(c(f"  [+] Downloaded PDF report successfully ({len(pdf_data):,} bytes).", "green"))
                         
-                    # Test GET /report/{id}?format=json
-                    json_url = result.get("reports", {}).get("json_url")
+                    # Test GET /reports/{id}?format=json
+                    json_url = result.get("report_urls", {}).get("json")
                     print(f"  [*] Downloading JSON report from {json_url}...")
                     with urllib.request.urlopen(f"{BASE_URL}{json_url}", timeout=5) as json_resp:
                         json_data = json_resp.read()
