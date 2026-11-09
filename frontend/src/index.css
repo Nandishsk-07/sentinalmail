@@ -76,3 +76,36 @@
   font-family: var(--font-serif);
   font-weight: 400;
 }
+
+/* Animated Dash Effect for Attack Path Polylines */
+@keyframes dash-travel {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.animated-attack-path {
+  stroke-dasharray: 6 8;
+  animation: dash-travel 1.2s linear infinite;
+}
+
+/* Marker Pulse / Glow Animation */
+@keyframes marker-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(193, 101, 79, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(193, 101, 79, 0);
+    transform: scale(1.15);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(193, 101, 79, 0);
+    transform: scale(1);
+  }
+}
+
+.pulse-marker {
+  animation: marker-pulse 1.8s ease-in-out infinite;
+  border-radius: 9999px;
+}

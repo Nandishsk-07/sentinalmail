@@ -1,0 +1,125 @@
+{
+  "sample_ips": {
+    "194.163.128.77": {
+      "ip": "194.163.128.77",
+      "country": "Germany",
+      "lat": 51.1657,
+      "lon": 10.4515,
+      "risk_level": "high",
+      "infra_type": "hosting_server",
+      "isp": "Contabo GmbH",
+      "org": "Contabo Datacenter"
+    },
+    "185.234.72.19": {
+      "ip": "185.234.72.19",
+      "country": "Seychelles",
+      "lat": -4.6796,
+      "lon": 55.492,
+      "risk_level": "critical",
+      "infra_type": "botnet_c2",
+      "isp": "Bulletproof Hosting Ltd",
+      "org": "Bulletproof Cyber Infrastructure"
+    },
+    "153.92.0.44": {
+      "ip": "153.92.0.44",
+      "country": "Lithuania",
+      "lat": 55.1694,
+      "lon": 23.8813,
+      "risk_level": "high",
+      "infra_type": "open_relay",
+      "isp": "Hostinger International",
+      "org": "Hostinger VPS Server"
+    },
+    "40.107.207.10": {
+      "ip": "40.107.207.10",
+      "country": "United States",
+      "lat": 37.751,
+      "lon": -97.822,
+      "risk_level": "low",
+      "infra_type": "cloud_service",
+      "isp": "Microsoft Corporation",
+      "org": "Exchange Online Protection"
+    },
+    "198.51.100.49": {
+      "ip": "198.51.100.49",
+      "country": "United States",
+      "lat": 38.9072,
+      "lon": -77.0369,
+      "risk_level": "low",
+      "infra_type": "cloud_service",
+      "isp": "TargetCorp Internal Gateway",
+      "org": "Corporate Mail Gateway"
+    },
+    "198.51.100.50": {
+      "ip": "198.51.100.50",
+      "country": "United States",
+      "lat": 38.9072,
+      "lon": -77.0369,
+      "risk_level": "low",
+      "infra_type": "cloud_service",
+      "isp": "TargetCorp Internal Gateway",
+      "org": "Corporate Mail Gateway"
+    },
+    "198.51.100.51": {
+      "ip": "198.51.100.51",
+      "country": "United States",
+      "lat": 38.9072,
+      "lon": -77.0369,
+      "risk_level": "low",
+      "infra_type": "cloud_service",
+      "isp": "TargetCorp Internal Gateway",
+      "org": "Corporate Mail Gateway"
+    },
+    "192.0.2.40": {
+      "ip": "192.0.2.40",
+      "country": "United States",
+      "lat": 37.751,
+      "lon": -97.822,
+      "risk_level": "low",
+      "infra_type": "cloud_service",
+      "isp": "PartnerCorp Edge",
+      "org": "PartnerCorp Security Gateway"
+    },
+    "185.220.101.5": {
+      "ip": "185.220.101.5",
+      "country": "Germany",
+      "lat": 52.52,
+      "lon": 13.405,
+      "risk_level": "critical",
+      "infra_type": "tor_node",
+      "isp": "Tor Exit Node",
+      "org": "Tor Project Relay"
+    },
+    "104.28.10.1": {
+      "ip": "104.28.10.1",
+      "country": "United States",
+      "lat": 37.7749,
+      "lon": -122.4194,
+      "risk_level": "high",
+      "infra_type": "vpn_proxy",
+      "isp": "Cloudflare / VPN Node",
+      "org": "Consumer VPN Service"
+    }
+  },
+  "sample_tor_nodes": [
+    "185.220.101.5",
+    "185.220.101.6",
+    "185.220.101.7",
+    "176.10.99.200",
+    "198.96.155.3"
+  ],
+  "sample_botnet_ips": [
+    "185.234.72.19",
+    "193.42.33.18",
+    "45.144.225.101",
+    "103.145.13.88"
+  ],
+  "sample_vpn_asns": [
+    "AS9009",
+    "AS20473",
+    "AS60068",
+    "AS212238",
+    "AS62005",
+    "AS202425"
+  ]
+}

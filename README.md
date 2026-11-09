@@ -1,141 +1,223 @@
 # 🛡️ Sentinel-Mail
 
-**AI-powered email threat detection and forensic analysis prototype.**
+**Next-Generation AI Email Threat Detection, Deep Forensics & Threat Attribution Platform**
 
-Sentinel-Mail ingests raw `.eml` files, runs them through four specialised
-analysis engines in parallel, fuses the results into a single threat verdict,
-and produces a rich forensic report — all exposed via a FastAPI REST API.
+Sentinel-Mail is an enterprise-grade forensic analysis system for emails (`.eml`). It orchestrates multiple specialized inspection engines concurrently, combines heterogeneous forensic evidence using Dempster–Shafer mathematical evidential reasoning, attributes indicators to threat actor campaigns via graph intelligence, and presents comprehensive forensic intelligence through an interactive React dashboard and multi-format forensic reports (JSON / HTML / PDF).
 
 ---
 
-## Architecture
+## 🏛️ System Architecture
 
 ```
-                         ┌──────────────────┐
-                         │   Raw .eml File  │
-                         └────────┬─────────┘
-                                  │
-                    ┌─────────────┼─────────────┐
-                    │             │              │
-              ┌─────▼─────┐ ┌────▼────┐  ┌──────▼──────┐
-              │  Header    │ │  NLP    │  │   Visual    │
-              │  Parser    │ │  Engine │  │   Engine    │
-              └─────┬──────┘ └────┬────┘  └──────┬──────┘
-                    │             │              │
-                    │      ┌──────▼──────┐       │
-                    │      │ Attribution │       │
-                    │      │   Graph     │       │
-                    │      └──────┬──────┘       │
-                    │             │              │
-                    └─────────────┼──────────────┘
-                                  │
-                         ┌────────▼─────────┐
-                         │  Fusion Engine   │
-                         │  (Dempster–Shafer│
-                         │   combination)   │
-                         └────────┬─────────┘
-                                  │
-                         ┌────────▼─────────┐
-                         │ Report Generator │
-                         │  (PDF + JSON)    │
-                         └──────────────────┘
+                                 ┌──────────────────┐
+                                 │   Raw .eml File  │
+                                 └────────┬─────────┘
+                                          │
+                    ┌─────────────────────┼─────────────────────┐
+                    │                     │                     │
+              ┌─────▼─────┐         ┌────▼────┐           ┌──────▼──────┐
+              │  Header    │         │  NLP    │           │   Visual    │
+              │  Parser    │         │  Engine │           │   Engine    │
+              └─────┬──────┘         └────┬────┘           └──────┬──────┘
+                    │                     │                     │
+                    │              ┌──────▼──────┐              │
+                    │              │ Attribution │              │
+                    │              │    Graph    │              │
+                    │              └──────┬──────┘              │
+                    │                     │                     │
+                    └─────────────────────┼─────────────────────┘
+                                          │
+                                 ┌────────▼─────────┐
+                                 │  Fusion Engine   │
+                                 │ (Dempster–Shafer │
+                                 │   combination)   │
+                                 └────────┬─────────┘
+                                          │
+                                 ┌────────▼─────────┐
+                                 │ Report Generator │
+                                 │(PDF, HTML, JSON) │
+                                 └────────┬─────────┘
+                                          │
+                    ┌─────────────────────┴─────────────────────┐
+                    │                                           │
+             ┌──────▼───────┐                            ┌──────▼───────┐
+             │ FastAPI REST │                            │ React + Vite │
+             │   Backend    │                            │  Dashboard   │
+             └──────────────┘                            └──────────────┘
 ```
 
-### Engine Descriptions
+---
 
-| Engine | Module | Purpose |
+## 🔬 Specialized Forensic Engines
+
+| Engine | Module | Capabilities & Detection Mechanics |
 |---|---|---|
-| **Header Parser** | `engines/header_parser.py` | SPF / DKIM / DMARC validation, Received-chain tracing, IP geolocation, reverse-DNS |
-| **NLP Engine** | `engines/nlp_engine.py` | Transformer-based phishing-intent classification, urgency detection, URL risk scoring |
-| **Visual Engine** | `engines/visual_engine.py` | QR-code extraction (quishing), brand-logo spoofing detection, macro scanning |
-| **Attribution Graph** | `engines/attribution_graph.py` | NetworkX knowledge graph linking IPs, domains, and threat-actor indicators |
-| **Fusion Engine** | `fusion/fusion_engine.py` | Weighted Dempster–Shafer evidence combination → unified threat tier |
-| **Report Generator** | `reports/report_generator.py` | WeasyPrint PDF forensic report + machine-readable JSON for SIEM/SOAR |
+| **Header Parser** | `engines/header_parser.py` | RFC 5322 parsing, SPF / DKIM / DMARC authentication verification, Received-chain hop route tracing, envelope vs. header From spoofing detection, reverse DNS resolution. |
+| **NLP Phishing Engine** | `engines/nlp_engine.py` | Transformer-based sequence classification, conversational intent analysis, linguistic urgency & coercion scoring, high-risk URL extraction, homoglyph & credential harvesting detection. |
+| **Visual & Attachment Engine** | `engines/visual_engine.py` | OpenCV & PyZBar QR-code extraction (Quishing detection), attachment MIME-type validation, weaponized Office macro & executable scanning, logo brand impersonation analysis. |
+| **Attribution Graph** | `engines/attribution_graph.py` | NetworkX bipartite knowledge graph linking sending IPs, ASN details, target domains, and threat indicators to known Advanced Persistent Threat (APT) campaign clusters. |
+| **Fusion Engine** | `fusion/fusion_engine.py` | Weighted Dempster–Shafer theory of evidence combination to resolve conflicting engine signals into a calibrated 0–100 threat score and definitive threat tier. |
+| **IP Intelligence Engine** | `engines/ip_intelligence.py` | GeoIP lookup, ASN reputation scoring, proxy/VPN/Tor node identification, and visual coordinate mapping for global relay visualization. |
+| **Forensic Report Generator** | `reports/report_generator.py` | Automated report compilation producing SIEM/SOAR-ready JSON verdicts, styled responsive HTML reports, and print-ready PDF forensic audit documents via WeasyPrint. |
 
-### Pipeline Flow
-
-1. **Ingest** — A `.eml` file is uploaded via `POST /analyse`.
-2. **Parallel Analysis** — The four engines run concurrently on the parsed email.
-3. **Fusion** — Engine outputs are combined into a single `FusionVerdict` with a
-   0–100 threat score and a tier (`SAFE`, `SUSPICIOUS`, `LIKELY_PHISH`,
-   `CONFIRMED_THREAT`).
-4. **Report** — A forensic PDF and JSON report are generated and persisted.
-5. **Response** — The JSON verdict is returned to the caller; the PDF is
-   retrievable via `GET /report/{id}`.
+### Threat Classification Tiers
+* `SAFE` (Score: 0 – 29) — Passed authentication, benign body heuristics, clean attachments.
+* `SUSPICIOUS` (Score: 30 – 59) — Minor header anomalies or moderate urgency phrasing detected.
+* `LIKELY_PHISH` (Score: 60 – 84) — Failed authentication, impersonation cues, or suspicious URLs.
+* `CONFIRMED_THREAT` (Score: 85 – 100) — Direct spoofing, malicious attachments, weaponized QR code, or high-confidence APT IOC match.
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 sentinel-mail/
 ├── api/
 │   ├── __init__.py
-│   └── main.py              # FastAPI application
+│   └── main.py                  # FastAPI REST endpoints & WebSocket server
 ├── engines/
 │   ├── __init__.py
-│   ├── header_parser.py     # Email header analysis
-│   ├── nlp_engine.py        # NLP / phishing classification
-│   ├── visual_engine.py     # Attachment & image analysis
-│   └── attribution_graph.py # Threat-actor attribution graph
+│   ├── header_parser.py         # Email header & authentication analysis
+│   ├── nlp_engine.py            # Deep-learning phishing & intent detection
+│   ├── visual_engine.py         # Quishing (QR) & attachment macro scanner
+│   ├── attribution_graph.py     # NetworkX knowledge graph & threat clustering
+│   └── ip_intelligence.py       # Geolocation & ASN intelligence
 ├── fusion/
 │   ├── __init__.py
-│   └── fusion_engine.py     # Multi-engine score fusion
+│   └── fusion_engine.py         # Dempster–Shafer mathematical evidence fusion
 ├── reports/
 │   ├── __init__.py
-│   └── report_generator.py  # PDF & JSON forensic reports
+│   └── report_generator.py      # PDF, HTML, and JSON report generator
+├── frontend/                    # Vite + React + Tailwind interactive dashboard
+│   ├── src/
+│   │   ├── components/          # Reusable UI components (ThreatMap, Headers, etc.)
+│   │   ├── App.jsx              # Main application view & preset runner
+│   │   └── index.css            # Tailwind & handcrafted theme styles
+│   ├── package.json
+│   └── vite.config.js
 ├── data/
-│   └── sample_emails/       # Test .eml files go here
-├── requirements.txt
+│   ├── sample_emails/           # Pre-built realistic test threat payloads (.eml)
+│   └── sample_ip_intel.json     # Geolocation & IP reputation fixtures
+├── run_demo.py                  # One-command full-stack environment launcher
+├── run_demo.bat                 # Windows one-click batch launcher
+├── run_demo.sh                  # Linux/macOS launcher script
+├── DEMO_SCRIPT.md               # Click-by-click presenter guide & scenarios
+├── test_all_endpoints.py        # End-to-end integration test suite
+├── requirements.txt             # Python dependencies
 └── README.md
 ```
 
 ---
 
-## Quick Start
+## ⚡ Quick Start
 
+### 1. Automated One-Command Launcher (Recommended)
+
+Starts the FastAPI server (`:8000`), boots the Vite frontend (`:3000`), pre-loads the 5 sample threat payloads, and opens the dashboard in your default browser:
+
+**Windows (PowerShell / CMD):**
+```powershell
+.\venv\Scripts\activate
+python run_demo.py
+# (or double-click run_demo.bat)
+```
+
+**Linux / macOS:**
 ```bash
-# 1. Create a virtual environment
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # Linux / macOS
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Run the API server
-uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
-
-# 4. Test the health endpoint
-curl http://localhost:8000/health
+source .venv/bin/activate
+chmod +x run_demo.sh
+./run_demo.sh
 ```
 
 ---
 
-## API Endpoints
+### 2. Manual Setup & Development Mode
 
-| Method | Path | Description |
+#### Backend Setup (FastAPI)
+```powershell
+# 1. Create and activate a virtual environment
+python -m venv venv
+.\venv\Scripts\activate          # Windows
+# source venv/bin/activate       # Linux / macOS
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Start the API server
+uvicorn api.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+#### Frontend Setup (React + Vite)
+In a separate terminal:
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🌐 Endpoints & API Reference
+
+| Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/health` | Liveness / readiness probe |
-| `POST` | `/analyse` | Upload a `.eml` file → full pipeline → JSON verdict |
-| `GET` | `/report/{id}` | Retrieve a forensic PDF report by ID |
+| `GET` | `/health` | Liveness and readiness health probe. |
+| `POST` | `/analyze` | Ingests a raw `.eml` file via `multipart/form-data`, triggers the full forensic pipeline, and returns a detailed JSON report. |
+| `GET` | `/reports/{id}?format=json\|html\|pdf` | Downloads or previews an existing forensic report in JSON, HTML, or PDF format. |
+| `GET` | `/campaigns` | Returns the active knowledge graph and threat campaign clusters in node-link JSON format. |
+| `POST` | `/query` | Natural-language query interface returning filtered threat reports and matched indicators. |
+
+### Example: Analyze an Email via `curl`
+
+```bash
+curl -X POST "http://127.0.0.1:8000/analyze?offline=true" \
+  -F "file=@data/sample_emails/phish_ceo_wire_fraud.eml"
+```
 
 ---
 
-## Tech Stack
+## 🧪 Testing & Verification
 
-- **FastAPI + Uvicorn** — async API layer
-- **Transformers + PyTorch** — phishing-intent NLP models
-- **NLTK** — tokenisation and linguistic feature extraction
-- **OpenCV + pyzbar** — image analysis and QR-code decoding
-- **NetworkX** — threat-attribution graph construction
-- **dnspython** — DNS record lookups (SPF, MX, PTR)
-- **WeasyPrint** — PDF report rendering
-- **python-magic** — MIME-type detection for attachments
-- **email-validator** — address syntax and deliverability checks
+Sentinel-Mail includes automated end-to-end integration and engine test suites:
+
+```powershell
+# Run the complete API integration test
+python test_all_endpoints.py
+
+# Test individual engines
+python test_header_parser.py
+python test_nlp_engine.py
+python test_visual_engine.py
+python test_attribution_graph.py
+python test_fusion_engine.py
+python test_report_generator.py
+```
 
 ---
 
-## License
+## 🎯 Pre-Loaded Demo Scenarios
 
-This project is a prototype for research and educational purposes.
+Located in `data/sample_emails/`:
+
+1. **`phish_ceo_wire_fraud.eml`** — Business Email Compromise (BEC): Urgent \$48,500 wire transfer request with failed SPF/DKIM/DMARC and display name spoofing.
+2. **`quish_mfa_reset.eml`** — QR Code Phishing (Quishing): QR image decoded to reveal a credential phishing credential harvesting page.
+3. **`malware_fake_invoice.eml`** — Weaponized Attachment: Malicious invoice macro targeting endpoint finance personnel.
+4. **`phish_cred_harvest.eml`** — Security Alert Impersonation: Microsoft 365 lookalike landing page with homoglyphic URL redirection.
+5. **`benign_project_update.eml`** — Normal Legitimate Email: Clean SPF/DKIM baseline proving low false-positive rate.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Backend Framework:** FastAPI, Uvicorn, Pydantic v2
+* **Machine Learning & NLP:** PyTorch, Hugging Face Transformers, NLTK
+* **Image & Attachment Forensics:** OpenCV, PyZBar, python-magic
+* **Graph Intelligence:** NetworkX
+* **Forensic Document Rendering:** WeasyPrint, Jinja2, Matplotlib
+* **Frontend:** React, Vite, Tailwind CSS, Lucide Icons
+
+---
+
+## 🔒 Security & Privacy
+
+Sentinel-Mail does not transmit private email payload contents to third-party public cloud APIs. All model inference and heuristic parsing can be executed completely locally in `offline=true` mode.

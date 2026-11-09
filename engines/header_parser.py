@@ -30,6 +30,8 @@ from email.message import Message
 from pathlib import Path
 from typing import Any
 
+from engines.ip_intelligence import IPIntelligenceEngine
+
 # Optional: dnspython for live DNS validation
 try:
     import dns.resolver
@@ -135,6 +137,7 @@ class HeaderParser:
         self._geo_rate_limit = geo_rate_limit
         self._geo_cache: dict[str, dict[str, Any]] = {}
         self._geo_last_ts: float = 0.0
+        self.intel_engine = IPIntelligenceEngine(offline_mode=offline_mode)
 
     # ── Public API ─────────────────────────────────────────────────────
 
@@ -491,7 +494,7 @@ class HeaderParser:
     # ── 4. IP geolocation ──────────────────────────────────────────────
 
     def _build_geo_trace(self, relay_path: list[dict]) -> list[dict[str, Any]]:
-        """Geolocate every public IP in the relay path."""
+        """Geolocate every public IP in the relay path and enrich with IP intelligence."""
         seen: set[str] = set()
         results: list[dict[str, Any]] = []
 
@@ -502,14 +505,17 @@ class HeaderParser:
             seen.add(ip)
 
             if self._is_private_ip(ip):
-                results.append({"ip": ip, "private": True})
+                enriched = self.intel_engine.enrich(ip, {"country": "Internal Network"})
+                enriched["private"] = True
+                results.append(enriched)
                 continue
 
+            geo_data = {}
             if self.geo_enabled:
-                geo = self._geolocate_ip(ip)
-                results.append(geo)
-            else:
-                results.append({"ip": ip, "geo": "disabled"})
+                geo_data = self._geolocate_ip(ip)
+
+            enriched = self.intel_engine.enrich(ip, geo_data)
+            results.append(enriched)
 
         return results
 
@@ -602,7 +608,14 @@ class HeaderParser:
         """Return True for RFC-1918, loopback, and link-local addresses."""
         try:
             addr = ipaddress.ip_address(ip_str)
-            return addr.is_private or addr.is_loopback or addr.is_link_local
+            if addr.is_loopback or addr.is_link_local:
+                return True
+            # Explicit RFC 1918 private ranges
+            return (
+                addr in ipaddress.ip_network("10.0.0.0/8") or
+                addr in ipaddress.ip_network("172.16.0.0/12") or
+                addr in ipaddress.ip_network("192.168.0.0/16")
+            )
         except ValueError:
             return False
 

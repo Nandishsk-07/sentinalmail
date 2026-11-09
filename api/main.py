@@ -14,10 +14,11 @@ import json
 import os
 import shutil
 import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, File, HTTPException, Query, UploadFile
+from fastapi import FastAPI, File, HTTPException, Query, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
@@ -54,6 +55,130 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 
+# ── Connection Manager & Threat Map State ──────────────────────────────
+class ConnectionManager:
+    """Manages active WebSocket connections for real-time Threat Map push."""
+
+    def __init__(self):
+        self.active_connections: list[WebSocket] = []
+
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+
+    def disconnect(self, websocket: WebSocket):
+        if websocket in self.active_connections:
+            self.active_connections.remove(websocket)
+
+    async def broadcast(self, message: dict[str, Any]):
+        disconnected = []
+        for connection in self.active_connections:
+            try:
+                await connection.send_json(message)
+            except Exception:
+                disconnected.append(connection)
+        for conn in disconnected:
+            self.disconnect(conn)
+
+
+ws_manager = ConnectionManager()
+
+
+class ThreatMapState:
+    """In-memory tally and threat statistics for real-time map summary."""
+
+    def __init__(self):
+        self.infra_counts: dict[str, int] = {
+            "hosting_server": 0,
+            "vpn_proxy": 0,
+            "tor_node": 0,
+            "cloud_service": 0,
+            "open_relay": 0,
+            "botnet_c2": 0,
+        }
+        self.country_threats: dict[str, dict[str, Any]] = {}
+        self.recent_paths: list[dict[str, Any]] = []
+        self._seeded: bool = False
+
+    def seed_initial_data(self):
+        if self._seeded:
+            return
+        self._seeded = True
+        try:
+            hp = HeaderParser(offline_mode=True)
+            for eml in sorted(SAMPLE_DIR.glob("*.eml")):
+                try:
+                    res = hp.analyse(str(eml))
+                    geo = res.get("geo_trace", [])
+                    self.record_hops(eml.stem, geo)
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+    def record_hops(self, email_id: str, geo_trace: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        clean_hops = []
+        for hop in geo_trace:
+            ip = hop.get("ip")
+            country = hop.get("country") or "Unknown"
+            lat = hop.get("lat")
+            lon = hop.get("lon")
+            risk_level = hop.get("risk_level", "medium")
+            infra_type = hop.get("infra_type", "hosting_server")
+
+            if infra_type in self.infra_counts:
+                self.infra_counts[infra_type] += 1
+
+            if country and country != "Internal Network" and lat is not None and lon is not None:
+                if country not in self.country_threats:
+                    self.country_threats[country] = {
+                        "country": country,
+                        "lat": lat,
+                        "lon": lon,
+                        "critical": 0,
+                        "high": 0,
+                        "medium": 0,
+                        "low": 0,
+                        "no_data": 0,
+                        "total": 0,
+                        "max_risk": "low",
+                    }
+
+                c_data = self.country_threats[country]
+                c_data["total"] += 1
+                if risk_level in c_data:
+                    c_data[risk_level] += 1
+
+                risk_order = ["no_data", "low", "medium", "high", "critical"]
+                if risk_order.index(risk_level) > risk_order.index(c_data["max_risk"]):
+                    c_data["max_risk"] = risk_level
+
+                clean_hops.append({
+                    "ip": ip,
+                    "country": country,
+                    "lat": lat,
+                    "lon": lon,
+                    "risk_level": risk_level,
+                    "infra_type": infra_type,
+                    "isp": hop.get("isp"),
+                    "org": hop.get("org"),
+                })
+
+        path_entry = {
+            "email_id": email_id,
+            "hops": clean_hops,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+        self.recent_paths.append(path_entry)
+        if len(self.recent_paths) > 50:
+            self.recent_paths.pop(0)
+
+        return clean_hops
+
+
+threat_map_state = ThreatMapState()
+
+
 # ── Pydantic Request Models ────────────────────────────────────────────
 class QueryRequest(BaseModel):
     question: Optional[str] = Field(None, description="Natural language query string")
@@ -66,6 +191,30 @@ class QueryRequest(BaseModel):
 async def health() -> dict[str, str]:
     """Liveness probe."""
     return {"status": "ok", "service": "Sentinel-Mail"}
+
+
+@app.websocket("/ws/threat-map")
+async def websocket_threat_map(websocket: WebSocket):
+    """Real-time push channel for live threat map updates."""
+    await ws_manager.connect(websocket)
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        ws_manager.disconnect(websocket)
+    except Exception:
+        ws_manager.disconnect(websocket)
+
+
+@app.get("/threat-map/summary")
+async def get_threat_map_summary() -> dict[str, Any]:
+    """Return aggregated threat stats and per-country risk tallies for page load."""
+    threat_map_state.seed_initial_data()
+    return {
+        "infra_type_counts": threat_map_state.infra_counts,
+        "countries": list(threat_map_state.country_threats.values()),
+        "recent_paths": threat_map_state.recent_paths[-10:],
+    }
 
 
 @app.post("/analyze")
@@ -144,6 +293,18 @@ async def analyze_email(
 
         pdf_bytes = reports.generate_pdf(verdict, engines, temp_path)
         (REPORT_DIR / f"{temp_id}.pdf").write_bytes(pdf_bytes)
+
+        # Broadcast real-time hop path to WebSocket clients
+        geo_trace = header_res.get("geo_trace", [])
+        clean_hops = threat_map_state.record_hops(temp_id, geo_trace)
+
+        ws_payload = {
+            "event": "new_hop_path",
+            "email_id": temp_id,
+            "hops": clean_hops,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+        await ws_manager.broadcast(ws_payload)
 
         return json_report
 

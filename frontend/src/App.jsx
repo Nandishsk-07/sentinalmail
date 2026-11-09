@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Shield, Network, FileText, Settings, Activity } from 'lucide-react';
+import { Mail, Shield, Network, FileText, Settings, Activity, Globe } from 'lucide-react';
 import FileUploader from './components/FileUploader';
 import AnalysisResults from './components/AnalysisResults';
 import AttributionGraphView from './components/AttributionGraphView';
 import QueryConsole from './components/QueryConsole';
+import ThreatMap from './components/ThreatMap';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('analyze');
@@ -95,6 +96,7 @@ export default function App() {
           <nav className="flex flex-col space-y-1">
             {[
               { id: 'analyze', label: 'Analyze', icon: <Mail className="w-4 h-4" /> },
+              { id: 'threatmap', label: 'Threat Map', icon: <Globe className="w-4 h-4" /> },
               { id: 'campaigns', label: 'Campaigns', icon: <Network className="w-4 h-4" /> },
               { id: 'reports', label: 'Reports', icon: <FileText className="w-4 h-4" /> },
               { id: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" />, inactive: true },
@@ -170,6 +172,12 @@ export default function App() {
                 
                 {/* Analysis Results */}
                 <AnalysisResults data={analysisData} />
+              </div>
+            )}
+
+            {activeTab === 'threatmap' && (
+              <div className="space-y-6">
+                <ThreatMap />
               </div>
             )}
 
